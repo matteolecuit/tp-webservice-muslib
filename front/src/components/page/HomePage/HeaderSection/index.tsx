@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import logo from "./logo.svg";
 import { DefaultButton } from "../../../common/Buttons";
+import Test from "./Test";
 
 export default () => {
   return (
@@ -18,6 +20,7 @@ export default () => {
         Learn React
         <DefaultButton text="Hello, I'm a button" />
       </Link>
+      <Test />
     </StyledHeader>
   );
 };
