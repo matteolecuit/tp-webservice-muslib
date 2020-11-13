@@ -1,28 +1,28 @@
 import React, { Component } from 'react'
 import { Table, Button } from 'reactstrap';
+import TitreModalForm from '../Modals/AddTitreModal'
 import ModalForm from '../Modals/Modal'
 
 class DataTable extends Component {
 
   deleteItem = id => {
     let confirmDelete = window.confirm('Delete item forever?')
-    if(confirmDelete){
-      fetch('http://localhost:3000/crud', {
-      method: 'delete',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        id
+    if (confirmDelete) {
+      fetch('http://localhost:8080/crud', {
+        method: 'delete',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          id
+        })
       })
-    })
-      .then(response => response.json())
-      .then(item => {
-        this.props.deleteItemFromState(id)
-      })
-      .catch(err => console.log(err))
+        .then(response => response.json())
+        .then(item => {
+          this.props.deleteItemFromState(id)
+        })
+        .catch(err => console.log(err))
     }
-
   }
 
   render() {
@@ -38,15 +38,16 @@ class DataTable extends Component {
           <td>{item.location}</td>
           <td>{item.hobby}</td>
           <td>
-            <div style={{width:"110px"}}>
-              <ModalForm buttonLabel="Edit" item={item} updateState={this.props.updateState}/>
+            <div style={{ width: "110px" }}>
+              <TitreModalForm buttonLabel="EditTitre" item={item} updateState={this.props.updateState} />
+              <ModalForm buttonLabel="Edit" item={item} updateState={this.props.updateState} />
               {' '}
               <Button color="danger" onClick={() => this.deleteItem(item.id)}>Del</Button>
             </div>
           </td>
         </tr>
-        )
-      })
+      )
+    })
 
     return (
       <Table responsive hover>

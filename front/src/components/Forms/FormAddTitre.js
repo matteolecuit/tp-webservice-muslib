@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
-class AlbumAddEditForm extends React.Component {
-  titre = {
+class TitreAddEditForm extends React.Component {
+  state = {
     duree: '',
     nom: '',
     artiste: null,
@@ -21,7 +21,7 @@ class AlbumAddEditForm extends React.Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        duree: this.state.duree,
+        duree: 300,
         nom: this.state.nom,
         artiste: null,
         album: null,
@@ -69,8 +69,8 @@ class AlbumAddEditForm extends React.Component {
   componentDidMount() {
     // if item exists, populate the state with proper data
     if (this.props.item) {
-      const { id, first, last, email, phone, location, hobby } = this.props.item
-      this.setState({ id, first, last, email, phone, location, hobby })
+      const { nom, duree, artiste, album } = this.props.item
+      this.setState({ nom, duree, artiste, album })
     }
   }
 
@@ -91,4 +91,4 @@ class AlbumAddEditForm extends React.Component {
   }
 }
 
-export default AlbumAddEditForm
+export default TitreAddEditForm

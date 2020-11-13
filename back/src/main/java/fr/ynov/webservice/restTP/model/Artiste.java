@@ -16,9 +16,6 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Artiste {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
