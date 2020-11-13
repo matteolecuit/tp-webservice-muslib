@@ -24,4 +24,8 @@ public class Administrateur {
 
     private String pseudo;
 
+    public Administrateur(String email, String pseudo) {
+        this.email = email;
+        this.pseudo = pseudo;
+    }
 }

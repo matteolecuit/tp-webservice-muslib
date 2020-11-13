@@ -29,6 +29,9 @@ public class InitController {
     @Autowired
     PlaylistService playlistService;
 
+    @Autowired
+    AdministrateurService administrateurService;
+
     @RequestMapping(method = RequestMethod.GET, value = "")
     public void init(){
 
@@ -79,7 +82,8 @@ public class InitController {
             this.playlistService.save(new Playlist("Playlist "+i));
         }
 
-        System.out.println("favorisService");
+        System.out.println("administrateurService");
+        this.administrateurService.save(new Administrateur("admin@admin.com", "Admin"));
 
     }
 }

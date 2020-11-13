@@ -50,7 +50,4 @@ public class TitreService {
         }
         return randTitres;
     }
-    public Titre createTitre(Titre titre) {
-    	return this.titreRepository.save(titre);
-    }
 }

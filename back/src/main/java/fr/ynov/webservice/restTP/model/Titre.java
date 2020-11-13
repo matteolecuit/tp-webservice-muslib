@@ -41,32 +41,5 @@ public class Titre {
         this.duree = duree;
         this.nom = nom;
     }
-    public Titre() {
-    	super();
-    }
-	public int getDuree() {
-		return duree;
-	}
-	public void setDuree(int duree) {
-		this.duree = duree;
-	}
-	public String getNom() {
-		return nom;
-	}
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-	public List<Artiste> getArtistes() {
-		return artistes;
-	}
-	public void setArtistes(List<Artiste> artistes) {
-		this.artistes = artistes;
-	}
-	public Album getAlbum() {
-		return album;
-	}
-	public void setAlbum(Album album) {
-		this.album = album;
-	}
-    
+
 }
