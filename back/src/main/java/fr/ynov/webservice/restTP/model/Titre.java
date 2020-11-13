@@ -34,12 +34,6 @@ public class Titre {
     @ManyToOne(targetEntity = Album.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Album album;
 
-    @ManyToMany(targetEntity = Playlist.class)
-    private List<Playlist> playlists = new ArrayList<>();
-
-    @ManyToMany(targetEntity = Favoris.class, mappedBy = "titres")
-    private List<Favoris> favoris = new ArrayList<>();
-
     public Titre(int duree, String nom) {
         this.duree = duree;
         this.nom = nom;

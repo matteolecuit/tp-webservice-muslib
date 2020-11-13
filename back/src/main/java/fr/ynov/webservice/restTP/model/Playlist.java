@@ -30,7 +30,7 @@ public class Playlist {
     @ManyToOne(targetEntity = Utilisateur.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Utilisateur utilisateur;
 
-    @ManyToMany(targetEntity = Titre.class, mappedBy = "playlists")
+    @ManyToOne(targetEntity = Titre.class)
     private List<Titre> titres = new ArrayList<>();
 
     public Playlist(String nom) {
