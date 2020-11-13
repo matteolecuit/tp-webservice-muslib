@@ -50,6 +50,21 @@ public class UtilisateurController {
         return this.utilisateurService.addTitreToPlaylist(userId, titre);
     }
 
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/favoris/album")
+    public Utilisateur deleteAlbum(@PathVariable(value = "id") long userId, @RequestParam long albumId){
+        return this.utilisateurService.deleteAlbumToPlaylist(userId, albumId);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/favoris/artiste")
+    public Utilisateur deleteArtiste(@PathVariable(value = "id") long userId, @RequestParam long artisteId){
+        return this.utilisateurService.deleteArtisteToPlaylist(userId, artisteId);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/favoris/titre")
+    public Utilisateur deleteTitre(@PathVariable(value = "id") long userId, @RequestParam long titreId){
+        return this.utilisateurService.deleteTitreToPlaylist(userId, titreId);
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/{id}/favoris")
     public Favoris addTitre(@PathVariable(value = "id") long userId){
         Optional<Utilisateur> userOpt = this.utilisateurService.findById(userId);

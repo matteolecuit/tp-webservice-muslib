@@ -5,6 +5,7 @@ import fr.ynov.webservice.restTP.entity.Artiste;
 import fr.ynov.webservice.restTP.entity.Titre;
 import fr.ynov.webservice.restTP.entity.Utilisateur;
 import fr.ynov.webservice.restTP.repository.UtilisateurRepository;
+import org.apache.tomcat.jni.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -74,6 +75,54 @@ public class UtilisateurService {
                 user.getTitres().add(titreOpt.get());
                 return this.save(user);
             }
+        }
+        return null;
+    }
+
+    public Utilisateur deleteAlbumToPlaylist(long userId, long albumId){
+        Optional<Utilisateur> userOpt = this.findById(userId);
+        if (userOpt.isPresent()) {
+            Utilisateur user = userOpt.get();
+            // retrouve l'album
+            Optional<Album> album = user.getAlbums().stream().filter(albm -> albm.getId() == albumId).findFirst();
+            if (album.isPresent()){
+                // retire l'album de la liste du user
+                user.getAlbums().remove(album.get());
+                return this.utilisateurRepository.save(user);
+            }
+
+        }
+        return null;
+    }
+
+    public Utilisateur deleteArtisteToPlaylist(long userId, long artisteId){
+        Optional<Utilisateur> userOpt = this.findById(userId);
+        if (userOpt.isPresent()) {
+            Utilisateur user = userOpt.get();
+            // retrouve l'artiste
+            Optional<Artiste> artiste = user.getArtistes().stream().filter(art -> art.getId() == artisteId).findFirst();
+            if (artiste.isPresent()){
+                // retire l'artiste de la liste du user
+                user.getArtistes().remove(artiste.get());
+                return this.utilisateurRepository.save(user);
+            }
+
+        }
+        return null;
+    }
+
+    public Utilisateur deleteTitreToPlaylist(long userId, long titreId){
+        Optional<Utilisateur> userOpt = this.findById(userId);
+        if (userOpt.isPresent()) {
+            Utilisateur user = userOpt.get();
+            // retrouve le titre
+            Optional<Titre> titre = user.getTitres().stream().filter(ttre -> ttre.getId() == titreId).findFirst();
+            if (titre.isPresent()){
+                // retire le titre de la liste du user
+                user.getTitres().remove(titre.get());
+                return this.utilisateurRepository.save(user);
+            }
+
         }
         return null;
     }
