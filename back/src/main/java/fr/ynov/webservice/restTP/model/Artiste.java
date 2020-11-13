@@ -1,16 +1,24 @@
 package fr.ynov.webservice.restTP.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Artiste {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,12 +28,19 @@ public class Artiste {
 
     private String imageUrl;
 
-    @ManyToMany(targetEntity = Titre.class, mappedBy = "artistes")
-    private List<Titre> titres;
+    @ManyToMany(targetEntity = Titre.class, mappedBy = "artistes", cascade = CascadeType.ALL)
+    private List<Titre> titres = new ArrayList<>();
 
-    @ManyToMany(targetEntity = Album.class, mappedBy="artistes")
-    private List<Album> albums;
+    @ManyToMany(targetEntity = Album.class, cascade = CascadeType.ALL)
+    private List<Album> albums = new ArrayList<>();
 
-    @OneToOne(targetEntity = Favoris.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Favoris favoris;
+    @ManyToMany(targetEntity = Favoris.class, mappedBy = "artistes")
+    private List<Favoris> favoris = new ArrayList<>();
+
+    public Artiste(String alias, String imageUrl) {
+        this.alias = alias;
+        this.imageUrl = imageUrl;
+    }
+
+
 }

@@ -1,17 +1,18 @@
 package fr.ynov.webservice.restTP.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@ToString
+@NoArgsConstructor
 public class Album {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,11 +25,17 @@ public class Album {
     private String imageUrl;
 
     @OneToMany(targetEntity = Titre.class, mappedBy = "album")
-    private List<Titre> titres;
+    private List<Titre> titres = new ArrayList<>();
 
-    @ManyToMany(targetEntity = Artiste.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Artiste> artistes;
+    @ManyToMany(targetEntity = Artiste.class, mappedBy = "albums")
+    private List<Artiste> artistes = new ArrayList<>();
 
-    @OneToOne(targetEntity = Favoris.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Favoris favoris;
+    @ManyToMany(targetEntity = Favoris.class, mappedBy = "albums")
+    private List<Favoris> favoris = new ArrayList<>();
+
+    public Album(Calendar date_publication, String nom, String imageUrl) {
+        this.date_publication = date_publication;
+        this.nom = nom;
+        this.imageUrl = imageUrl;
+    }
 }

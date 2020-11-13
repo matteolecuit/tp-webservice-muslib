@@ -1,16 +1,24 @@
 package fr.ynov.webservice.restTP.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Favoris {
 
     @Id
@@ -20,13 +28,16 @@ public class Favoris {
     @OneToOne(targetEntity = Utilisateur.class, mappedBy = "favoris")
     private Utilisateur users;
 
-    @OneToMany(targetEntity = Titre.class, mappedBy="favoris")
-    private List<Titre> titres;
+    @OneToMany(targetEntity = Titre.class, cascade = CascadeType.ALL)
+    private List<Titre> titres = new ArrayList<>();
 
-    @OneToMany(targetEntity = Album.class, mappedBy="favoris")
-    private List<Album> albums;
+    @OneToMany(targetEntity = Album.class, cascade = CascadeType.ALL)
+    private List<Album> albums = new ArrayList<>();
 
-    @OneToMany(targetEntity = Artiste.class, mappedBy="favoris")
-    private List<Artiste> artistes;
+    @OneToMany(targetEntity = Artiste.class, cascade = CascadeType.ALL)
+    private List<Artiste> artistes = new ArrayList<>();
 
+    public Favoris(Utilisateur users) {
+        this.users = users;
+    }
 }
