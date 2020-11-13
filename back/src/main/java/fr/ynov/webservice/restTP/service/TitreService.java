@@ -41,4 +41,8 @@ public class TitreService {
     public Titre createTitre(Titre titre) {
     	return this.titreRepository.save(titre);
     }
+
+	public List<Titre> getAllTitres() {
+		return this.titreRepository.findAll();
+	}
 }

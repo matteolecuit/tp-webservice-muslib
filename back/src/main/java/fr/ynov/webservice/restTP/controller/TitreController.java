@@ -3,6 +3,7 @@ package fr.ynov.webservice.restTP.controller;
 import fr.ynov.webservice.restTP.model.Titre;
 import fr.ynov.webservice.restTP.service.TitreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -27,5 +29,9 @@ public class TitreController {
     @PostMapping(value="")
     public Titre createTitre(@RequestBody Titre titre) {
     	return this.titreService.createTitre(titre);
+    }
+    @GetMapping(value="")
+    public List<Titre> getAllTitres(){
+    	return this.titreService.getAllTitres();
     }
 }
