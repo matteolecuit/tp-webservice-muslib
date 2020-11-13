@@ -32,7 +32,7 @@ public class AlbumService {
         return randArtists;
     }
 
-    public Album add(Album album){
+    public Album save(Album album){
         return this.albumRepository.save(album);
     }
 

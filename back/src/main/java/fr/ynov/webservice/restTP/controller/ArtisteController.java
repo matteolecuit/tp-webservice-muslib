@@ -1,6 +1,5 @@
 package fr.ynov.webservice.restTP.controller;
 
-import com.github.lambdaexpression.annotation.RequestBodyParam;
 import fr.ynov.webservice.restTP.model.Artiste;
 import fr.ynov.webservice.restTP.service.ArtisteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +21,8 @@ public class ArtisteController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "")
-    public Artiste getRandom(@RequestBodyParam String alias, @RequestBodyParam String imageUrl ){
-        Artiste artiste = new Artiste(alias, imageUrl);
-        return this.artisteService.add(artiste);
+    public Artiste getRandom(@RequestBody Artiste artiste){
+        return this.artisteService.save(artiste);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")

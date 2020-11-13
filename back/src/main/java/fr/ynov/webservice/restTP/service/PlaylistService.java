@@ -17,7 +17,7 @@ public class PlaylistService {
         return this.playlistRepository.findById(id);
     }
 
-    public Playlist add(Playlist playlist){
+    public Playlist save(Playlist playlist){
         return this.playlistRepository.save(playlist);
     }
 }

@@ -14,15 +14,14 @@ import javax.persistence.*;
 @Setter
 @ToString
 @NoArgsConstructor
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Administrateur {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne(targetEntity = Utilisateur.class, mappedBy = "admin")
-    private Utilisateur users_admin;
+    private String email;
+
+    private String pseudo;
+
 }

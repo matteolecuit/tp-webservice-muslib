@@ -29,22 +29,19 @@ public class InitController {
     @Autowired
     PlaylistService playlistService;
 
-    @Autowired
-    FavorisService favorisService;
-
     @RequestMapping(method = RequestMethod.GET, value = "")
     public void init(){
 
         System.out.println("utilisateurService");
 
         for (int i = 0; i < 5; i++){
-            this.utilisateurService.add(new Utilisateur("test"+i+"@mail.com", "pseudo"+i));
+            this.utilisateurService.save(new Utilisateur("test"+i+"@mail.com", "pseudo"+i));
         }
 
         System.out.println("albumService");
 
         for (int i = 0; i < 5; i++){
-            this.albumService.add(new Album(Calendar.getInstance(), "album "+i, ""));
+            this.albumService.save(new Album(Calendar.getInstance(), "album "+i, ""));
         }
 
         System.out.println("artisteService");
@@ -55,7 +52,7 @@ public class InitController {
 
             art.setAlbums(albumList);
 
-            this.artisteService.add(art);
+            this.artisteService.save(art);
         }
 
         System.out.println("titreService");
@@ -66,28 +63,23 @@ public class InitController {
             
             titre.setArtistes(artisteList);
             titre.setAlbum(artisteList.get(0).getAlbums().get(0));
-            this.titreService.add(titre);
+            this.titreService.save(titre);
         }
 
         System.out.println("playlistService");
 
         for (int i = 0; i < 5; i++){
             Playlist playlist = new Playlist("Playlist "+i);
-            this.playlistService.add(playlist);
+            this.playlistService.save(playlist);
         }
 
         System.out.println("playlistService");
 
         for (int i = 0; i < 5; i++){
-            this.playlistService.add(new Playlist("Playlist "+i));
+            this.playlistService.save(new Playlist("Playlist "+i));
         }
 
         System.out.println("favorisService");
 
-        for (int i = 0; i < 5; i++){
-
-            Favoris favoris = new Favoris(this.utilisateurService.getRandom(1).get(0));
-            this.favorisService.add(favoris);
-        }
     }
 }

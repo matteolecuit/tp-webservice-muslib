@@ -32,7 +32,7 @@ public class ArtisteService {
         return randArtists;
     }
 
-    public Artiste add(Artiste artiste){
+    public Artiste save(Artiste artiste){
         return this.artisteRepository.save(artiste);
     }
 

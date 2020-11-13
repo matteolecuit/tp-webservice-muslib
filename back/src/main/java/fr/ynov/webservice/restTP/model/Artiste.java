@@ -16,9 +16,6 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Artiste {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,9 +30,6 @@ public class Artiste {
 
     @ManyToMany(targetEntity = Album.class, cascade = CascadeType.ALL)
     private List<Album> albums = new ArrayList<>();
-
-    @ManyToMany(targetEntity = Favoris.class, mappedBy = "artistes")
-    private List<Favoris> favoris = new ArrayList<>();
 
     public Artiste(String alias, String imageUrl) {
         this.alias = alias;

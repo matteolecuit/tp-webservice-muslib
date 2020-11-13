@@ -3,6 +3,7 @@ package fr.ynov.webservice.restTP.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 public class Album {
     @Id
@@ -29,9 +31,6 @@ public class Album {
 
     @ManyToMany(targetEntity = Artiste.class, mappedBy = "albums")
     private List<Artiste> artistes = new ArrayList<>();
-
-    @ManyToMany(targetEntity = Favoris.class, mappedBy = "albums")
-    private List<Favoris> favoris = new ArrayList<>();
 
     public Album(Calendar date_publication, String nom, String imageUrl) {
         this.date_publication = date_publication;
