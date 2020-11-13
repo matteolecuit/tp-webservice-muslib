@@ -3,10 +3,10 @@ import { Table, Button } from "reactstrap";
 import ModalForm from "../Modals/Modal";
 
 class TitreTable extends Component {
-  deleteItem = (id) => {
-    let confirmDelete = window.confirm("Delete item forever?");
+  deleteTitre = (id) => {
+    let confirmDelete = window.confirm("Delete titre forever?");
     if (confirmDelete) {
-      fetch("http://localhost:3000/titre", {
+      fetch("http://localhost:8080/titre", {
         method: "delete",
         headers: {
           "Content-Type": "application/json",
@@ -16,37 +16,37 @@ class TitreTable extends Component {
         }),
       })
         .then((response) => response.json())
-        .then((item) => {
-          this.props.deleteItemFromState(id);
+        .then((titre) => {
+          this.props.deleteTitreFromState(id);
         })
         .catch((err) => console.log(err));
     }
   };
 
   render() {
-    const items = this.props.items.map((item) => {
+    const titres = this.props.titres.map((titre) => {
       return (
-        <tr key={item.id}>
-          <th scope="row">{item.id}</th>
-          <td>{item.nom}</td>
-          <td>{item.duree}</td>
-          <td>{item.artistes}</td>
+        <tr key={titre.id}>
+          <th scope="row">{titre.id}</th>
+          <td>{titre.nom}</td>
+          <td>{titre.duree}</td>
+          <td>{titre.artistes}</td>
           <td>
             <ul>
-              {item.artistes.map((artist) => {
+              {titre.artistes.map((artist) => {
                 return <li>{artist}</li>;
               })}
             </ul>
           </td>
-          <td>{item.album}</td>
+          <td>{titre.album}</td>
           <td>
             <div style={{ width: "110px" }}>
               <ModalForm
                 buttonLabel="Edit"
-                item={item}
+                titre={titre}
                 updateState={this.props.updateState}
               />{" "}
-              <Button color="danger" onClick={() => this.deleteItem(item.id)}>
+              <Button color="danger" onClick={() => this.deleteTitre(titre.id)}>
                 Del
               </Button>
             </div>
@@ -66,10 +66,10 @@ class TitreTable extends Component {
             <th>Album</th>
           </tr>
         </thead>
-        <tbody>{items}</tbody>
+        <tbody>{titres}</tbody>
       </Table>
     );
   }
 }
 
-export default DataTable;
+export default TitreTable;

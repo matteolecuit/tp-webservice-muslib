@@ -41,7 +41,7 @@ class TitreAddEditForm extends React.Component {
 
   submitFormEdit = e => {
     e.preventDefault()
-    fetch('http://localhost:3000/crud', {
+    fetch('http://localhost:8080/titre', {
       method: 'put',
       headers: {
         'Content-Type': 'application/json'

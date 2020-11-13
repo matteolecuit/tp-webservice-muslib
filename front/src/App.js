@@ -1,81 +1,47 @@
 import React, { Component } from 'react'
-import NewReleases from "@material-ui/icons/NewReleases";
-import Album from "@material-ui/icons/Album";
-import Person from "@material-ui/icons/Person";
-import ThumbUpAlt from "@material-ui/icons/ThumbUpAlt";
-// import Settings from "@material-ui/icons/Settings";
-import Sidebar from "./components/Sidebar/Sidebar";
 import { Container, Row, Col } from 'reactstrap'
-import ModalForm from './components/Modals/Modal'
 import TitreModalForm from './components/Modals/AddTitreModal'
-import DataTable from './components/Tables/DataTable'
+import TitreTable from './components/Tables/TitreTable'
 import { CSVLink } from "react-csv"
-
-function onClick(e, item) {
-  window.alert(JSON.stringify(item, null, 2));
-}
-
-const navItems = [
-  {
-    name: "Discover",
-    label: "Discover",
-    Icon: NewReleases
-  },
-  {
-    name: "Albums",
-    label: "Albums",
-    Icon: Album,
-  },
-  {
-    name: "Artists",
-    label: "Artists",
-    Icon: Person,
-  },
-  {
-    name: "Favourites",
-    label: "Favourites",
-    Icon: ThumbUpAlt,
-  }
-];
 
 class App extends Component {
   state = {
-    items: []
+    titres: []
   }
 
-  getItems() {
-    fetch('http://localhost:3000/crud')
+  getTitres() {
+    fetch('http://localhost:8080/titre')
       .then(response => response.json())
-      .then(items => this.setState({ items }))
+      .then(titres => this.setState({ titres }))
       .catch(err => console.log(err))
   }
 
-  addItemToState = (item) => {
+  addTitreToState = (titre) => {
     this.setState(prevState => ({
-      items: [...prevState.items, item]
+      titres: [...prevState.titres, titre]
     }))
   }
 
-  updateState = (item) => {
-    const itemIndex = this.state.items.findIndex(data => data.id === item.id)
+  updateState = (titre) => {
+    const titreIndex = this.state.titres.findIndex(data => data.id === titre.id)
     const newArray = [
-      // destructure all items from beginning to the indexed item
-      ...this.state.items.slice(0, itemIndex),
-      // add the updated item to the array
-      item,
-      // add the rest of the items to the array from the index after the replaced item
-      ...this.state.items.slice(itemIndex + 1)
+      // destructure all titres from beginning to the indexed titre
+      ...this.state.titres.slice(0, titreIndex),
+      // add the updated titre to the array
+      titre,
+      // add the rest of the titres to the array from the index after the replaced titre
+      ...this.state.titres.slice(titreIndex + 1)
     ]
-    this.setState({ items: newArray })
+    this.setState({ titres: newArray })
   }
 
-  deleteItemFromState = (id) => {
-    const updatedItems = this.state.items.filter(item => item.id !== id)
-    this.setState({ items: updatedItems })
+  deleteTitreFromState = (id) => {
+    const updatedTitres = this.state.titres.filter(titre => titre.id !== id)
+    this.setState({ titres: updatedTitres })
   }
 
   componentDidMount() {
-    this.getItems()
+    this.getTitres()
   }
 
   render() {
@@ -88,7 +54,7 @@ class App extends Component {
         </Row>
         <Row>
           <Col>
-            <DataTable items={this.state.items} updateState={this.updateState} deleteItemFromState={this.deleteItemFromState} />
+            <TitreTable titres={this.state.titres} updateState={this.updateState} deleteTitreFromState={this.deleteTitreFromState} />
           </Col>
         </Row>
         <Row>
@@ -98,11 +64,10 @@ class App extends Component {
               color="primary"
               style={{ float: "left", marginRight: "10px" }}
               className="btn btn-primary"
-              data={this.state.items}>
+              data={this.state.titres}>
               Download CSV
             </CSVLink>
-            <ModalForm buttonLabel="Add Item" addItemToState={this.addItemToState} />
-            <TitreModalForm buttonLabel="Add Titre" addItemToState={this.addItemToState} />
+            <TitreModalForm buttonLabel="Add Titre" addTitreToState={this.addTitreToState} />
           </Col>
         </Row>
       </Container>
