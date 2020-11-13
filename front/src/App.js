@@ -1,14 +1,46 @@
 import React, { Component } from 'react'
+import NewReleases from "@material-ui/icons/NewReleases";
+import Album from "@material-ui/icons/Album";
+import Person from "@material-ui/icons/Person";
+import ThumbUpAlt from "@material-ui/icons/ThumbUpAlt";
+// import Settings from "@material-ui/icons/Settings";
+import Sidebar from "./components/Sidebar/Sidebar";
 import { Container, Row, Col } from 'reactstrap'
-import ModalForm from './Components/Modals/Modal'
-import DataTable from './Components/Tables/DataTable'
+import ModalForm from './components/Modals/Modal'
+import DataTable from './components/Tables/DataTable'
 import { CSVLink } from "react-csv"
+
+function onClick(e, item) {
+  window.alert(JSON.stringify(item, null, 2));
+}
+
+const navItems = [
+  { 
+    name: "Discover", 
+    label: "Discover", 
+    Icon: NewReleases },
+  {
+    name: "Albums",
+    label: "Albums",
+    Icon: Album,
+  },
+  {
+    name: "Artists",
+    label: "Artists",
+    Icon: Person,
+  },
+  {
+    name: "Favourites",
+    label: "Favourites",
+    Icon: ThumbUpAlt,
+  }
+];
 
 class App extends Component {
   state = {
     items: []
   }
-
+  
   getItems(){
     fetch('http://localhost:3000/crud')
       .then(response => response.json())
@@ -46,31 +78,38 @@ class App extends Component {
 
   render() {
     return (
-      <Container className="App">
-        <Row>
-          <Col>
-            <h1 style={{margin: "20px 0"}}>CRUD Database</h1>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <DataTable items={this.state.items} updateState={this.updateState} deleteItemFromState={this.deleteItemFromState} />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <CSVLink
-              filename={"db.csv"}
-              color="primary"
-              style={{float: "left", marginRight: "10px"}}
-              className="btn btn-primary"
-              data={this.state.items}>
-              Download CSV
-            </CSVLink>
-            <ModalForm buttonLabel="Add Item" addItemToState={this.addItemToState}/>
-          </Col>
-        </Row>
-      </Container>
+      // <Container className="App">
+      //   <Row>
+      //     <Col>
+      //       <h1 style={{margin: "20px 0"}}>CRUD Database</h1>
+      //     </Col>
+      //   </Row>
+      //   <Row>
+      //     <Col>
+      //       <DataTable items={this.state.items} updateState={this.updateState} deleteItemFromState={this.deleteItemFromState} />
+      //     </Col>
+      //   </Row>
+      //   <Row>
+      //     <Col>
+      //       <CSVLink
+      //         filename={"db.csv"}
+      //         color="primary"
+      //         style={{float: "left", marginRight: "10px"}}
+      //         className="btn btn-primary"
+      //         data={this.state.items}>
+      //         Download CSV
+      //       </CSVLink>
+      //       <ModalForm buttonLabel="Add Item" addItemToState={this.addItemToState}/>
+      //     </Col>
+      //   </Row>
+      // </Container>
+      
+      <div style={{
+		  height: "100vh",
+		  width: "200px"
+		}}>
+        <Sidebar items={navItems}/>
+      </div>
     )
   }
 }
