@@ -1,7 +1,7 @@
 package fr.ynov.webservice.restTP.service;
 
-import fr.ynov.webservice.restTP.model.Administrateur;
-import fr.ynov.webservice.restTP.model.Titre;
+import fr.ynov.webservice.restTP.entity.Administrateur;
+import fr.ynov.webservice.restTP.entity.Titre;
 import fr.ynov.webservice.restTP.repository.TitreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +19,12 @@ public class TitreService {
     @Autowired
     AdministrateurService administrateurService;
 
-    public Titre save(Titre titre){
-        return this.titreRepository.save(titre);
+    public List<Titre> findAll(){
+        return this.titreRepository.findAll();
+    }
+
+    public Optional<Titre> findById(long id){
+        return this.titreRepository.findById(id);
     }
 
     public Titre create(long userId, Titre titre){
@@ -29,10 +33,6 @@ public class TitreService {
             return this.titreRepository.save(titre);
         }
         return null;
-    }
-
-    public Optional<Titre> findById(long id){
-        return this.titreRepository.findById(id);
     }
 
     public List<Titre> getRandom(int numberOfRandom){

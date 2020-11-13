@@ -1,6 +1,6 @@
 package fr.ynov.webservice.restTP.controller;
 
-import fr.ynov.webservice.restTP.model.*;
+import fr.ynov.webservice.restTP.entity.*;
 import fr.ynov.webservice.restTP.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +35,9 @@ public class InitController {
     @RequestMapping(method = RequestMethod.GET, value = "")
     public void init(){
 
+        System.out.println("administrateurService");
+        this.administrateurService.save(new Administrateur("admin@admin.com", "Admin"));
+
         System.out.println("utilisateurService");
 
         for (int i = 0; i < 5; i++){
@@ -44,7 +47,7 @@ public class InitController {
         System.out.println("albumService");
 
         for (int i = 0; i < 5; i++){
-            this.albumService.save(new Album(Calendar.getInstance(), "album "+i, ""));
+            this.albumService.create(1, new Album(Calendar.getInstance(), "album "+i, ""));
         }
 
         System.out.println("artisteService");
@@ -55,18 +58,18 @@ public class InitController {
 
             art.setAlbums(albumList);
 
-            this.artisteService.save(art);
+            this.artisteService.create(1, art);
         }
 
         System.out.println("titreService");
 
         for (int i = 0; i < 5; i++){
             Titre titre = new Titre(180, "Titre "+i);
-             List<Artiste> artisteList = this.artisteService.getRandom(1);
-            
-            titre.setArtistes(artisteList);
-            titre.setAlbum(artisteList.get(0).getAlbums().get(0));
-            this.titreService.save(titre);
+            List<Artiste> artisteList = this.artisteService.getRandom(1);
+            Artiste artiste = artisteList.get(0);
+            artiste.getTitres().add(titre);
+            artiste.getAlbums().get(0).getTitres().add(titre);
+            this.titreService.create(1, titre);
         }
 
         System.out.println("playlistService");
@@ -81,9 +84,6 @@ public class InitController {
         for (int i = 0; i < 5; i++){
             this.playlistService.save(new Playlist("Playlist "+i));
         }
-
-        System.out.println("administrateurService");
-        this.administrateurService.save(new Administrateur("admin@admin.com", "Admin"));
 
     }
 }

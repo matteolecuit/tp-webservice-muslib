@@ -1,7 +1,5 @@
-package fr.ynov.webservice.restTP.model;
+package fr.ynov.webservice.restTP.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,10 +23,10 @@ public class Artiste {
 
     private String imageUrl;
 
-    @ManyToMany(targetEntity = Titre.class, mappedBy = "artistes", cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Titre.class)
     private List<Titre> titres = new ArrayList<>();
 
-    @ManyToMany(targetEntity = Album.class, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Album.class)
     private List<Album> albums = new ArrayList<>();
 
     public Artiste(String alias, String imageUrl) {

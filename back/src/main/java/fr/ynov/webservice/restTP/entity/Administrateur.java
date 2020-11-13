@@ -1,7 +1,5 @@
-package fr.ynov.webservice.restTP.model;
+package fr.ynov.webservice.restTP.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

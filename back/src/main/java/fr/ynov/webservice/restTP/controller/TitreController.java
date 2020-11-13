@@ -1,12 +1,11 @@
 package fr.ynov.webservice.restTP.controller;
 
-import fr.ynov.webservice.restTP.model.Administrateur;
-import fr.ynov.webservice.restTP.model.Titre;
-import fr.ynov.webservice.restTP.service.AdministrateurService;
+import fr.ynov.webservice.restTP.entity.Titre;
 import fr.ynov.webservice.restTP.service.TitreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -16,8 +15,13 @@ public class TitreController {
     @Autowired
     TitreService titreService;
 
+    @RequestMapping(method = RequestMethod.GET, value = "")
+    public List<Titre> getAll(){
+        return this.titreService.findAll();
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public Titre getRandom(@PathVariable("id") long id){
+    public Titre getById(@PathVariable("id") long id){
         Optional<Titre> titreOpt = this.titreService.findById(id);
         return titreOpt.orElse(null);
     }

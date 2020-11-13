@@ -1,9 +1,9 @@
 package fr.ynov.webservice.restTP.service;
 
-import fr.ynov.webservice.restTP.model.Album;
-import fr.ynov.webservice.restTP.model.Artiste;
-import fr.ynov.webservice.restTP.model.Titre;
-import fr.ynov.webservice.restTP.model.Utilisateur;
+import fr.ynov.webservice.restTP.entity.Album;
+import fr.ynov.webservice.restTP.entity.Artiste;
+import fr.ynov.webservice.restTP.entity.Titre;
+import fr.ynov.webservice.restTP.entity.Utilisateur;
 import fr.ynov.webservice.restTP.repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,12 +27,16 @@ public class UtilisateurService {
     @Autowired
     ArtisteService artisteService;
 
-    public Utilisateur save(Utilisateur utilisateur){
-        return this.utilisateurRepository.save(utilisateur);
+    public List<Utilisateur> findAll(){
+        return this.utilisateurRepository.findAll();
     }
 
     public Optional<Utilisateur> findById(long id){
         return this.utilisateurRepository.findById(id);
+    }
+
+    public Utilisateur save(Utilisateur utilisateur){
+        return this.utilisateurRepository.save(utilisateur);
     }
 
     public Utilisateur addAlbumToPlaylist(long userId, Album album){
