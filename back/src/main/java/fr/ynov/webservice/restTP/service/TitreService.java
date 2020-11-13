@@ -48,7 +48,9 @@ public class TitreService {
                 allArtists.remove(allArtists.get(idx));
             }
         }
-
         return randTitres;
+    }
+    public Titre createTitre(Titre titre) {
+    	return this.titreRepository.save(titre);
     }
 }
