@@ -1,111 +1,63 @@
 import React from "react";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Divider from "@material-ui/core/Divider";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import ExpandLessIcon from "@material-ui/icons/ExpandLess";
-import Collapse from "@material-ui/core/Collapse";
+import styled from "styled-components";
 
-function SidebarItem({ depthStep = 10, depth = 0, expanded, item, ...rest }) {
-  const [collapsed, setCollapsed] = React.useState(true);
-  const { label, items, Icon, onClick: onClickProp } = item;
+const Sidebar = styled.section`
+  color: white;
+  padding: 10px;
+`;
 
-  function toggleCollapse() {
-    setCollapsed(prevValue => !prevValue);
-  }
+const SidebarLogo = styled.section`
+  display: flex;
 
-  function onClick(e) {
-    if (Array.isArray(items)) {
-      toggleCollapse();
-    }
-    if (onClickProp) {
-      onClickProp(e, item);
-    }
-  }
+`;
 
-  let expandIcon;
+const SidebarLogoImg = styled.img`
+  height: 40px;
+  width: 60px;
+`;
 
-  if (Array.isArray(items) && items.length) {
-    expandIcon = !collapsed ? (
-      <ExpandLessIcon
-        className={
-          "sidebar-item-expand-arrow" + " sidebar-item-expand-arrow-expanded"
-        }
-      />
-    ) : (
-      <ExpandMoreIcon className="sidebar-item-expand-arrow" />
-    );
-  }
+const SidebarLogoTitle = styled.h2`
+  color: #000000;
 
+`;
+
+const SidebarItem = styled.li`
+  list-style-type: none;
+  padding: none;
+`;
+
+const SidebarNav = styled.li`
+  padding: none;
+`;
+
+export default () => {
   return (
-    <>
-      <ListItem
-        className="sidebar-item"
-        onClick={onClick}
-        button
-        dense
-        {...rest}
-      >
-        <div
-          style={{ 
-              paddingLeft: depth * depthStep,
-              display: "flex"
-            }}
-          className="sidebar-item-content"
-        >
-          {Icon && <Icon className="sidebar-item-icon" fontSize="small" />}
-          <div className="sidebar-item-text">{label}</div>
-        </div>
-        {expandIcon}
-      </ListItem>
-      <Collapse in={!collapsed} timeout="auto" unmountOnExit>
-        {Array.isArray(items) ? (
-          <List disablePadding dense>
-            {items.map((subItem, index) => (
-              <React.Fragment key={`${subItem.name}${index}`}>
-                {subItem === "divider" ? (
-                  <Divider style={{ margin: "6px 0" }} />
-                ) : (
-                  <SidebarItem
-                    depth={depth + 1}
-                    depthStep={depthStep}
-                    item={subItem}
-                  />
-                )}
-              </React.Fragment>
-            ))}
-          </List>
-        ) : null}
-      </Collapse>
-    </>
-  );
-}
+	<Sidebar>
+		<SidebarLogo id="logo">
+			<SidebarLogoImg src="https://i.redd.it/fnutbjqyahj21.jpg"/>
+			<SidebarLogoTitle>Tongo Music</SidebarLogoTitle>
+		</SidebarLogo>
 
-function Sidebar({ items, depthStep, depth, expanded }) {
-  return (
-    <div className="sidebar" style={{height: "100%"}}>
-        <div id="logo" style={{display: "flex"}}>
-            <img src="https://i.redd.it/fnutbjqyahj21.jpg" style={{}}/>
-            <h2>Tongo Music</h2>
-        </div>
-        <List disablePadding dense style={{height: "100%", display: "flex", flexDirection:"column", justifyContent: "space-around", alignItems: "flex-start"}}>
-        {items.map((sidebarItem, index) => (
-            <React.Fragment key={`${sidebarItem.name}${index}`}>
-            {sidebarItem === "divider" ? (
-                <Divider style={{ margin: "6px 0" }} />
-            ) : (
-                <SidebarItem
-                depthStep={depthStep}
-                depth={depth}
-                expanded={expanded}
-                item={sidebarItem}
-                />
-            )}
-            </React.Fragment>
-        ))}
-        </List>
-    </div>
+		<div id="navbar">
+			<SidebarNav>
+				<SidebarItem>
+					<i data-eva="github"></i>
+					<span>Discover</span>
+				</SidebarItem>
+				<SidebarItem>
+					<i data-eva="github"></i>
+					<span>Albums</span>
+				</SidebarItem>
+				<SidebarItem>
+					<i data-eva="github"></i>
+					<span>Artists</span>
+				</SidebarItem>
+				<SidebarItem>
+					<i data-eva="github"></i>
+					<span>Favorites</span>
+				</SidebarItem>
+			</SidebarNav>
+		</div>
+	</Sidebar>
   );
-}
-
-export default Sidebar;
+};
