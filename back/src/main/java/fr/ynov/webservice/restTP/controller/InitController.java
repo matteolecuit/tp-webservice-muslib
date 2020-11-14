@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "init")
@@ -75,14 +76,10 @@ public class InitController {
         System.out.println("playlistService");
 
         for (int i = 0; i < 5; i++){
-            Playlist playlist = new Playlist("Playlist "+i);
-            this.playlistService.save(playlist);
-        }
-
-        System.out.println("playlistService");
-
-        for (int i = 0; i < 5; i++){
-            this.playlistService.save(new Playlist("Playlist "+i));
+            Playlist playlist = this.playlistService.save(new Playlist("Playlist "+i));
+            Utilisateur user = this.utilisateurService.getRandom(1).get(0);
+            user.getPlaylists().add(playlist);
+            this.utilisateurService.save(user);
         }
 
     }
