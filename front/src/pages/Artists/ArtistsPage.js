@@ -171,10 +171,12 @@ class ArtistsPage extends Component {
 		return (
 			<Container>
 				<Row>
-					<h2 style={{margin: "20px 0"}}>Featured Artists</h2>
-					<ul style={{display: "flex", justifyContent: "flex-start", padding: "0", flexWrap: "wrap"}}>
-						{this.artists}
-					</ul>
+					<Col>
+						<h2 style={{margin: "20px 0"}}>Featured Artists</h2>
+						<ul style={{display: "flex", justifyContent: "flex-start", padding: "0", flexWrap: "wrap"}}>
+							{this.artists}
+						</ul>
+					</Col>
 				</Row>
 			</Container>
 		);

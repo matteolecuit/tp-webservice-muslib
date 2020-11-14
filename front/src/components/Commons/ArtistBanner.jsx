@@ -13,7 +13,7 @@ export default (props) => {
                     <h1 class="artist-name">{props.name}</h1>
                     <div class="artist-infos">
                         <div class="album-count">
-                            <span>Albums</span>
+                            <span>Total</span>
                             <span class="albums-number">{props.albumsCount}</span>
                         </div>
                         <Icon name="heart-outline" size="large" fill="#FFF" animation={{type: "pulse", hover: true, infinite: false}}/>
