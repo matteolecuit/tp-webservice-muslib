@@ -17,7 +17,8 @@ const Topbar = styled.section`
   background-color: #FFFFFF;
   height: 10vh;
   width: 100%;
-  z-index: 0;
+  z-index: 1;
+  position: fixed;
 `;
 
 const TopbarSearch = styled.section`

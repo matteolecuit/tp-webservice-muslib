@@ -23,7 +23,7 @@ class App extends Component {
           <Sidebar></Sidebar>
           <div style={{ width: "100%", zIndex: "0" }}>
             <Topbar></Topbar>
-            <div style={{ background: "linear-gradient(180deg, rgba(244, 249, 255, 0.01) 0%, #F4F9FF 50.23%)", height: "100%" }}>
+            <div style={{ background: "linear-gradient(180deg, rgba(244, 249, 255, 0.01) 0%, #F4F9FF 50.23%)", height: "100%" , marginTop: "100px"}}>
               <Switch>
                 <Route exact path="/" component={HomePage} />
                 <Route exact path="/albums" component={AlbumsPage} />

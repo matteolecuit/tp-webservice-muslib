@@ -14,6 +14,7 @@ const Sidebar = styled.section`
   z-index: 1;
   position: fixed;
   width: 12vw;
+  background-color: #FFF;
 `;
 
 const SidebarLogo = styled.section`
