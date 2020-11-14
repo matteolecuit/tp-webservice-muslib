@@ -34,6 +34,7 @@ const StyledArtistCard = styled.div`
 			height: 100px;
 			width: 100px;
 			border-radius: 100%;
+			filter: drop-shadow(4px 4px 10px rgba(0, 0, 0, 0.25));
 		}
 
 		.card-title {

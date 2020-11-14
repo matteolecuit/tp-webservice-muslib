@@ -30,13 +30,20 @@ const StyledCard = styled.div`
 		background-color: transparent;
 
 		img {
+			border-radius: 3px;
+			filter: drop-shadow(4px 4px 10px rgba(0, 0, 0, 0.25));
 			margin: auto;
 			height: 100px;
 			width: 100px;
 		}
 
 		.card-title {
-			text-align: center;
+			text-align: start;
+		}
+
+		.card-text {
+			color: #0F1E36;
+			opacity: 50%;
 		}
 	}
 `;

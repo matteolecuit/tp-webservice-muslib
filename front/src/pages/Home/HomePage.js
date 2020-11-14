@@ -127,7 +127,7 @@ class HomePage extends Component {
 
 	// List Albums
 	albums = this.state.albums.map((item) =>
-		<StyledCard imgUrl={item.img} titre={item.name} link={item.url}></StyledCard>
+		<StyledCard imgUrl={item.img} titre={item.name} link={item.url} artiste={item.artist}></StyledCard>
 	);
 
 	render() {
