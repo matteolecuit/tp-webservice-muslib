@@ -30,8 +30,4 @@ public class TitreController {
     public Titre create(@RequestParam("userId") long userId, @RequestBody Titre titre){
         return this.titreService.create(userId, titre);
     }
-    @GetMapping(value="")
-    public List<Titre> getAllTitres(){
-    	return this.titreService.getAllTitres();
-    }
 }
