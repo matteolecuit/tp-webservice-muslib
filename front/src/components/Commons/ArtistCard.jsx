@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export default (props) => {
 	return (
 		<StyledArtistCard>
-			<a href={props.link}>
+			<Link to={props.link}>
 				<div class="card">
 					<img src={props.imgUrl} class="card-img-top" alt="..." />
 					<div class="card-body">
@@ -12,7 +13,7 @@ export default (props) => {
 						<p class="card-text">{props.artiste}</p>
 					</div>
 				</div>
-			</a>
+			</Link>
 		</StyledArtistCard>)
 };
 

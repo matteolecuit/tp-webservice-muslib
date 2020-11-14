@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import HomePage from './pages/Home/HomePage';
 import AlbumsPage from './pages/Albums/AlbumsPage';
+import AlbumPage from './pages/Album/AlbumPage';
 import ArtistsPage from './pages/Artists/ArtistsPage';
 import FavoritesPage from './pages/Favorites/FavoritesPage';
 import Topbar from './components/Topbar/Topbar';
@@ -29,6 +30,7 @@ class App extends Component {
                 <Route exact path="/albums" component={AlbumsPage} />
                 <Route exact path="/artists" component={ArtistsPage} />
                 <Route exact path="/favorites" component={FavoritesPage} />
+                <Route exact path="/albums/:id" component={AlbumPage} />
               </Switch>
             </div>
           </div>
