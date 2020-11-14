@@ -10,6 +10,9 @@ import {
 const Sidebar = styled.section`
   color: white;
   padding: 20px;
+  height: 100vh;
+  z-index: 1;
+  width: 12vw;
 `;
 
 const SidebarLogo = styled.section`

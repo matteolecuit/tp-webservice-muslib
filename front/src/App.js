@@ -12,6 +12,7 @@ import HomePage from './pages/Home/HomePage';
 import AlbumsPage from './pages/Albums/AlbumsPage';
 import ArtistsPage from './pages/Artists/ArtistsPage';
 import FavoritesPage from './pages/Favorites/FavoritesPage';
+import Topbar from './components/Topbar/Topbar';
 
 class App extends Component {
 
@@ -20,14 +21,16 @@ class App extends Component {
 	  <Router>
 		<Container>
 				<Sidebar></Sidebar>
-				<Switch>
-					<Route exact path="/" component={HomePage} />
-					<Route exact path="/albums" component={AlbumsPage} />
-					<Route exact path="/artists" component={ArtistsPage} />
-					<Route exact path="/favorites" component={FavoritesPage} />
-				</Switch>
-				<div>
-					
+				<div style={{width: "88vw", zIndex: "0"}}>
+					<Topbar></Topbar>
+					<div style={{background: "linear-gradient(180deg, rgba(244, 249, 255, 0.01) 0%, #F4F9FF 50.23%)", height: "90vh"}}>
+						<Switch>
+							<Route exact path="/" component={HomePage} />
+							<Route exact path="/albums" component={AlbumsPage} />
+							<Route exact path="/artists" component={ArtistsPage} />
+							<Route exact path="/favorites" component={FavoritesPage} />
+						</Switch>
+					</div>
 				</div>
 				<script>
 					eva.replace();
@@ -42,4 +45,6 @@ export default App
 
 const Container = styled.div`
   display: flex;
+  height: 100%;
+  width: 100%;
 `;
