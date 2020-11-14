@@ -87,7 +87,7 @@ export default () => {
   return (
 	<Sidebar>
 		<SidebarLogo id="logo">
-			<SidebarLogoImg src="https://i.redd.it/fnutbjqyahj21.jpg"/>
+			<Link to="/"><SidebarLogoImg src="https://i.redd.it/fnutbjqyahj21.jpg"/></Link>
 			<SidebarLogoTitle>Tongo Music</SidebarLogoTitle>
 		</SidebarLogo>
 
