@@ -1,8 +1,9 @@
-package fr.ynov.webservice.restTP.model;
+package fr.ynov.webservice.restTP.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 public class Album {
     @Id
@@ -22,20 +24,14 @@ public class Album {
 
     private String nom;
 
-    private String imageUrl;
+    private String image_url;
 
-    @OneToMany(targetEntity = Titre.class, mappedBy = "album")
+    @OneToMany(targetEntity = Titre.class)
     private List<Titre> titres = new ArrayList<>();
 
-    @ManyToMany(targetEntity = Artiste.class, mappedBy = "albums")
-    private List<Artiste> artistes = new ArrayList<>();
-
-    @ManyToMany(targetEntity = Favoris.class, mappedBy = "albums")
-    private List<Favoris> favoris = new ArrayList<>();
-
-    public Album(Calendar date_publication, String nom, String imageUrl) {
+    public Album(Calendar date_publication, String nom, String image_url) {
         this.date_publication = date_publication;
         this.nom = nom;
-        this.imageUrl = imageUrl;
+        this.image_url = image_url;
     }
 }

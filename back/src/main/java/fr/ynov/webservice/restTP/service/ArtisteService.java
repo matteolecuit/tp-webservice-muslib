@@ -1,6 +1,7 @@
 package fr.ynov.webservice.restTP.service;
 
-import fr.ynov.webservice.restTP.model.Artiste;
+import fr.ynov.webservice.restTP.entity.Administrateur;
+import fr.ynov.webservice.restTP.entity.Artiste;
 import fr.ynov.webservice.restTP.repository.ArtisteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,25 @@ public class ArtisteService {
 
     @Autowired
     ArtisteRepository artisteRepository;
+
+    @Autowired
+    AdministrateurService administrateurService;
+
+    public List<Artiste> findAll(){
+        return this.artisteRepository.findAll();
+    }
+
+    public Artiste create(long adminId, Artiste artiste){
+        Optional<Administrateur> adminOpt = this.administrateurService.findById(adminId);
+        if (adminOpt.isPresent()){
+            return this.artisteRepository.save(artiste);
+        }
+        return null;
+    }
+
+    public Optional<Artiste> findById(long id){
+        return this.artisteRepository.findById(id);
+    }
 
     public List<Artiste> getRandom(int numberOfRandom){
 
@@ -30,14 +50,6 @@ public class ArtisteService {
         }
 
         return randArtists;
-    }
-
-    public Artiste add(Artiste artiste){
-        return this.artisteRepository.save(artiste);
-    }
-
-    public Optional<Artiste> findById(long id){
-        return this.artisteRepository.findById(id);
     }
 
 }

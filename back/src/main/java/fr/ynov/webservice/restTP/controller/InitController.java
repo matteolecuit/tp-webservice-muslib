@@ -1,6 +1,6 @@
 package fr.ynov.webservice.restTP.controller;
 
-import fr.ynov.webservice.restTP.model.*;
+import fr.ynov.webservice.restTP.entity.*;
 import fr.ynov.webservice.restTP.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,21 +30,24 @@ public class InitController {
     PlaylistService playlistService;
 
     @Autowired
-    FavorisService favorisService;
+    AdministrateurService administrateurService;
 
     @RequestMapping(method = RequestMethod.GET, value = "")
     public void init(){
 
+        System.out.println("administrateurService");
+        this.administrateurService.save(new Administrateur("admin@admin.com", "Admin"));
+
         System.out.println("utilisateurService");
 
         for (int i = 0; i < 5; i++){
-            this.utilisateurService.add(new Utilisateur("test"+i+"@mail.com", "pseudo"+i));
+            this.utilisateurService.save(new Utilisateur("test"+i+"@mail.com", "pseudo"+i));
         }
 
         System.out.println("albumService");
 
         for (int i = 0; i < 5; i++){
-            this.albumService.add(new Album(Calendar.getInstance(), "album "+i, ""));
+            this.albumService.create(1, new Album(Calendar.getInstance(), "album "+i, ""));
         }
 
         System.out.println("artisteService");
@@ -55,39 +58,32 @@ public class InitController {
 
             art.setAlbums(albumList);
 
-            this.artisteService.add(art);
+            this.artisteService.create(1, art);
         }
 
         System.out.println("titreService");
 
         for (int i = 0; i < 5; i++){
             Titre titre = new Titre(180, "Titre "+i);
-             List<Artiste> artisteList = this.artisteService.getRandom(1);
-            
-            titre.setArtistes(artisteList);
-            titre.setAlbum(artisteList.get(0).getAlbums().get(0));
-            this.titreService.add(titre);
+            List<Artiste> artisteList = this.artisteService.getRandom(1);
+            Artiste artiste = artisteList.get(0);
+            artiste.getTitres().add(titre);
+            artiste.getAlbums().get(0).getTitres().add(titre);
+            this.titreService.create(1, titre);
         }
 
         System.out.println("playlistService");
 
         for (int i = 0; i < 5; i++){
             Playlist playlist = new Playlist("Playlist "+i);
-            this.playlistService.add(playlist);
+            this.playlistService.save(playlist);
         }
 
         System.out.println("playlistService");
 
         for (int i = 0; i < 5; i++){
-            this.playlistService.add(new Playlist("Playlist "+i));
+            this.playlistService.save(new Playlist("Playlist "+i));
         }
 
-        System.out.println("favorisService");
-
-        for (int i = 0; i < 5; i++){
-
-            Favoris favoris = new Favoris(this.utilisateurService.getRandom(1).get(0));
-            this.favorisService.add(favoris);
-        }
     }
 }

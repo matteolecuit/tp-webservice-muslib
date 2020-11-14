@@ -1,15 +1,9 @@
 package fr.ynov.webservice.restTP.controller;
 
-import fr.ynov.webservice.restTP.model.Titre;
+import fr.ynov.webservice.restTP.entity.Titre;
 import fr.ynov.webservice.restTP.service.TitreService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,14 +15,20 @@ public class TitreController {
     @Autowired
     TitreService titreService;
 
+    @RequestMapping(method = RequestMethod.GET, value = "")
+    public List<Titre> getAll(){
+        return this.titreService.findAll();
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public Titre getRandom(@PathVariable("id") long id){
+    public Titre getById(@PathVariable("id") long id){
         Optional<Titre> titreOpt = this.titreService.findById(id);
         return titreOpt.orElse(null);
     }
-    @PostMapping(value="")
-    public Titre createTitre(@RequestBody Titre titre) {
-    	return this.titreService.createTitre(titre);
+
+    @RequestMapping(method = RequestMethod.POST, value = "")
+    public Titre create(@RequestParam("userId") long userId, @RequestBody Titre titre){
+        return this.titreService.create(userId, titre);
     }
     @GetMapping(value="")
     public List<Titre> getAllTitres(){
