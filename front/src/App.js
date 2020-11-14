@@ -13,30 +13,41 @@ import AlbumsPage from './pages/Albums/AlbumsPage';
 import ArtistsPage from './pages/Artists/ArtistsPage';
 import FavoritesPage from './pages/Favorites/FavoritesPage';
 import Topbar from './components/Topbar/Topbar';
+import { Container, Row, Col } from 'reactstrap'
+import TitreModalForm from './components/Modals/AddTitreModal'
+import TitreTable from './components/Tables/TitreTable'
+import { CSVLink } from "react-csv"
+import LoginForm from './components/Login/Login'
 
 class App extends Component {
 
   render() {
     return (
-	  <Router>
-		<Container>
-				<Sidebar></Sidebar>
-				<div style={{width: "88vw", zIndex: "0"}}>
-					<Topbar></Topbar>
-					<div style={{background: "linear-gradient(180deg, rgba(244, 249, 255, 0.01) 0%, #F4F9FF 50.23%)", height: "90vh"}}>
-						<Switch>
-							<Route exact path="/" component={HomePage} />
-							<Route exact path="/albums" component={AlbumsPage} />
-							<Route exact path="/artists" component={ArtistsPage} />
-							<Route exact path="/favorites" component={FavoritesPage} />
-						</Switch>
-					</div>
-				</div>
-				<script>
-					eva.replace();
-				</script>
-		</Container>
-	  </Router>
+      <Container className="App">
+        <Row>
+          <Col>
+            <h1 style={{ margin: "20px 0" }}>CRUD Database</h1>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <TitreTable titres={this.state.titres} updateState={this.updateState} deleteTitreFromState={this.deleteTitreFromState} />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <CSVLink
+              filename={"db.csv"}
+              color="primary"
+              style={{ float: "left", marginRight: "10px" }}
+              className="btn btn-primary"
+              data={this.state.titres}>
+              Download CSV
+            </CSVLink>
+            <TitreModalForm buttonLabel="Add Titre" addTitreToState={this.addTitreToState} />
+          </Col>
+        </Row>
+      </Container>
     )
   }
 }

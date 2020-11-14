@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { Table, Button } from "reactstrap";
 import ModalForm from "../Modals/Modal";
-import StyledCard from "../Commons/Card";
 
-class TitreTable extends Component {
-  deleteTitre = (id) => {
-    let confirmDelete = window.confirm("Delete titre forever?");
+class AlbumTable extends Component {
+  deleteAlbum = (id) => {
+    let confirmDelete = window.confirm("Delete album forever?");
     if (confirmDelete) {
-      fetch("http://localhost:8080/titre", {
+      fetch("http://localhost:8080/album", {
         method: "delete",
         headers: {
           "Content-Type": "application/json",
@@ -17,36 +16,36 @@ class TitreTable extends Component {
         }),
       })
         .then((response) => response.json())
-        .then((titre) => {
-          this.props.deleteTitreFromState(id);
+        .then((album) => {
+          this.props.deleteAlbumFromState(id);
         })
         .catch((err) => console.log(err));
     }
   };
 
   render() {
-    const titres = this.props.titres.map((titre) => {
+    const albums = this.props.albums.map((album) => {
       return (
-        <tr key={titre.id}>
-          <th scope="row">{titre.id}</th>
-          <td><StyledCard imgUrl="https://images-na.ssl-images-amazon.com/images/I/71Jt0-HbYrL._SL1500_.jpg" titre={titre.nom} author={titre.author}></StyledCard></td>
-          <td>{titre.duree}</td>
+        <tr key={album.id}>
+          <th scope="row">{album.id}</th>
+          <td>{album.nom}</td>
+          <td>{album.date_publication}</td>
+          <img url={album.imageUrl} alt={album.nom} />
           <td>
             <ul>
-              {titre.artistes.map((artist) => {
+              {album.artistes.map((artist) => {
                 return <li>{artist}</li>;
               })}
             </ul>
           </td>
-          <td>{titre.album}</td>
           <td>
             <div style={{ width: "110px" }}>
               <ModalForm
                 buttonLabel="Edit"
-                titre={titre}
+                album={album}
                 updateState={this.props.updateState}
               />{" "}
-              <Button color="danger" onClick={() => this.deleteTitre(titre.id)}>
+              <Button color="danger" onClick={() => this.deleteAlbum(album.id)}>
                 Del
               </Button>
             </div>
@@ -61,15 +60,15 @@ class TitreTable extends Component {
           <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Length</th>
+            <th>Publishing date</th>
+            <th>Image Url</th>
             <th>Artists</th>
-            <th>Album</th>
           </tr>
         </thead>
-        <tbody>{titres}</tbody>
+        <tbody>{albums}</tbody>
       </Table>
     );
   }
 }
 
-export default TitreTable;
+export default AlbumTable;
