@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export default (props) => {
 	return (
-		<StyledCard>
+		<StyledArtistCard>
 			<a href={props.link}>
 				<div class="card">
 					<img src={props.imgUrl} class="card-img-top" alt="..." />
@@ -13,10 +13,10 @@ export default (props) => {
 					</div>
 				</div>
 			</a>
-		</StyledCard>)
+		</StyledArtistCard>)
 };
 
-const StyledCard = styled.div`
+const StyledArtistCard = styled.div`
 	max-width: 150px;
 	width: 18rem;
 
@@ -33,6 +33,7 @@ const StyledCard = styled.div`
 			margin: auto;
 			height: 100px;
 			width: 100px;
+			border-radius: 100%;
 		}
 
 		.card-title {

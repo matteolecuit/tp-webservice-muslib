@@ -21,9 +21,9 @@ class App extends Component {
       <Router>
         <Container>
           <Sidebar></Sidebar>
-          <div style={{ width: "88vw", zIndex: "0" }}>
+          <div style={{ width: "100%", zIndex: "0" }}>
             <Topbar></Topbar>
-            <div style={{ background: "linear-gradient(180deg, rgba(244, 249, 255, 0.01) 0%, #F4F9FF 50.23%)", height: "90vh" }}>
+            <div style={{ background: "linear-gradient(180deg, rgba(244, 249, 255, 0.01) 0%, #F4F9FF 50.23%)", height: "100%" }}>
               <Switch>
                 <Route exact path="/" component={HomePage} />
                 <Route exact path="/albums" component={AlbumsPage} />

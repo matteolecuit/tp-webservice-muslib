@@ -12,6 +12,7 @@ const Sidebar = styled.section`
   padding: 20px;
   height: 100vh;
   z-index: 1;
+  position: fixed;
   width: 12vw;
 `;
 
