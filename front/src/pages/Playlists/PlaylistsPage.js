@@ -15,8 +15,13 @@ class ArtistsPage extends Component {
 			bannerImg: "https://s3-eu-west-1.amazonaws.com/images.linnlive.com/fe50132e61c7590af0f3485de98353dd/66bd9ea3-36f7-4ff6-8ae7-69d50cfca420.jpg",
 			playlists: [
 				{
+					name: "Liked Songs",
+					img: "https://e-cdns-images.dzcdn.net/images/playlist/510b6a39695df5bf96a650394790f2bb/264x264-000000-80-0-0.jpg",
+					url: "/playlists/1"
+				},
+				{
 					name: "Best Of Big Ali",
-					img: "https://e-cdns-images.dzcdn.net/images/cover/8f7ff24dbbb77f281bf7f7ae0be72c0c/264x264-000000-80-0-0.jpg",
+					img: "https://upload.wikimedia.org/wikipedia/commons/d/d1/Big_Ali_2011.jpg",
 					url: "/playlists/1"
 				},
 				{

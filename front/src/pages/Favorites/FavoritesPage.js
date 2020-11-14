@@ -79,7 +79,7 @@ class FavoritesPage extends Component {
 			},
 		],
 		songsImg: "https://e-cdns-images.dzcdn.net/images/playlist/510b6a39695df5bf96a650394790f2bb/264x264-000000-80-0-0.jpg",
-		songsUrl: "#"
+		songsUrl: "/playlists/1"
 	};
 
 	// List Artists

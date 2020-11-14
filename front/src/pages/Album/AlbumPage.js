@@ -59,7 +59,7 @@ class AlbumsPage extends Component {
 			<Container>
 				<Row>
 					<Col>
-						<img src={this.state.album.cover} alt="Album Cover" style={{filter: "drop-shadow(4px 4px 10px rgba(0, 0, 0, 0.25))"}}/>
+						<img src={this.state.album.cover} alt="Album Cover" style={{filter: "drop-shadow(4px 4px 10px rgba(0, 0, 0, 0.25))", maxWidth: "300px", maxHeight: "300px"}}/>
 					</Col>
 					<Col>
 						<h2 style={{margin: "20px 0", fontWeight: "900", fontSize: "3rem"}}>{this.state.album.title}</h2>
