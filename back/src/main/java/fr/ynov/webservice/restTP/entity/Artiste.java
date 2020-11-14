@@ -23,7 +23,7 @@ public class Artiste {
 
     private String imageUrl;
 
-    @OneToMany(targetEntity = Titre.class)
+    @ManyToMany(targetEntity = Titre.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Titre> titres = new ArrayList<>();
 
     @ManyToMany(targetEntity = Album.class)

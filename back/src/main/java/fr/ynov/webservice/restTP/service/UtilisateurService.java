@@ -7,6 +7,7 @@ import org.apache.tomcat.jni.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -147,7 +148,7 @@ public class UtilisateurService {
         return null;
     }
 
-    public Utilisateur addTitreToPlaylist(long userId, long playId, long titreId) {
+    public Utilisateur addTitreToPlaylist(long userId, long playId, long titreId) throws SQLIntegrityConstraintViolationException {
         Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
         if (userOpt.isPresent()){
             Utilisateur user = userOpt.get();

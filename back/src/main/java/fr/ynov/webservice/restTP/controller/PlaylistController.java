@@ -24,14 +24,4 @@ public class PlaylistController {
         Optional<Playlist> playlistOpt = this.playlistService.findById(id);
         return playlistOpt.orElse(null);
     }
-
-    @RequestMapping(method = RequestMethod.POST, value = "")
-    public Playlist create(@RequestParam("userId") long userId, @RequestBody Playlist playlist){
-        Optional<Utilisateur> userOpt = this.utilisateurService.findById(userId);
-        if (userOpt.isPresent()){
-            playlist.setUtilisateur(userOpt.get());
-            return playlistService.save(playlist);
-        }
-        return null;
-    }
 }

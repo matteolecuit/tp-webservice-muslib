@@ -22,10 +22,8 @@ public class Playlist {
 
     private String nom;
 
-    @ManyToOne(targetEntity = Utilisateur.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Utilisateur utilisateur;
-
-    @OneToMany(targetEntity = Titre.class)
+    @ManyToMany(targetEntity = Titre.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(uniqueConstraints = {@UniqueConstraint(columnNames={"playlist_id", "titres_id"})})
     private List<Titre> titres = new ArrayList<>();
 
     public Playlist(String nom) {

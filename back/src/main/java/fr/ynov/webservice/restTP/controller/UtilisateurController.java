@@ -6,6 +6,7 @@ import fr.ynov.webservice.restTP.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,7 +74,7 @@ public class UtilisateurController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/{userId}/playlist/{playId}")
-    public Utilisateur addTitreToPlaylist(@PathVariable(value = "userId") long userId, @PathVariable(value = "playId") long playId, @RequestParam long titreId){
+    public Utilisateur addTitreToPlaylist(@PathVariable(value = "userId") long userId, @PathVariable(value = "playId") long playId, @RequestParam long titreId) throws SQLIntegrityConstraintViolationException {
         return this.utilisateurService.addTitreToPlaylist(userId, playId, titreId);
     }
 
