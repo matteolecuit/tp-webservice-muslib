@@ -26,7 +26,9 @@ public class Utilisateur {
 
     private String pseudo;
 
-    @OneToMany(targetEntity = Playlist.class, mappedBy = "utilisateur")
+    private String password;
+
+    @OneToMany(targetEntity = Playlist.class, cascade = CascadeType.ALL)
     private List<Playlist> playlists = new ArrayList<>();
 
     @OneToMany(targetEntity = Artiste.class)

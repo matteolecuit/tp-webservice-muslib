@@ -1,9 +1,7 @@
 package fr.ynov.webservice.restTP.service;
 
-import fr.ynov.webservice.restTP.entity.Album;
-import fr.ynov.webservice.restTP.entity.Artiste;
-import fr.ynov.webservice.restTP.entity.Titre;
-import fr.ynov.webservice.restTP.entity.Utilisateur;
+import fr.ynov.webservice.restTP.entity.*;
+import fr.ynov.webservice.restTP.model.Favoris;
 import fr.ynov.webservice.restTP.repository.UtilisateurRepository;
 import org.apache.tomcat.jni.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,59 +26,36 @@ public class UtilisateurService {
     @Autowired
     ArtisteService artisteService;
 
-    public List<Utilisateur> findAll(){
-        return this.utilisateurRepository.findAll();
-    }
+    @Autowired
+    PlaylistService playlistService;
 
     public Optional<Utilisateur> findById(long id){
         return this.utilisateurRepository.findById(id);
+    }
+
+    public List<Utilisateur> findAll(){
+        return this.utilisateurRepository.findAll();
     }
 
     public Utilisateur save(Utilisateur utilisateur){
         return this.utilisateurRepository.save(utilisateur);
     }
 
-    public Utilisateur addAlbumToPlaylist(long userId, Album album){
-        Optional<Utilisateur> userOpt = this.findById(userId);
+    public Utilisateur addAlbumToFavorite(long userId, long albumId){
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
         if (userOpt.isPresent()){
-            Optional<Album> albumOpt = this.albumService.findById(album.getId());
+            Optional<Album> albumOpt = this.albumService.findById(albumId);
             if (albumOpt.isPresent()){
                 Utilisateur user = userOpt.get();
                 user.getAlbums().add(albumOpt.get());
-                return this.save(user);
+                return this.utilisateurRepository.save(user);
             }
         }
         return null;
     }
 
-    public Utilisateur addArtisteToPlaylist(long userId, Artiste artiste){
-        Optional<Utilisateur> userOpt = this.findById(userId);
-        if (userOpt.isPresent()){
-            Optional<Artiste> artisteOpt = this.artisteService.findById(artiste.getId());
-            if (artisteOpt.isPresent()){
-                Utilisateur user = userOpt.get();
-                user.getArtistes().add(artisteOpt.get());
-                return this.save(user);
-            }
-        }
-        return null;
-    }
-
-    public Utilisateur addTitreToPlaylist(long userId, Titre titre){
-        Optional<Utilisateur> userOpt = this.findById(userId);
-        if (userOpt.isPresent()){
-            Optional<Titre> titreOpt = this.titreService.findById(titre.getId());
-            if (titreOpt.isPresent()){
-                Utilisateur user = userOpt.get();
-                user.getTitres().add(titreOpt.get());
-                return this.save(user);
-            }
-        }
-        return null;
-    }
-
-    public Utilisateur deleteAlbumToPlaylist(long userId, long albumId){
-        Optional<Utilisateur> userOpt = this.findById(userId);
+    public Utilisateur deleteAlbumFromFavorite(long userId, long albumId){
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
         if (userOpt.isPresent()) {
             Utilisateur user = userOpt.get();
             // retrouve l'album
@@ -95,8 +70,21 @@ public class UtilisateurService {
         return null;
     }
 
-    public Utilisateur deleteArtisteToPlaylist(long userId, long artisteId){
-        Optional<Utilisateur> userOpt = this.findById(userId);
+    public Utilisateur addArtisteToFavorite(long userId, long artisteId){
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
+        if (userOpt.isPresent()){
+            Optional<Artiste> artisteOpt = this.artisteService.findById(artisteId);
+            if (artisteOpt.isPresent()){
+                Utilisateur user = userOpt.get();
+                user.getArtistes().add(artisteOpt.get());
+                return this.utilisateurRepository.save(user);
+            }
+        }
+        return null;
+    }
+
+    public Utilisateur deleteArtisteFromFavorite(long userId, long artisteId){
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
         if (userOpt.isPresent()) {
             Utilisateur user = userOpt.get();
             // retrouve l'artiste
@@ -111,8 +99,21 @@ public class UtilisateurService {
         return null;
     }
 
-    public Utilisateur deleteTitreToPlaylist(long userId, long titreId){
-        Optional<Utilisateur> userOpt = this.findById(userId);
+    public Utilisateur addTitreToFavorite(long userId, long titreId){
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
+        if (userOpt.isPresent()){
+            Optional<Titre> titreOpt = this.titreService.findById(titreId);
+            if (titreOpt.isPresent()){
+                Utilisateur user = userOpt.get();
+                user.getTitres().add(titreOpt.get());
+                return this.utilisateurRepository.save(user);
+            }
+        }
+        return null;
+    }
+
+    public Utilisateur deleteTitreFromFavorite(long userId, long titreId){
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
         if (userOpt.isPresent()) {
             Utilisateur user = userOpt.get();
             // retrouve le titre
@@ -125,6 +126,94 @@ public class UtilisateurService {
 
         }
         return null;
+    }
+
+    public Favoris getFavoris(long userId) {
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
+        if (userOpt.isPresent()){
+            Utilisateur user = userOpt.get();
+            return new Favoris(user.getTitres(), user.getArtistes(), user.getAlbums());
+        }
+        return null;
+    }
+
+    public Utilisateur createPlaylist(long userId, Playlist playlist){
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
+        if (userOpt.isPresent()){
+            Utilisateur user = userOpt.get();
+            user.getPlaylists().add(playlist);
+            return this.utilisateurRepository.save(user);
+        }
+        return null;
+    }
+
+    public Utilisateur addTitreToPlaylist(long userId, long playId, long titreId) {
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
+        if (userOpt.isPresent()){
+            Utilisateur user = userOpt.get();
+            Optional<Playlist> playlistOpt = user.getPlaylists().stream().filter(play -> play.getId() == playId).findFirst();
+            if (playlistOpt.isPresent()){
+                Optional<Titre> titreOpt = this.titreService.findById(titreId);
+                if (titreOpt.isPresent()) {
+                    Playlist playlist = playlistOpt.get();
+                    playlist.getTitres().add(titreOpt.get());
+                    return this.utilisateurRepository.save(user);
+                }
+            }
+        }
+        return null;
+    }
+
+    public Utilisateur deleteTitreFromPlaylist(long userId, long playId, long titreId) {
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
+        if (userOpt.isPresent()){
+            Utilisateur user = userOpt.get();
+            Optional<Playlist> playlistOpt = user.getPlaylists().stream().filter(play -> play.getId() == playId).findFirst();
+            if (playlistOpt.isPresent()){
+                Playlist playlist = playlistOpt.get();
+                Optional<Titre> titreOpt = playlist.getTitres().stream().filter(titre -> titre.getId() == titreId).findFirst();
+                if (titreOpt.isPresent()) {
+                    playlist.getTitres().remove(titreOpt.get());
+                    System.out.println(playlist);
+                    return this.utilisateurRepository.save(user);
+                }
+            }
+        }
+        return null;
+    }
+
+    public Utilisateur deletePlaylist(long userId, long playId) {
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
+        if (userOpt.isPresent()) {
+            Optional<Playlist> playlistOpt = userOpt.get().getPlaylists().stream().filter(play -> play.getId() == playId).findFirst();
+            if (playlistOpt.isPresent()) {
+                Playlist playlist = playlistOpt.get();
+                this.playlistService.remove(playlist);
+
+                Utilisateur user = userOpt.get();
+                user.getPlaylists().remove(playlist);
+                this.utilisateurRepository.save(user);
+
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public Playlist getPlaylist(long userId, long playId) {
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
+        if (userOpt.isPresent()){
+            Optional<Playlist> playlistOpt = userOpt.get().getPlaylists().stream().filter(play -> play.getId() == playId).findFirst();
+            if (playlistOpt.isPresent()) {
+                return playlistOpt.get();
+            }
+        }
+        return null;
+    }
+
+    public List<Playlist> getAllPlaylist(long userId) {
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
+        return userOpt.map(Utilisateur::getPlaylists).orElse(null);
     }
 
     public List<Utilisateur> getRandom(int numberOfRandom){
