@@ -27,7 +27,7 @@ public class TitreController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "")
-    public Titre create(@RequestParam("userId") long userId, @RequestBody Titre titre){
-        return this.titreService.create(userId, titre);
+    public Titre create(@RequestParam("adminId") long adminId, @RequestBody Titre titre){
+        return this.titreService.create(adminId, titre);
     }
 }

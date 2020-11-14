@@ -27,8 +27,8 @@ public class TitreService {
         return this.titreRepository.findById(id);
     }
 
-    public Titre create(long userId, Titre titre){
-        Optional<Administrateur> adminOpt = this.administrateurService.findById(userId);
+    public Titre create(long adminId, Titre titre){
+        Optional<Administrateur> adminOpt = this.administrateurService.findById(adminId);
         if (adminOpt.isPresent()){
             return this.titreRepository.save(titre);
         }
