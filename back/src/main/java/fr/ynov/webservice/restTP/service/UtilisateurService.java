@@ -1,13 +1,12 @@
 package fr.ynov.webservice.restTP.service;
 
 import fr.ynov.webservice.restTP.entity.*;
+import fr.ynov.webservice.restTP.exception.PlaylistTitreExistException;
 import fr.ynov.webservice.restTP.model.Favoris;
 import fr.ynov.webservice.restTP.repository.UtilisateurRepository;
-import org.apache.tomcat.jni.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -148,7 +147,7 @@ public class UtilisateurService {
         return null;
     }
 
-    public Utilisateur addTitreToPlaylist(long userId, long playId, long titreId) throws SQLIntegrityConstraintViolationException {
+    public Utilisateur addTitreToPlaylist(long userId, long playId, long titreId) throws PlaylistTitreExistException {
         Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
         if (userOpt.isPresent()){
             Utilisateur user = userOpt.get();
@@ -158,7 +157,12 @@ public class UtilisateurService {
                 if (titreOpt.isPresent()) {
                     Playlist playlist = playlistOpt.get();
                     playlist.getTitres().add(titreOpt.get());
-                    return this.utilisateurRepository.save(user);
+                    try {
+                        return this.utilisateurRepository.save(user);
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                        throw new PlaylistTitreExistException("Titre déjà présent dans la playlist");
+                    }
                 }
             }
         }
