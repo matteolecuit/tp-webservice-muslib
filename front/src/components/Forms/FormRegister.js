@@ -15,16 +15,16 @@ class RegisterForm extends React.Component {
 
   submitFormAdd = e => {
     e.preventDefault()
-    fetch('http://localhost:8080/register', {
+    fetch('http://localhost:8080/utilisateur/register', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        duree: 300,
-        nom: this.state.nom,
-        artiste: null,
-        album: null,
+        email: this.state.identifiant,
+        avatar: this.state.avatar,
+        pseudo: this.state.pseudo,
+        password: this.state.password,
       })
     })
       .then(response => response.json())
@@ -39,44 +39,9 @@ class RegisterForm extends React.Component {
       .catch(err => console.log(err))
   }
 
-  submitFormEdit = e => {
-    e.preventDefault()
-    fetch('http://localhost:8080/titre', {
-      method: 'put',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        duree: this.state.duree,
-        nom: this.state.nom,
-        artiste: null,
-        album: null,
-      })
-    })
-      .then(response => response.json())
-      .then(item => {
-        if (Array.isArray(item)) {
-          // console.log(item[0])
-          this.props.updateState(item[0])
-          this.props.toggle()
-        } else {
-          console.log('failure')
-        }
-      })
-      .catch(err => console.log(err))
-  }
-
-  componentDidMount() {
-    // if item exists, populate the state with proper data
-    if (this.props.item) {
-      const { nom, duree, artiste, album } = this.props.item
-      this.setState({ nom, duree, artiste, album })
-    }
-  }
-
   render() {
     return (
-      <Form onSubmit={this.props.item ? this.submitFormEdit : this.submitFormAdd}>
+      <Form onSubmit={this.submitFormAdd}>
         <FormGroup>
           <Label for="first">Adresse email</Label>
           <Input type="text" name="identifiant" id="identifiant" onChange={this.onChange} value={this.state.identifiant === null ? '' : this.state.identifiant} />
