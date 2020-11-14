@@ -15,6 +15,10 @@ const Sidebar = styled.section`
   position: fixed;
   width: 12vw;
   background-color: #FFF;
+
+  a:hover {
+	  text-decoration: none;
+  }
 `;
 
 const SidebarLogo = styled.section`
@@ -51,9 +55,28 @@ const SidebarItem = styled.li`
   }
 `;
 
+const SidebarPlaylist = styled.li`
+  display: flex;
+  color: #0F1D36;
+  opacity: 100%;
+  list-style-type: none;
+  padding: none;
+  margin: 20px 0;
+  transition: 0.3s;
+
+  &:hover {
+	  color: #0F1D36;
+	  opacity: 100%;
+	  cursor: pointer;
+	  transition: 0.3s;
+  }
+`;
+
+
 const SidebarItemLabel = styled.span`
-  margin-left: 10px;
+  margin: 0 10px;
   font-size: 1.2rem;
+  
 `;
 
 const SidebarNav = styled.li`
@@ -128,6 +151,82 @@ export default () => {
 								}}
 							/>
 							<SidebarItemLabel>Favorites</SidebarItemLabel>
+						</SidebarItem>
+					</Link>
+					<Link to="/playlists">
+						<SidebarPlaylist>
+							<SidebarItemLabel>Playlists</SidebarItemLabel>
+							<Icon 
+								name="plus-circle-outline"
+								size="large"
+								fill="#000000"     // small, medium, large, xlarge
+								animation={{
+								type: "pulse",  // zoom, pulse, shake, flip
+								hover: true,
+								infinite: false 
+								}}
+							/>
+						</SidebarPlaylist>
+					</Link>
+					{/* List Playlists */}
+					<Link to="/playlists/1">
+						<SidebarItem>
+							<Icon 
+								name="folder-outline"
+								size="large"
+								fill="#000000"     // small, medium, large, xlarge
+								animation={{
+								type: "pulse",  // zoom, pulse, shake, flip
+								hover: true,
+								infinite: false 
+								}}
+							/>
+							<SidebarItemLabel>Liked Songs</SidebarItemLabel>
+						</SidebarItem>
+					</Link>
+					<Link to="/playlists/1">
+						<SidebarItem>
+							<Icon 
+								name="folder-outline"
+								size="large"
+								fill="#000000"     // small, medium, large, xlarge
+								animation={{
+								type: "pulse",  // zoom, pulse, shake, flip
+								hover: true,
+								infinite: false 
+								}}
+							/>
+							<SidebarItemLabel>Best Of Big Ali</SidebarItemLabel>
+						</SidebarItem>
+					</Link>
+					<Link to="/playlists/1">
+						<SidebarItem>
+							<Icon 
+								name="folder-outline"
+								size="large"
+								fill="#000000"     // small, medium, large, xlarge
+								animation={{
+								type: "pulse",  // zoom, pulse, shake, flip
+								hover: true,
+								infinite: false 
+								}}
+							/>
+							<SidebarItemLabel>Fiesta</SidebarItemLabel>
+						</SidebarItem>
+					</Link>
+					<Link to="/playlists/1">
+						<SidebarItem>
+							<Icon 
+								name="folder-outline"
+								size="large"
+								fill="#000000"     // small, medium, large, xlarge
+								animation={{
+								type: "pulse",  // zoom, pulse, shake, flip
+								hover: true,
+								infinite: false 
+								}}
+							/>
+							<SidebarItemLabel>Motivation</SidebarItemLabel>
 						</SidebarItem>
 					</Link>
 				</SidebarNav>
