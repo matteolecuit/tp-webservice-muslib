@@ -4,12 +4,14 @@ import Icon from 'react-eva-icons';
 import { Container, Row, Col } from 'reactstrap'
 import ModalForm from '../../components/Modals/Modal'
 import TitreModalForm from '../../components/Modals/AddTitreModal'
+import TitreTable from '../../components/Tables/TitreTable'
+import LoginForm from '../../components/Login/Login'
 import { CSVLink } from "react-csv"
 
 
+
+
 class HomePage extends Component {
-
-
 	state = {
 		items: []
 	};
@@ -51,7 +53,7 @@ class HomePage extends Component {
 
 	render() {
 		return(
-			<Container>
+			<Container className="App">
 				<Row>
 					<Col>
 						<h1 style={{ margin: "20px 0" }}>CRUD Database</h1>
@@ -59,12 +61,20 @@ class HomePage extends Component {
 				</Row>
 				<Row>
 					<Col>
+						<TitreTable titres={this.state.titres} updateState={this.updateState} deleteTitreFromState={this.deleteTitreFromState} />
 					</Col>
 				</Row>
 				<Row>
 					<Col>
-						<ModalForm buttonLabel="Add Item" addItemToState={this.addItemToState} />
-						<TitreModalForm buttonLabel="Add Titre" addItemToState={this.addItemToState} />
+						<CSVLink
+						filename={"db.csv"}
+						color="primary"
+						style={{ float: "left", marginRight: "10px" }}
+						className="btn btn-primary"
+						data={this.state.titres}>
+						Download CSV
+						</CSVLink>
+						<TitreModalForm buttonLabel="Add Titre" addTitreToState={this.addTitreToState} />
 					</Col>
 				</Row>
 			</Container>
