@@ -68,6 +68,14 @@ class HomePage extends Component {
 				</Row>
 				<Row>
 					<Col>
+						<CSVLink
+						filename={"db.csv"}
+						color="primary"
+						style={{ float: "left", marginRight: "10px" }}
+						className="btn btn-primary"
+						data={this.state.titres}>
+						Download CSV
+						</CSVLink>
 						<TitreModalForm buttonLabel="Add Titre" addTitreToState={this.addTitreToState} />
 					</Col>
 				</Row>
