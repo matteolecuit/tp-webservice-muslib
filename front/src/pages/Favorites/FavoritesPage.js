@@ -12,32 +12,32 @@ class FavoritesPage extends Component {
 			{
 				name: "Soso maness",
 				img: "https://e-cdn-images.dzcdn.net/images/artist/3400cc35862cc7b6ba9ab5380c0efa95/264x264-000000-80-0-0.jpg",
-				url: "#"
+				url: "/artists/1"
 			},
 			{
 				name: "Pink Floyd",
 				img: "https://e-cdn-images.dzcdn.net/images/artist/32f4286d3082999df24439308e2d7669/264x264-000000-80-0-0.jpg",
-				url: "#"
+				url: "/artists/1"
 			},
 			{
 				name: "Shaggy",
 				img: "https://e-cdn-images.dzcdn.net/images/artist/261eb7fa5d697e73bc0262b0ce0d9e41/264x264-000000-80-0-0.jpg",
-				url: "#"
+				url: "/artists/1"
 			},
 			{
 				name: "Gorillaz",
 				img: "https://e-cdn-images.dzcdn.net/images/artist/0d028aa34d7bf7980adf1bbf6e53ca22/264x264-000000-80-0-0.jpg",
-				url: "#"
+				url: "/artists/1"
 			},
 			{
 				name: "Xavier Lagaf",
 				img: "https://e-cdn-images.dzcdn.net/images/artist/49c869be7d139fa7a9424c972d0353b7/264x264-000000-80-0-0.jpg",
-				url: "#"
+				url: "/artists/1"
 			},
 			{
 				name: "Jul",
 				img: "https://e-cdn-images.dzcdn.net/images/artist/4ad5a1a6eebec66da3db5796d947be01/264x264-000000-80-0-0.jpg",
-				url: "#"
+				url: "/artists/1"
 			}
 		],
 		albums: [

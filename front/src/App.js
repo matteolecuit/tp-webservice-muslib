@@ -12,6 +12,7 @@ import HomePage from './pages/Home/HomePage';
 import AlbumsPage from './pages/Albums/AlbumsPage';
 import AlbumPage from './pages/Album/AlbumPage';
 import ArtistsPage from './pages/Artists/ArtistsPage';
+import ArtistPage from './pages/Artist/ArtistPage';
 import FavoritesPage from './pages/Favorites/FavoritesPage';
 import Topbar from './components/Topbar/Topbar';
 
@@ -31,6 +32,7 @@ class App extends Component {
                 <Route exact path="/artists" component={ArtistsPage} />
                 <Route exact path="/favorites" component={FavoritesPage} />
                 <Route exact path="/albums/:id" component={AlbumPage} />
+                <Route exact path="/artists/:id" component={ArtistPage} />
               </Switch>
             </div>
           </div>
