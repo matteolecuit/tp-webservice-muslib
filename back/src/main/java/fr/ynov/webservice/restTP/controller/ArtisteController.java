@@ -27,8 +27,18 @@ public class ArtisteController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "")
-    public Artiste create(@RequestParam("adminId") long adminId, @RequestBody Artiste artiste){
+    public Artiste createArtiste(@RequestParam("adminId") long adminId, @RequestBody Artiste artiste){
         return this.artisteService.create(adminId, artiste);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+    public Artiste updateArtiste(@RequestParam("adminId") long adminId, @PathVariable("id") long artisteId, @RequestBody Artiste artiste){
+        return this.artisteService.update(adminId, artisteId, artiste);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "")
+    public Artiste deleteArtiste(@RequestParam("adminId") long adminId, @RequestParam long artisteId){
+        return this.artisteService.delete(adminId, artisteId);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/random")

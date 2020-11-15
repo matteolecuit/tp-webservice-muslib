@@ -52,4 +52,33 @@ public class ArtisteService {
         return randArtists;
     }
 
+    public Artiste update(long adminId, long artisteId, Artiste a) {
+        Optional<Administrateur> adminOpt = this.administrateurService.findById(adminId);
+        if (adminOpt.isPresent()){
+            Optional<Artiste> artisteOpt = this.artisteRepository.findById(artisteId);
+            if (artisteOpt.isPresent()){
+                Artiste artiste = artisteOpt.get();
+                if (a.getAlias() != null && a.getAlias().trim().length() > 0){
+                    artiste.setAlias(a.getAlias());
+                }
+                if (a.getImageUrl() != null){
+                    artiste.setImageUrl(a.getImageUrl());
+                }
+                return this.artisteRepository.save(artiste);
+            }
+        }
+        return null;
+    }
+
+    public Artiste delete(long adminId, long artisteId) {
+        Optional<Administrateur> adminOpt = this.administrateurService.findById(adminId);
+        if (adminOpt.isPresent()) {
+            Optional<Artiste> artisteOpt = this.artisteRepository.findById(artisteId);
+            if (artisteOpt.isPresent()) {
+                this.artisteRepository.delete(artisteOpt.get());
+                return artisteOpt.get();
+            }
+        }
+        return null;
+    }
 }

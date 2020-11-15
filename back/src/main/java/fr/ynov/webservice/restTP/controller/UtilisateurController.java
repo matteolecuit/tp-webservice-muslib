@@ -1,6 +1,8 @@
 package fr.ynov.webservice.restTP.controller;
 
-import fr.ynov.webservice.restTP.entity.*;
+import fr.ynov.webservice.restTP.entity.Playlist;
+import fr.ynov.webservice.restTP.entity.Utilisateur;
+import fr.ynov.webservice.restTP.exception.PlaylistTitreExistException;
 import fr.ynov.webservice.restTP.model.Favoris;
 import fr.ynov.webservice.restTP.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +75,7 @@ public class UtilisateurController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/{userId}/playlist/{playId}")
-    public Utilisateur addTitreToPlaylist(@PathVariable(value = "userId") long userId, @PathVariable(value = "playId") long playId, @RequestParam long titreId){
+    public Utilisateur addTitreToPlaylist(@PathVariable(value = "userId") long userId, @PathVariable(value = "playId") long playId, @RequestParam long titreId) throws PlaylistTitreExistException {
         return this.utilisateurService.addTitreToPlaylist(userId, playId, titreId);
     }
 

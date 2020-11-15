@@ -20,4 +20,8 @@ public class PlaylistService {
     public Playlist save(Playlist playlist){
         return this.playlistRepository.save(playlist);
     }
+
+    public void remove(Playlist playlist){
+        this.playlistRepository.delete(playlist);
+    }
 }

@@ -23,7 +23,7 @@ public class Album {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private Calendar date_publication;
+    private Calendar datePublication;
 
     private String nom;
 
@@ -33,12 +33,12 @@ public class Album {
     @ManyToOne
     private Artiste artiste;
 
-    @OneToMany(targetEntity = Titre.class)
+    @OneToMany(targetEntity = Titre.class, cascade = CascadeType.ALL)
     private List<Titre> titres = new ArrayList<>();
 
-    public Album(Calendar date_publication, String nom, String image_url) {
-        this.date_publication = date_publication;
+    public Album(Calendar datePublication, String nom, String imageUrl) {
+        this.datePublication = datePublication;
         this.nom = nom;
-        this.image_url = image_url;
+        this.imageUrl = imageUrl;
     }
 }

@@ -51,4 +51,40 @@ public class AlbumService {
 
         return randArtists;
     }
+
+    public Album update(long adminId, long albumId, Album a) {
+        Optional<Administrateur> adminOpt = this.administrateurService.findById(adminId);
+        if (adminOpt.isPresent()){
+            Optional<Album> albumOpt = this.albumRepository.findById(albumId);
+            if (albumOpt.isPresent()){
+                Album album = albumOpt.get();
+                System.out.println(a.getDatePublication());
+                if (a.getDatePublication() != null){
+                    album.setDatePublication(a.getDatePublication());
+                }
+                if (a.getImageUrl() != null){
+                    album.setImageUrl(a.getImageUrl());
+                }
+                if (a.getNom() != null && a.getNom().trim().length() > 0){
+                    album.setNom(a.getNom());
+                }
+                return this.albumRepository.save(album);
+            }
+        }
+        return null;
+    }
+
+    public Album delete(long adminId, long albumId) {
+        Optional<Administrateur> adminOpt = this.administrateurService.findById(adminId);
+        if (adminOpt.isPresent()) {
+            Optional<Album> albumOpt = this.albumRepository.findById(albumId);
+            if (albumOpt.isPresent()) {
+                Album album = albumOpt.get();
+                album.setTitres(null);
+                this.albumRepository.delete(album);
+                return albumOpt.get();
+            }
+        }
+        return null;
+    }
 }
