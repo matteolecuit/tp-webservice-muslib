@@ -6,6 +6,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +26,8 @@ public class Artiste {
 
     private String imageUrl;
 
-    @ManyToMany(targetEntity = Titre.class, cascade = CascadeType.ALL)
-    private List<Titre> titres = new ArrayList<>();
-
-    @ManyToMany(targetEntity = Album.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"artiste"})
+    @ManyToMany(targetEntity = Album.class)
     private List<Album> albums = new ArrayList<>();
 
     public Artiste(String alias, String imageUrl) {

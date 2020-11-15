@@ -1,113 +1,66 @@
 import React, { Component } from 'react'
-import NewReleases from "@material-ui/icons/NewReleases";
-import Album from "@material-ui/icons/Album";
-import Person from "@material-ui/icons/Person";
-import ThumbUpAlt from "@material-ui/icons/ThumbUpAlt";
-// import Settings from "@material-ui/icons/Settings";
 import Sidebar from "./components/Sidebar/Sidebar";
-import { Container, Row, Col } from 'reactstrap'
-import ModalForm from './components/Modals/Modal'
-import TitreModalForm from './components/Modals/AddTitreModal'
-import DataTable from './components/Tables/DataTable'
-import { CSVLink } from "react-csv"
-
-function onClick(e, item) {
-  window.alert(JSON.stringify(item, null, 2));
-}
-
-const navItems = [
-  {
-    name: "Discover",
-    label: "Discover",
-    Icon: NewReleases
-  },
-  {
-    name: "Albums",
-    label: "Albums",
-    Icon: Album,
-  },
-  {
-    name: "Artists",
-    label: "Artists",
-    Icon: Person,
-  },
-  {
-    name: "Favourites",
-    label: "Favourites",
-    Icon: ThumbUpAlt,
-  }
-];
+import styled from "styled-components";
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Redirect,
+	Link
+} from "react-router-dom";
+import HomePage from './pages/Home/HomePage';
+import AlbumsPage from './pages/Albums/AlbumsPage';
+import AlbumPage from './pages/Album/AlbumPage';
+import ArtistsPage from './pages/Artists/ArtistsPage';
+import ArtistPage from './pages/Artist/ArtistPage';
+import FavoritesPage from './pages/Favorites/FavoritesPage';
+import PlaylistPage from './pages/Playlist/PlaylistPage';
+import PlaylistsPage from './pages/Playlists/PlaylistsPage';
+import Topbar from './components/Topbar/Topbar';
 
 class App extends Component {
-  state = {
-    items: []
-  }
 
-  getItems() {
-    fetch('http://localhost:3000/crud')
-      .then(response => response.json())
-      .then(items => this.setState({ items }))
-      .catch(err => console.log(err))
-  }
+	state = {
+		user: {
+			firstname: "John",
+			lastname: "Bovi",
+			profilePic:"https://scontent-cdt1-1.xx.fbcdn.net/v/t1.0-9/50496073_372353200233680_4618796985325977600_n.jpg?_nc_cat=101&ccb=2&_nc_sid=09cbfe&_nc_ohc=_uc12sulTCkAX-_QX8z&_nc_ht=scontent-cdt1-1.xx&oh=9f4ec88556fd1165347daeed0b3099ca&oe=5FD49437"
+		}
+	};
 
-  addItemToState = (item) => {
-    this.setState(prevState => ({
-      items: [...prevState.items, item]
-    }))
-  }
-
-  updateState = (item) => {
-    const itemIndex = this.state.items.findIndex(data => data.id === item.id)
-    const newArray = [
-      // destructure all items from beginning to the indexed item
-      ...this.state.items.slice(0, itemIndex),
-      // add the updated item to the array
-      item,
-      // add the rest of the items to the array from the index after the replaced item
-      ...this.state.items.slice(itemIndex + 1)
-    ]
-    this.setState({ items: newArray })
-  }
-
-  deleteItemFromState = (id) => {
-    const updatedItems = this.state.items.filter(item => item.id !== id)
-    this.setState({ items: updatedItems })
-  }
-
-  componentDidMount() {
-    this.getItems()
-  }
-
-  render() {
-    return (
-      <Container className="App">
-        <Row>
-          <Col>
-            <h1 style={{ margin: "20px 0" }}>CRUD Database</h1>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <DataTable items={this.state.items} updateState={this.updateState} deleteItemFromState={this.deleteItemFromState} />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <CSVLink
-              filename={"db.csv"}
-              color="primary"
-              style={{ float: "left", marginRight: "10px" }}
-              className="btn btn-primary"
-              data={this.state.items}>
-              Download CSV
-            </CSVLink>
-            <ModalForm buttonLabel="Add Item" addItemToState={this.addItemToState} />
-            <TitreModalForm buttonLabel="Add Titre" addItemToState={this.addItemToState} />
-          </Col>
-        </Row>
-      </Container>
-    )
-  }
+	render() {
+		return (
+			<Router>
+				<Container>
+					<Sidebar></Sidebar>
+					<div style={{ width: "100%", zIndex: "0" }}>
+						<Topbar firstname={this.state.user.firstname} lastname={this.state.user.lastname} profilePic={this.state.user.profilePic}></Topbar>
+						<div style={{ background: "linear-gradient(180deg, rgba(244, 249, 255, 0.01) 0%, #F4F9FF 50.23%)", height: "100%", marginTop: "100px" }}>
+							<Switch>
+								<Route exact path="/" component={HomePage} />
+								<Route exact path="/albums" component={AlbumsPage} />
+								<Route exact path="/artists" component={ArtistsPage} />
+								<Route exact path="/favorites" component={FavoritesPage} />
+								<Route exact path="/albums/:id" component={AlbumPage} />
+								<Route exact path="/artists/:id" component={ArtistPage} />
+								<Route exact path="/playlists/" component={PlaylistsPage} />
+								<Route exact path="/playlists/:id" component={PlaylistPage} />
+							</Switch>
+						</div>
+					</div>
+					<script>
+						eva.replace();
+				</script>
+				</Container>
+			</Router>
+		)
+	}
 }
 
 export default App
+
+const Container = styled.div`
+  display: flex;
+  height: 100%;
+  width: 100%;
+`;

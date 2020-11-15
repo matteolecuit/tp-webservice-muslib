@@ -1,12 +1,10 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
-class TitreAddEditForm extends React.Component {
+class LoginForm extends React.Component {
   state = {
-    duree: '',
-    nom: '',
-    artiste: null,
-    album: null,
+    identifiant: '',
+    password: '',
   }
 
   onChange = e => {
@@ -78,17 +76,17 @@ class TitreAddEditForm extends React.Component {
     return (
       <Form onSubmit={this.props.item ? this.submitFormEdit : this.submitFormAdd}>
         <FormGroup>
-          <Label for="first">Nom</Label>
-          <Input type="text" name="nom" id="nom" onChange={this.onChange} value={this.state.nom === null ? '' : this.state.nom} />
+          <Label for="first">Adresse email</Label>
+          <Input type="text" name="identifiant" id="identifiant" onChange={this.onChange} value={this.state.identifiant === null ? '' : this.state.identifiant} />
         </FormGroup>
         <FormGroup>
-          <Label for="last">Durée</Label>
-          <Input type="text" name="duree" id="duree" onChange={this.onChange} value={this.state.duree === null ? '' : this.state.duree} />
+          <Label for="last">Mot de passe</Label>
+          <Input type="password" name="password" id="password" onChange={this.onChange} value={this.state.password === null ? '' : this.state.password} />
         </FormGroup>
-        <Button>Ajouter</Button>
+        <Button>Connexion</Button>
       </Form>
     );
   }
 }
 
-export default TitreAddEditForm
+export default LoginForm

@@ -1,111 +1,236 @@
 import React from "react";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Divider from "@material-ui/core/Divider";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import ExpandLessIcon from "@material-ui/icons/ExpandLess";
-import Collapse from "@material-ui/core/Collapse";
+import styled from "styled-components";
+import Icon from 'react-eva-icons';
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Link
+  } from "react-router-dom";
+const Sidebar = styled.section`
+  color: white;
+  padding: 20px;
+  height: 100vh;
+  z-index: 1;
+  position: fixed;
+  width: 12vw;
+  background-color: #FFF;
 
-function SidebarItem({ depthStep = 10, depth = 0, expanded, item, ...rest }) {
-  const [collapsed, setCollapsed] = React.useState(true);
-  const { label, items, Icon, onClick: onClickProp } = item;
-
-  function toggleCollapse() {
-    setCollapsed(prevValue => !prevValue);
+  a:hover {
+	  text-decoration: none;
   }
+`;
 
-  function onClick(e) {
-    if (Array.isArray(items)) {
-      toggleCollapse();
-    }
-    if (onClickProp) {
-      onClickProp(e, item);
-    }
+const SidebarLogo = styled.section`
+  display: flex;
+  align-items: center;
+  margin: 30px 0 60px 0;
+`;
+
+const SidebarLogoImg = styled.img`
+	margin-right: 20px;
+	height: 40px;
+  	width: 60px;
+`;
+
+const SidebarLogoTitle = styled.h2`
+  	color: #0F1D36;
+	font-size: 1.2rem;
+`;
+
+const SidebarItem = styled.li`
+  display: flex;
+  color: #0F1D36;
+  opacity: 50%;
+  list-style-type: none;
+  padding: none;
+  margin: 20px 0;
+  transition: 0.3s;
+
+  &:hover {
+	  color: #3E2AD1;
+	  opacity: 100%;
+	  cursor: pointer;
+	  transition: 0.3s;
   }
+`;
 
-  let expandIcon;
+const SidebarPlaylist = styled.li`
+  display: flex;
+  color: #0F1D36;
+  opacity: 100%;
+  list-style-type: none;
+  padding: none;
+  margin: 20px 0;
+  transition: 0.3s;
 
-  if (Array.isArray(items) && items.length) {
-    expandIcon = !collapsed ? (
-      <ExpandLessIcon
-        className={
-          "sidebar-item-expand-arrow" + " sidebar-item-expand-arrow-expanded"
-        }
-      />
-    ) : (
-      <ExpandMoreIcon className="sidebar-item-expand-arrow" />
-    );
+  &:hover {
+	  color: #0F1D36;
+	  opacity: 100%;
+	  cursor: pointer;
+	  transition: 0.3s;
   }
+`;
 
+
+const SidebarItemLabel = styled.span`
+  margin: 0 10px;
+  font-size: 1.2rem;
+  
+`;
+
+const SidebarNav = styled.li`
+  padding: none;
+`;
+
+export default () => {
   return (
-    <>
-      <ListItem
-        className="sidebar-item"
-        onClick={onClick}
-        button
-        dense
-        {...rest}
-      >
-        <div
-          style={{ 
-              paddingLeft: depth * depthStep,
-              display: "flex"
-            }}
-          className="sidebar-item-content"
-        >
-          {Icon && <Icon className="sidebar-item-icon" fontSize="small" />}
-          <div className="sidebar-item-text">{label}</div>
-        </div>
-        {expandIcon}
-      </ListItem>
-      <Collapse in={!collapsed} timeout="auto" unmountOnExit>
-        {Array.isArray(items) ? (
-          <List disablePadding dense>
-            {items.map((subItem, index) => (
-              <React.Fragment key={`${subItem.name}${index}`}>
-                {subItem === "divider" ? (
-                  <Divider style={{ margin: "6px 0" }} />
-                ) : (
-                  <SidebarItem
-                    depth={depth + 1}
-                    depthStep={depthStep}
-                    item={subItem}
-                  />
-                )}
-              </React.Fragment>
-            ))}
-          </List>
-        ) : null}
-      </Collapse>
-    </>
-  );
-}
+	<Sidebar>
+		<SidebarLogo id="logo">
+			<Link to="/"><SidebarLogoImg src="https://i.redd.it/fnutbjqyahj21.jpg"/></Link>
+			<SidebarLogoTitle>Tongo Music</SidebarLogoTitle>
+		</SidebarLogo>
 
-function Sidebar({ items, depthStep, depth, expanded }) {
-  return (
-    <div className="sidebar" style={{height: "100%"}}>
-        <div id="logo" style={{display: "flex"}}>
-            <img src="https://i.redd.it/fnutbjqyahj21.jpg" style={{}}/>
-            <h2>Tongo Music</h2>
-        </div>
-        <List disablePadding dense style={{height: "100%", display: "flex", flexDirection:"column", justifyContent: "space-around", alignItems: "flex-start"}}>
-        {items.map((sidebarItem, index) => (
-            <React.Fragment key={`${sidebarItem.name}${index}`}>
-            {sidebarItem === "divider" ? (
-                <Divider style={{ margin: "6px 0" }} />
-            ) : (
-                <SidebarItem
-                depthStep={depthStep}
-                depth={depth}
-                expanded={expanded}
-                item={sidebarItem}
-                />
-            )}
-            </React.Fragment>
-        ))}
-        </List>
-    </div>
+		<div id="navbar">
+				<SidebarNav>
+					<Link to="/">
+						<SidebarItem>
+							<Icon 
+								name="activity"
+								size="large"
+								fill="#000000"     // small, medium, large, xlarge
+								animation={{
+								type: "pulse",  // zoom, pulse, shake, flip
+								hover: true,
+								infinite: false 
+								}}
+							/>
+							<SidebarItemLabel>Discover</SidebarItemLabel>
+						</SidebarItem>
+					</Link>
+					<Link to="/albums">
+						<SidebarItem>
+							<Icon 
+								name="book-open-outline"
+								size="large"
+								fill="#000000"     // small, medium, large, xlarge
+								animation={{
+								type: "pulse",  // zoom, pulse, shake, flip
+								hover: true,
+								infinite: false 
+								}}
+							/>
+							<SidebarItemLabel>Albums</SidebarItemLabel>
+						</SidebarItem>
+					</Link>
+					<Link to="/artists">
+						<SidebarItem>
+							<Icon 
+								name="person-outline"
+								size="large"
+								fill="#000000"     // small, medium, large, xlarge
+								animation={{
+								type: "pulse",  // zoom, pulse, shake, flip
+								hover: true,
+								infinite: false 
+								}}
+							/>
+							<SidebarItemLabel>Artists</SidebarItemLabel>
+						</SidebarItem>
+					</Link>
+					<Link to="/favorites">
+						<SidebarItem>
+							<Icon 
+								name="heart-outline"
+								size="large"
+								fill="#000000"     // small, medium, large, xlarge
+								animation={{
+								type: "pulse",  // zoom, pulse, shake, flip
+								hover: true,
+								infinite: false 
+								}}
+							/>
+							<SidebarItemLabel>Favorites</SidebarItemLabel>
+						</SidebarItem>
+					</Link>
+					<Link to="/playlists">
+						<SidebarPlaylist>
+							<SidebarItemLabel>Playlists</SidebarItemLabel>
+							<Icon 
+								name="plus-circle-outline"
+								size="large"
+								fill="#000000"     // small, medium, large, xlarge
+								animation={{
+								type: "pulse",  // zoom, pulse, shake, flip
+								hover: true,
+								infinite: false 
+								}}
+							/>
+						</SidebarPlaylist>
+					</Link>
+					{/* List Playlists */}
+					<Link to="/playlists/1">
+						<SidebarItem>
+							<Icon 
+								name="folder-outline"
+								size="large"
+								fill="#000000"     // small, medium, large, xlarge
+								animation={{
+								type: "pulse",  // zoom, pulse, shake, flip
+								hover: true,
+								infinite: false 
+								}}
+							/>
+							<SidebarItemLabel>Liked Songs</SidebarItemLabel>
+						</SidebarItem>
+					</Link>
+					<Link to="/playlists/1">
+						<SidebarItem>
+							<Icon 
+								name="folder-outline"
+								size="large"
+								fill="#000000"     // small, medium, large, xlarge
+								animation={{
+								type: "pulse",  // zoom, pulse, shake, flip
+								hover: true,
+								infinite: false 
+								}}
+							/>
+							<SidebarItemLabel>Best Of Big Ali</SidebarItemLabel>
+						</SidebarItem>
+					</Link>
+					<Link to="/playlists/1">
+						<SidebarItem>
+							<Icon 
+								name="folder-outline"
+								size="large"
+								fill="#000000"     // small, medium, large, xlarge
+								animation={{
+								type: "pulse",  // zoom, pulse, shake, flip
+								hover: true,
+								infinite: false 
+								}}
+							/>
+							<SidebarItemLabel>Fiesta</SidebarItemLabel>
+						</SidebarItem>
+					</Link>
+					<Link to="/playlists/1">
+						<SidebarItem>
+							<Icon 
+								name="folder-outline"
+								size="large"
+								fill="#000000"     // small, medium, large, xlarge
+								animation={{
+								type: "pulse",  // zoom, pulse, shake, flip
+								hover: true,
+								infinite: false 
+								}}
+							/>
+							<SidebarItemLabel>Motivation</SidebarItemLabel>
+						</SidebarItem>
+					</Link>
+				</SidebarNav>
+		</div>
+	</Sidebar>
   );
-}
-
-export default Sidebar;
+};

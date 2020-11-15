@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap'
-import TitreAddEditForm from '../Forms/FormAddTitre'
+import RegisterForm from '../Forms/FormRegister'
 
-class TitreModalForm extends Component {
+class RegisterModalForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -37,8 +37,9 @@ class TitreModalForm extends Component {
         onClick={this.toggle}
         style={{ float: "left", marginRight: "10px" }}>{label}
       </Button>
-      title = 'Ajouter un titre'
+      title = 'Inscription'
     }
+
 
     return (
       <div>
@@ -46,7 +47,7 @@ class TitreModalForm extends Component {
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle} close={closeBtn}>{title}</ModalHeader>
           <ModalBody>
-            <TitreAddEditForm
+            <RegisterForm
               addItemToState={this.props.addItemToState}
               updateState={this.props.updateState}
               toggle={this.toggle}
@@ -58,4 +59,4 @@ class TitreModalForm extends Component {
   }
 }
 
-export default TitreModalForm
+export default RegisterModalForm
