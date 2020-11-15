@@ -44,6 +44,7 @@ class Sidebar extends Component {
 			this.playlistsLabelShow =
 			<Link to={this.playlistsLabel.url}>
 				<SidebarPlaylist>
+					<SidebarItemLabel>{this.playlistsLabel.label}</SidebarItemLabel>
 					<Icon 
 						name={this.playlistsLabel.icon}
 						size="large"
@@ -54,7 +55,6 @@ class Sidebar extends Component {
 						infinite: false 
 						}}
 					/>
-					<SidebarItemLabel>{this.playlistsLabel.label}</SidebarItemLabel>
 				</SidebarPlaylist>
 			</Link>
 		}
