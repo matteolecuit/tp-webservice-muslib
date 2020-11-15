@@ -47,7 +47,7 @@ public class InitController {
         System.out.println("albumService");
 
         for (int i = 0; i < 5; i++){
-            Album album = new Album(Calendar.getInstance(), "album "+i, "");
+            Album album = new Album(Calendar.getInstance(), "album "+i, "https://e-cdns-images.dzcdn.net/images/cover/5722e04a2ba2539c02ac2afb655a4f93/264x264-000000-80-0-0.jpg");
             this.albumService.create(1, album);
         }
 
@@ -64,7 +64,7 @@ public class InitController {
         System.out.println("artisteService");
 
         for (int i = 0; i < 5; i++){
-            Artiste art = new Artiste("art "+i, "");
+            Artiste art = new Artiste("art "+i, "https://e-cdn-images.dzcdn.net/images/artist/4ad5a1a6eebec66da3db5796d947be01/264x264-000000-80-0-0.jpg");
             List<Album> albumList = albumService.getRandom(1);
 
             art.setAlbums(albumList);
