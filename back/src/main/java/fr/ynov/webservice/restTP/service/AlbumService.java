@@ -80,7 +80,6 @@ public class AlbumService {
             Optional<Album> albumOpt = this.albumRepository.findById(albumId);
             if (albumOpt.isPresent()) {
                 Album album = albumOpt.get();
-                album.setTitres(null);
                 this.albumRepository.delete(album);
                 return albumOpt.get();
             }
