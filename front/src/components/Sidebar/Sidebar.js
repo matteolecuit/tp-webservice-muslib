@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Component} from "react";
 import styled from "styled-components";
 import Icon from 'react-eva-icons';
 import {
@@ -7,7 +7,104 @@ import {
 	Route,
 	Link
   } from "react-router-dom";
-const Sidebar = styled.section`
+
+class Sidebar extends Component {
+	items = [];
+	playlistsLabel = {};
+	playlists = [];
+
+	constructor(props) {
+		super();
+		console.log(props);
+		this.items = props.items;
+		this.playlistsLabel = props.playlistsLabel;
+		this.playlists = props.playlists;
+
+		// List Items
+		this.itemsList = this.items.map((item) =>
+			<Link to={item.url}>
+				<SidebarItem>
+					<Icon 
+						name={item.icon}
+						size="large"
+						fill="#000000"     // small, medium, large, xlarge
+						animation={{
+						type: "pulse",  // zoom, pulse, shake, flip
+						hover: true,
+						infinite: false 
+						}}
+					/>
+					<SidebarItemLabel>{item.label}</SidebarItemLabel>
+				</SidebarItem>
+			</Link>
+		);
+
+		// Print Playlists Label
+		if (this.playlistsLabel) {
+			this.playlistsLabelShow =
+			<Link to={this.playlistsLabel.url}>
+				<SidebarPlaylist>
+					<Icon 
+						name={this.playlistsLabel.icon}
+						size="large"
+						fill="#000000"     // small, medium, large, xlarge
+						animation={{
+						type: "pulse",  // zoom, pulse, shake, flip
+						hover: true,
+						infinite: false 
+						}}
+					/>
+					<SidebarItemLabel>{this.playlistsLabel.label}</SidebarItemLabel>
+				</SidebarPlaylist>
+			</Link>
+		}
+
+		// Print Playlists
+		if (this.playlists) {
+			this.playlistsList = this.playlists.map((playlist) =>
+			<Link to={playlist.url}>
+				<SidebarItem>
+					<Icon 
+						name={playlist.icon}
+						size="large"
+						fill="#000000"     // small, medium, large, xlarge
+						animation={{
+						type: "pulse",  // zoom, pulse, shake, flip
+						hover: true,
+						infinite: false 
+						}}
+					/>
+					<SidebarItemLabel>{playlist.label}</SidebarItemLabel>
+				</SidebarItem>
+			</Link>
+		);
+		}
+		
+	}
+
+	render() {
+		return (
+		  <StyledSidebar>
+			  <SidebarLogo id="logo">
+				  <Link to="/"><SidebarLogoImg src="https://i.redd.it/fnutbjqyahj21.jpg"/></Link>
+				  <SidebarLogoTitle>Tongo Music</SidebarLogoTitle>
+			  </SidebarLogo>
+	  
+			  <div id="navbar">
+					  <SidebarNav>
+						  {this.itemsList}
+						  {this.playlistsLabelShow}
+						  {this.playlistsList}
+					  </SidebarNav>
+			  </div>
+		  </StyledSidebar>
+		);
+	  };
+}
+
+export default Sidebar;
+
+const StyledSidebar = styled.section`
   color: white;
   padding: 20px;
   height: 100vh;
@@ -83,154 +180,6 @@ const SidebarNav = styled.li`
   padding: none;
 `;
 
-export default () => {
-  return (
-	<Sidebar>
-		<SidebarLogo id="logo">
-			<Link to="/"><SidebarLogoImg src="https://i.redd.it/fnutbjqyahj21.jpg"/></Link>
-			<SidebarLogoTitle>Tongo Music</SidebarLogoTitle>
-		</SidebarLogo>
 
-		<div id="navbar">
-				<SidebarNav>
-					<Link to="/">
-						<SidebarItem>
-							<Icon 
-								name="activity"
-								size="large"
-								fill="#000000"     // small, medium, large, xlarge
-								animation={{
-								type: "pulse",  // zoom, pulse, shake, flip
-								hover: true,
-								infinite: false 
-								}}
-							/>
-							<SidebarItemLabel>Discover</SidebarItemLabel>
-						</SidebarItem>
-					</Link>
-					<Link to="/albums">
-						<SidebarItem>
-							<Icon 
-								name="book-open-outline"
-								size="large"
-								fill="#000000"     // small, medium, large, xlarge
-								animation={{
-								type: "pulse",  // zoom, pulse, shake, flip
-								hover: true,
-								infinite: false 
-								}}
-							/>
-							<SidebarItemLabel>Albums</SidebarItemLabel>
-						</SidebarItem>
-					</Link>
-					<Link to="/artists">
-						<SidebarItem>
-							<Icon 
-								name="person-outline"
-								size="large"
-								fill="#000000"     // small, medium, large, xlarge
-								animation={{
-								type: "pulse",  // zoom, pulse, shake, flip
-								hover: true,
-								infinite: false 
-								}}
-							/>
-							<SidebarItemLabel>Artists</SidebarItemLabel>
-						</SidebarItem>
-					</Link>
-					<Link to="/favorites">
-						<SidebarItem>
-							<Icon 
-								name="heart-outline"
-								size="large"
-								fill="#000000"     // small, medium, large, xlarge
-								animation={{
-								type: "pulse",  // zoom, pulse, shake, flip
-								hover: true,
-								infinite: false 
-								}}
-							/>
-							<SidebarItemLabel>Favorites</SidebarItemLabel>
-						</SidebarItem>
-					</Link>
-					<Link to="/playlists">
-						<SidebarPlaylist>
-							<SidebarItemLabel>Playlists</SidebarItemLabel>
-							<Icon 
-								name="plus-circle-outline"
-								size="large"
-								fill="#000000"     // small, medium, large, xlarge
-								animation={{
-								type: "pulse",  // zoom, pulse, shake, flip
-								hover: true,
-								infinite: false 
-								}}
-							/>
-						</SidebarPlaylist>
-					</Link>
-					{/* List Playlists */}
-					<Link to="/playlists/1">
-						<SidebarItem>
-							<Icon 
-								name="folder-outline"
-								size="large"
-								fill="#000000"     // small, medium, large, xlarge
-								animation={{
-								type: "pulse",  // zoom, pulse, shake, flip
-								hover: true,
-								infinite: false 
-								}}
-							/>
-							<SidebarItemLabel>Liked Songs</SidebarItemLabel>
-						</SidebarItem>
-					</Link>
-					<Link to="/playlists/1">
-						<SidebarItem>
-							<Icon 
-								name="folder-outline"
-								size="large"
-								fill="#000000"     // small, medium, large, xlarge
-								animation={{
-								type: "pulse",  // zoom, pulse, shake, flip
-								hover: true,
-								infinite: false 
-								}}
-							/>
-							<SidebarItemLabel>Best Of Big Ali</SidebarItemLabel>
-						</SidebarItem>
-					</Link>
-					<Link to="/playlists/1">
-						<SidebarItem>
-							<Icon 
-								name="folder-outline"
-								size="large"
-								fill="#000000"     // small, medium, large, xlarge
-								animation={{
-								type: "pulse",  // zoom, pulse, shake, flip
-								hover: true,
-								infinite: false 
-								}}
-							/>
-							<SidebarItemLabel>Fiesta</SidebarItemLabel>
-						</SidebarItem>
-					</Link>
-					<Link to="/playlists/1">
-						<SidebarItem>
-							<Icon 
-								name="folder-outline"
-								size="large"
-								fill="#000000"     // small, medium, large, xlarge
-								animation={{
-								type: "pulse",  // zoom, pulse, shake, flip
-								hover: true,
-								infinite: false 
-								}}
-							/>
-							<SidebarItemLabel>Motivation</SidebarItemLabel>
-						</SidebarItem>
-					</Link>
-				</SidebarNav>
-		</div>
-	</Sidebar>
-  );
-};
+
+
