@@ -47,7 +47,18 @@ public class InitController {
         System.out.println("albumService");
 
         for (int i = 0; i < 5; i++){
-            this.albumService.create(1, new Album(Calendar.getInstance(), "album "+i, ""));
+            Album album = new Album(Calendar.getInstance(), "album "+i, "");
+            this.albumService.create(1, album);
+        }
+
+        System.out.println("titreService");
+
+        for (int i = 0; i < 5; i++){
+            Titre titre = new Titre(180, "Titre "+i);
+            Titre newTitre = this.titreService.create(1, titre);
+            Album album = this.albumService.getRandom(1).get(0);
+            album.getTitres().add(newTitre);
+            this.albumService.create(1, album);
         }
 
         System.out.println("artisteService");
@@ -59,17 +70,6 @@ public class InitController {
             art.setAlbums(albumList);
 
             this.artisteService.create(1, art);
-        }
-
-        System.out.println("titreService");
-
-        for (int i = 0; i < 5; i++){
-            Titre titre = new Titre(180, "Titre "+i);
-            List<Artiste> artisteList = this.artisteService.getRandom(1);
-            Artiste artiste = artisteList.get(0);
-            artiste.getTitres().add(titre);
-            artiste.getAlbums().get(0).getTitres().add(titre);
-            this.titreService.create(1, titre);
         }
 
         System.out.println("playlistService");
