@@ -23,10 +23,10 @@ public class Artiste {
 
     private String imageUrl;
 
-    @ManyToMany(targetEntity = Titre.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Titre.class, cascade = CascadeType.ALL)
     private List<Titre> titres = new ArrayList<>();
 
-    @ManyToMany(targetEntity = Album.class)
+    @ManyToMany(targetEntity = Album.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Album> albums = new ArrayList<>();
 
     public Artiste(String alias, String imageUrl) {
