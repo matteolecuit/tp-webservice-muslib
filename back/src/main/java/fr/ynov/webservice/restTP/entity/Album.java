@@ -27,7 +27,7 @@ public class Album {
 
     private String nom;
 
-    private String image_url;
+    private String imageUrl;
     
     @JsonIgnoreProperties({"albums"})
     @ManyToOne
