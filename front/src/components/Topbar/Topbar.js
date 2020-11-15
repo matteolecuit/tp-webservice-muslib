@@ -3,13 +3,7 @@ import styled from "styled-components";
 import Icon from 'react-eva-icons';
 import LoginModalForm from '../../components/Modals/LoginModal'
 import RegisterModalForm from "../Modals/RegisterModal";
-
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
+import { TransitionPropTypeKeys } from "reactstrap/lib/utils";
 
 
 const Topbar = styled.section`
@@ -86,7 +80,7 @@ function deleteItemFromState(id) {
 }
 
 
-export default () => {
+export default (props) => {
     return (
         <Topbar>
             <TopbarSearch></TopbarSearch>
@@ -94,10 +88,10 @@ export default () => {
             <LoginModalForm buttonLabel="Connexion" addItemToState={addItemToState} />
             <TopbarProfile>
                 <TopbarProfileImg>
-                    <img src="https://scontent-cdt1-1.xx.fbcdn.net/v/t1.0-9/50496073_372353200233680_4618796985325977600_n.jpg?_nc_cat=101&ccb=2&_nc_sid=09cbfe&_nc_ohc=_uc12sulTCkAX-_QX8z&_nc_ht=scontent-cdt1-1.xx&oh=9f4ec88556fd1165347daeed0b3099ca&oe=5FD49437" alt="profile picture" height="35px" width="35px" />
+                    <img src={props.profilePic} alt="profile picture" height="35px" width="35px" />
                 </TopbarProfileImg>
                 <TopbarProfileName>
-                    <span>John Bovi</span>
+                    <span>{props.firstname} {props.lastname}</span>
                 </TopbarProfileName>
                 <TopbarProfileSettings>
                     <Icon
