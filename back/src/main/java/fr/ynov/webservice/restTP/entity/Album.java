@@ -6,6 +6,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -25,6 +28,10 @@ public class Album {
     private String nom;
 
     private String image_url;
+    
+    @JsonIgnoreProperties({"albums"})
+    @ManyToOne
+    private Artiste artiste;
 
     @OneToMany(targetEntity = Titre.class)
     private List<Titre> titres = new ArrayList<>();
