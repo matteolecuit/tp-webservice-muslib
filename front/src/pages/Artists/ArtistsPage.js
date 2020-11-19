@@ -12,7 +12,13 @@ class ArtistsPage extends Component {
 	};
 
 	getArtists() {
-		fetch('http://localhost:8080/artiste/')
+		fetch('http://localhost:8080/artiste/', {
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": "application/json",
+				"Authorization": `${localStorage.getItem("token")}`
+			}
+		})
 			.then(response => response.json())
 			.then(artists => {
 				console.log(artists);

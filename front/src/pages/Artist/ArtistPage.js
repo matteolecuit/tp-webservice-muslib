@@ -12,7 +12,13 @@ class ArtistsPage extends Component {
 	};
 	
 	getArtist() {
-		fetch('http://localhost:8080/artiste/' + this.id)
+		fetch('http://localhost:8080/artiste/' + this.id, {
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": "application/json",
+				"Authorization": `${localStorage.getItem("token")}`
+			}
+		})
 			.then(res => res.json())
 			.then(artist => {
 				this.setState({artist})

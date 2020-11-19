@@ -27,7 +27,13 @@ class AlbumsPage extends Component {
 	id = this.props.match.params.id;
 
 	getAlbum() {
-		fetch('http://localhost:8080/album/' + this.id)
+		fetch('http://localhost:8080/album/' + this.id, {
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": "application/json",
+				"Authorization": `${localStorage.getItem("token")}`
+			}
+		})
 			.then(response => response.json())
 			.then(album => {
 				album.artiste = album.artiste.alias;
