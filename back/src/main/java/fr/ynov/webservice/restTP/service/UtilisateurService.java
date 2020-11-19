@@ -277,4 +277,19 @@ public class UtilisateurService implements UserDetailsService {
 
         return randUtilisateur;
     }
+
+    public Utilisateur update(String email, Utilisateur u) {
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
+        if (userOpt.isPresent()){
+            Utilisateur user = userOpt.get();
+            if (u.getPseudo() != null && u.getPseudo().trim().length() > 0){
+                user.setPseudo(u.getPseudo());
+            }
+            if (u.getAvatar() != null){
+                user.setAvatar(u.getAvatar());
+            }
+            return this.utilisateurRepository.save(user);
+        }
+        return null;
+    }
 }
