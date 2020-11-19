@@ -28,7 +28,7 @@ class ArtistsPage extends Component {
 		let albums = [];
 		if(this.state.artist.albums){
 			albums = this.state.artist.albums.map((item) =>
-			<StyleCard imgUrl={item.imageUrl} titre={item.nom} link={"http://localhost:8080/album/" + item.id}></StyleCard>
+			<StyleCard imgUrl={item.imageUrl} titre={item.nom} link={"/album/" + item.id}></StyleCard>
 			);
 		}
 		
