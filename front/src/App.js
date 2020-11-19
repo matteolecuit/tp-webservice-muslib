@@ -16,6 +16,9 @@ import ArtistPage from './pages/Artist/ArtistPage';
 import FavoritesPage from './pages/Favorites/FavoritesPage';
 import PlaylistPage from './pages/Playlist/PlaylistPage';
 import PlaylistsPage from './pages/Playlists/PlaylistsPage';
+import ManageSongsPage from './pages/ManageSongs/ManageSongsPage';
+import ManageAlbumsPage from './pages/ManageAlbums/ManageAlbumsPage';
+import ManageArtistsPage from './pages/ManageArtists/ManageArtistsPage';
 import Topbar from './components/Topbar/Topbar';
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
@@ -102,6 +105,9 @@ class App extends Component {
 									<Route exact path="/artists/:id" component={ArtistPage} />
 									<Route exact path="/playlists/" component={PlaylistsPage} />
 									<Route exact path="/playlists/:id" component={PlaylistPage} />
+									<Route exact path="/manage/songs" component={ManageSongsPage} />
+									<Route exact path="/manage/albums" component={ManageAlbumsPage} />
+									<Route exact path="/manage/artists" component={ManageArtistsPage} />
 								</Switch>
 							</div>
 						</div>
