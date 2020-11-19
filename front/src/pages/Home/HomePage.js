@@ -6,15 +6,11 @@ import ModalForm from '../../components/Modals/Modal'
 import StyledBanner from '../../components/Commons/Banner';
 import StyledArtistCard from '../../components/Commons/ArtistCard';
 import StyledCard from '../../components/Commons/Card';
-import TitreModalForm from '../../components/Modals/AddTitreModal'
-import TitreTable from '../../components/Tables/TitreTable'
-import LoginForm from '../../components/Login/Login'
-import { CSVLink } from "react-csv"
 
 class HomePage extends Component {
 	state = {
 		artists: [],
-		albums: []
+		albums: [],
 	};
 
 	getAlbums() {
@@ -48,7 +44,6 @@ class HomePage extends Component {
 			})
 			.catch(err => console.log(err))
 	};
-
 	componentDidMount() {
 		this.getArtists();
 		this.getAlbums();

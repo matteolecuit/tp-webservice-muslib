@@ -1,10 +1,5 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { useDispatch } from 'react-redux'
-
-const setUser = (payload) => ({ type: "SET_USER", payload })
-
-export const logUserOut = () => ({ type: "LOG_OUT" })
 
 class LoginForm extends React.Component {
   state = {
@@ -30,12 +25,11 @@ class LoginForm extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        localStorage.setItem("token", data.token)
-        useDispatch(setUser(data.user));
+        localStorage.setItem("token", data.token);
+        window.location.reload(false);
       })
       .catch(err => console.log(err))
   }
-
   componentDidMount() {
     // if item exists, populate the state with proper data
     if (this.props.item) {
@@ -62,3 +56,4 @@ class LoginForm extends React.Component {
 }
 
 export default LoginForm
+
