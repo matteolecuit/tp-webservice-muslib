@@ -23,10 +23,13 @@ public class Titre {
     private int duree;
 
     private String nom;
+    
+    private String imageUrl;
 
-    public Titre(int duree, String nom) {
+    public Titre(int duree, String nom, String imageUrl) {
         this.duree = duree;
         this.nom = nom;
+        this.imageUrl = imageUrl;
     }
 
 }

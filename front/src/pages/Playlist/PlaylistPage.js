@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
 import Icon from 'react-eva-icons';
 import { Container, Row, Col } from 'reactstrap'
@@ -53,39 +53,55 @@ class AlbumsPage extends Component {
 					artist: "Sexion d'assaut",
 					length: "300"
 				},
-				
 			]
 		}
 	};
-	
-	// List Tracks
-	tracks = this.state.playlist.songs.map((item, index) =>
-		<StyledTrack trackNumber={index + 1} title={item.title} artist={item.artist} length={item.length}></StyledTrack>
-	);
-	
+
+	id = this.props.match.params.id;
+
+	getPlaylist() {
+		fetch('http://localhost:8080/playlist/' + this.id)
+			.then(response => response.json())
+			.then(playlist => {
+				playlist.imageUrl = playlist.titres[0].imageUrl;
+				this.setState({ playlist });
+				console.log(this.state.playlist);
+			})
+			.catch(err => console.log(err))
+	};
+
+	componentDidMount() {
+		this.getPlaylist();
+	}
+
 	render() {
+		let tracks = [];
+		if (this.state.playlist.titres) {
+			tracks = this.state.playlist.titres.map((item, index) =>
+				<StyledTrack trackNumber={index + 1} title={item.nom} length={item.duree}></StyledTrack>
+			);
+		}
+
 		return (
 			<Container>
 				<Row>
 					<Col>
-						<img src={this.state.playlist.cover} alt="Album Cover" style={{filter: "drop-shadow(4px 4px 10px rgba(0, 0, 0, 0.25))", maxWidth: "300px", maxHeight: "300px"}}/>
+						<img src={this.state.playlist.imageUrl} alt="Album Cover" style={{ filter: "drop-shadow(4px 4px 10px rgba(0, 0, 0, 0.25))", maxWidth: "300px", maxHeight: "300px" }} />
 					</Col>
 					<Col>
-						<h2 style={{margin: "20px 0", fontWeight: "900", fontSize: "3rem"}}>{this.state.playlist.title}</h2>
-						<h3 style={{margin: "20px 0", color: "0F1E36", opacity: "50%"}}>{this.state.playlist.artist}</h3>
-						<p style={{color: "0F1E36", opacity: "50%"}}>{this.state.playlist.description}</p>
-						<Icon 
+						<h2 style={{ margin: "20px 0", fontWeight: "900", fontSize: "3rem" }}>{this.state.playlist.nom}</h2>
+						<Icon
 							name="heart-outline"
 							size="large"
 							fill="#0F1E36"     // small, medium, large, xlarge
 							animation={{
-							type: "pulse",  // zoom, pulse, shake, flip
-							hover: true,
-							infinite: false 
+								type: "pulse",  // zoom, pulse, shake, flip
+								hover: true,
+								infinite: false
 							}}
 						/>
-						<ul style={{display: "flex", flexDirection: "column", justifyContent: "flex-start", padding: "0", margin: "20px 0", flexWrap: "wrap"}}>
-							{this.tracks}
+						<ul style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", padding: "0", margin: "20px 0", flexWrap: "wrap" }}>
+							{tracks}
 						</ul>
 					</Col>
 				</Row>
