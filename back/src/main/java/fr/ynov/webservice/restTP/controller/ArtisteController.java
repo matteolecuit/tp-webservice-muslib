@@ -3,6 +3,7 @@ package fr.ynov.webservice.restTP.controller;
 import fr.ynov.webservice.restTP.entity.Artiste;
 import fr.ynov.webservice.restTP.service.ArtisteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,18 +28,18 @@ public class ArtisteController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "")
-    public Artiste createArtiste(@RequestParam("adminId") long adminId, @RequestBody Artiste artiste){
-        return this.artisteService.create(adminId, artiste);
+    public Artiste createArtiste(Authentication authentication, @RequestBody Artiste artiste){
+        return this.artisteService.create(authentication.getName(), artiste);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-    public Artiste updateArtiste(@RequestParam("adminId") long adminId, @PathVariable("id") long artisteId, @RequestBody Artiste artiste){
-        return this.artisteService.update(adminId, artisteId, artiste);
+    public Artiste updateArtiste(Authentication authentication, @PathVariable("id") long artisteId, @RequestBody Artiste artiste){
+        return this.artisteService.update(authentication.getName(), artisteId, artiste);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "")
-    public Artiste deleteArtiste(@RequestParam("adminId") long adminId, @RequestParam long artisteId){
-        return this.artisteService.delete(adminId, artisteId);
+    public Artiste deleteArtiste(Authentication authentication, @RequestParam long artisteId){
+        return this.artisteService.delete(authentication.getName(), artisteId);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/random")

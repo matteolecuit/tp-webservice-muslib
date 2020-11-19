@@ -1,7 +1,7 @@
 package fr.ynov.webservice.restTP.service;
 
-import fr.ynov.webservice.restTP.entity.Administrateur;
 import fr.ynov.webservice.restTP.entity.Artiste;
+import fr.ynov.webservice.restTP.entity.Utilisateur;
 import fr.ynov.webservice.restTP.repository.ArtisteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,22 +17,52 @@ public class ArtisteService {
     ArtisteRepository artisteRepository;
 
     @Autowired
-    AdministrateurService administrateurService;
-
+    UtilisateurService utilisateurService;
+    
     public List<Artiste> findAll(){
         return this.artisteRepository.findAll();
     }
 
-    public Artiste create(long adminId, Artiste artiste){
-        Optional<Administrateur> adminOpt = this.administrateurService.findById(adminId);
-        if (adminOpt.isPresent()){
+    public Optional<Artiste> findById(long id){
+        return this.artisteRepository.findById(id);
+    }
+
+    public Artiste create(String email, Artiste artiste){
+        Optional<Utilisateur> userOpt = this.utilisateurService.findByEmail(email);
+        if (userOpt.isPresent() && userOpt.get().isAdmin()){
             return this.artisteRepository.save(artiste);
         }
         return null;
     }
 
-    public Optional<Artiste> findById(long id){
-        return this.artisteRepository.findById(id);
+    public Artiste update(String email, long artisteId, Artiste a) {
+        Optional<Utilisateur> userOpt = this.utilisateurService.findByEmail(email);
+        if (userOpt.isPresent() && userOpt.get().isAdmin()){
+            Optional<Artiste> artisteOpt = this.artisteRepository.findById(artisteId);
+            if (artisteOpt.isPresent()){
+                Artiste artiste = artisteOpt.get();
+                if (a.getAlias() != null && a.getAlias().trim().length() > 0){
+                    artiste.setAlias(a.getAlias());
+                }
+                if (a.getImageUrl() != null){
+                    artiste.setImageUrl(a.getImageUrl());
+                }
+                return this.artisteRepository.save(artiste);
+            }
+        }
+        return null;
+    }
+
+    public Artiste delete(String email, long artisteId) {
+        Optional<Utilisateur> userOpt = this.utilisateurService.findByEmail(email);
+        if (userOpt.isPresent() && userOpt.get().isAdmin()) {
+            Optional<Artiste> artisteOpt = this.artisteRepository.findById(artisteId);
+            if (artisteOpt.isPresent()) {
+                this.artisteRepository.delete(artisteOpt.get());
+                return artisteOpt.get();
+            }
+        }
+        return null;
     }
 
     public List<Artiste> getRandom(int numberOfRandom){
@@ -50,35 +80,5 @@ public class ArtisteService {
         }
 
         return randArtists;
-    }
-
-    public Artiste update(long adminId, long artisteId, Artiste a) {
-        Optional<Administrateur> adminOpt = this.administrateurService.findById(adminId);
-        if (adminOpt.isPresent()){
-            Optional<Artiste> artisteOpt = this.artisteRepository.findById(artisteId);
-            if (artisteOpt.isPresent()){
-                Artiste artiste = artisteOpt.get();
-                if (a.getAlias() != null && a.getAlias().trim().length() > 0){
-                    artiste.setAlias(a.getAlias());
-                }
-                if (a.getImageUrl() != null){
-                    artiste.setImageUrl(a.getImageUrl());
-                }
-                return this.artisteRepository.save(artiste);
-            }
-        }
-        return null;
-    }
-
-    public Artiste delete(long adminId, long artisteId) {
-        Optional<Administrateur> adminOpt = this.administrateurService.findById(adminId);
-        if (adminOpt.isPresent()) {
-            Optional<Artiste> artisteOpt = this.artisteRepository.findById(artisteId);
-            if (artisteOpt.isPresent()) {
-                this.artisteRepository.delete(artisteOpt.get());
-                return artisteOpt.get();
-            }
-        }
-        return null;
     }
 }

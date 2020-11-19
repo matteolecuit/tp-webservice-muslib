@@ -32,7 +32,7 @@ public class Album {
     private Artiste artiste;
 
     @JsonIgnoreProperties({"album"})
-    @OneToMany(mappedBy = "album")
+    @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
     private List<Titre> titres = new ArrayList<>();
 
     public Album(Calendar datePublication, String nom, String imageUrl) {
