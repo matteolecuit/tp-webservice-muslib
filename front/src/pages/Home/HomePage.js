@@ -18,7 +18,13 @@ class HomePage extends Component {
 	};
 
 	getAlbums() {
-		fetch('http://localhost:8080/album/random?numRand=10')
+		fetch('http://localhost:8080/album/random?numRand=10', {
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": "application/json",
+				"Authorization": `${localStorage.getItem("token")}`
+			}
+		})
 			.then(response => response.json())
 			.then(albums => {
 				albums.forEach(album => {
@@ -29,7 +35,13 @@ class HomePage extends Component {
 			.catch(err => console.log(err))
 	};
 	getArtists() {
-		fetch('http://localhost:8080/artiste/random?numRand=10')
+		fetch('http://localhost:8080/artiste/random?numRand=10', {
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": "application/json",
+				"Authorization": `${localStorage.getItem("token")}`
+			}
+		})
 			.then(response => response.json())
 			.then(artists => {
 				this.setState({ artists });
