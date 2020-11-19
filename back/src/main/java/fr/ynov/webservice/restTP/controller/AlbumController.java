@@ -3,6 +3,7 @@ package fr.ynov.webservice.restTP.controller;
 import fr.ynov.webservice.restTP.entity.Album;
 import fr.ynov.webservice.restTP.service.AlbumService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,18 +28,18 @@ public class AlbumController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "")
-    public Album create(@RequestParam("adminId") long adminId, @RequestBody Album album){
-        return this.albumService.create(adminId, album);
+    public Album create(Authentication authentication, @RequestBody Album album){
+        return this.albumService.create(authentication.getName(), album);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-    public Album updateAlbum(@RequestParam("adminId") long adminId, @PathVariable("id") long albumId, @RequestBody Album album){
-        return this.albumService.update(adminId, albumId, album);
+    public Album updateAlbum(Authentication authentication, @PathVariable("id") long albumId, @RequestBody Album album){
+        return this.albumService.update(authentication.getName(), albumId, album);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "")
-    public Album deleteAlbum(@RequestParam("adminId") long adminId, @RequestParam long albumId){
-        return this.albumService.delete(adminId, albumId);
+    public Album deleteAlbum(Authentication authentication, @RequestParam long albumId){
+        return this.albumService.delete(authentication.getName(), albumId);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/random")

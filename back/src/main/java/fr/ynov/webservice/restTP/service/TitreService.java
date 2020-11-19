@@ -1,7 +1,7 @@
 package fr.ynov.webservice.restTP.service;
 
-import fr.ynov.webservice.restTP.entity.Administrateur;
 import fr.ynov.webservice.restTP.entity.Titre;
+import fr.ynov.webservice.restTP.entity.Utilisateur;
 import fr.ynov.webservice.restTP.repository.TitreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +17,8 @@ public class TitreService {
     TitreRepository titreRepository;
 
     @Autowired
-    AdministrateurService administrateurService;
-
+    UtilisateurService utilisateurService;
+     
     public List<Titre> findAll(){
         return this.titreRepository.findAll();
     }
@@ -27,17 +27,17 @@ public class TitreService {
         return this.titreRepository.findById(id);
     }
 
-    public Titre create(long adminId, Titre titre){
-        Optional<Administrateur> adminOpt = this.administrateurService.findById(adminId);
-        if (adminOpt.isPresent()){
+    public Titre create(String email, Titre titre){
+        Optional<Utilisateur> userOpt = this.utilisateurService.findByEmail(email);
+        if (userOpt.isPresent() && userOpt.get().isAdmin()){
             return this.titreRepository.save(titre);
         }
         return null;
     }
 
-    public Titre update(long adminId, long titreId, Titre t) {
-        Optional<Administrateur> adminOpt = this.administrateurService.findById(adminId);
-        if (adminOpt.isPresent()){
+    public Titre update(String email, long titreId, Titre t) {
+        Optional<Utilisateur> userOpt = this.utilisateurService.findByEmail(email);
+        if (userOpt.isPresent() && userOpt.get().isAdmin()){
             Optional<Titre> titreOpt = this.titreRepository.findById(titreId);
             if (titreOpt.isPresent()){
                 Titre titre = titreOpt.get();
@@ -53,9 +53,9 @@ public class TitreService {
         return null;
     }
 
-    public Titre delete(long adminId, long titreId) {
-        Optional<Administrateur> adminOpt = this.administrateurService.findById(adminId);
-        if (adminOpt.isPresent()) {
+    public Titre delete(String email, long titreId) {
+        Optional<Utilisateur> userOpt = this.utilisateurService.findByEmail(email);
+        if (userOpt.isPresent() && userOpt.get().isAdmin()) {
             Optional<Titre> titreOpt = this.titreRepository.findById(titreId);
             if (titreOpt.isPresent()) {
                 this.titreRepository.delete(titreOpt.get());
