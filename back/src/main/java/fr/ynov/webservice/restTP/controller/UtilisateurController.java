@@ -1,14 +1,23 @@
 package fr.ynov.webservice.restTP.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.google.api.client.json.Json;
 import fr.ynov.webservice.restTP.entity.Playlist;
 import fr.ynov.webservice.restTP.entity.Utilisateur;
 import fr.ynov.webservice.restTP.exception.PlaylistTitreExistException;
 import fr.ynov.webservice.restTP.model.Favoris;
+import fr.ynov.webservice.restTP.security.JWTAuthenticationFilter;
 import fr.ynov.webservice.restTP.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,8 +35,16 @@ public class UtilisateurController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/register")
-    public Utilisateur createUtilisateur(@RequestBody Utilisateur utilisateur){
-        return utilisateurService.save(utilisateur);
+    public JSONObject createUtilisateur(@RequestBody Utilisateur utilisateur){
+        Utilisateur user =  utilisateurService.save(utilisateur);
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
+        SecurityContextHolder.getContext().setAuthentication(authToken);
+        String token = JWTAuthenticationFilter.generateToken(user.getEmail());
+        System.out.println(token);
+        JSONObject json = new JSONObject();
+        json.put("token", token);
+        json.put("user", user);
+        return json;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/favoris/album")
