@@ -28,7 +28,7 @@ public class Titre {
     @ManyToOne
     private Album album;
 
-    public Titre(int duree, String nom) {
+    public Titre(int duree, String nom, String imageUrl) {
         this.duree = duree;
         this.nom = nom;
         this.imageUrl = imageUrl;

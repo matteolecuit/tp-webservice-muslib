@@ -63,7 +63,7 @@ public class InitController {
         System.out.println("titreService");
 
         for (int i = 0; i < 5; i++){
-            Titre titre = new Titre(180, "Titre "+i);
+            Titre titre = new Titre(180, "Titre "+i, "");
             titre.setAlbum(this.albumService.getRandom(1).get(0));
             this.titreService.create(1, titre);
         }
