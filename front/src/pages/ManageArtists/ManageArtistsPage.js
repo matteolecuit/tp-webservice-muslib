@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import Icon from 'react-eva-icons';
 import { Container, Row, Col } from 'reactstrap'
-import StyledTrack from '../../components/Commons/Track';
+import StyledAdminTrack from '../../components/Commons/AdminTrack';
 
 class ManageArtistsPage extends Component {
 
@@ -34,7 +34,7 @@ class ManageArtistsPage extends Component {
 		let artists = [];
 		if (this.state.artists) {
 			artists = this.state.artists.map((item, index) =>
-				<StyledTrack trackNumber={index + 1} title={item.nom} length={item.duree}></StyledTrack>
+				<StyledAdminTrack trackNumber={index + 1} title={item.nom} length={item.duree}></StyledAdminTrack>
 			);
 		}
 
