@@ -4,6 +4,7 @@ import Icon from 'react-eva-icons';
 import LoginModalForm from '../../components/Modals/LoginModal'
 import RegisterModalForm from "../Modals/RegisterModal";
 import { TransitionPropTypeKeys } from "reactstrap/lib/utils";
+import { Button, Divider } from "@material-ui/core";
 
 
 const Topbar = styled.section`
@@ -61,51 +62,55 @@ function addItemToState(item) {
     }))
 }
 
-function updateState(item) {
-    const itemIndex = this.state.items.findIndex(data => data.id === item.id)
-    const newArray = [
-        // destructure all items from beginning to the indexed item
-        ...this.state.items.slice(0, itemIndex),
-        // add the updated item to the array
-        item,
-        // add the rest of the items to the array from the index after the replaced item
-        ...this.state.items.slice(itemIndex + 1)
-    ]
-    this.setState({ items: newArray })
-}
-
-function deleteItemFromState(id) {
-    const updatedItems = this.state.items.filter(item => item.id !== id)
-    this.setState({ items: updatedItems })
+function logout() {
+    localStorage.clear();
+    window.location.reload(false);
 }
 
 
 export default (props) => {
+    let topbar = null;
+    if (localStorage.getItem("token")) {
+        topbar =
+            <Topbar>
+                <TopbarSearch></TopbarSearch>
+                <Button
+                    color="success"
+                    onClick={logout}
+                    style={{ float: "left", marginRight: "10px" }}>Deconnexion
+                </Button>
+                <TopbarProfile>
+                    <TopbarProfileImg>
+                        <img src={props.profilePic} alt="profile picture" height="35px" width="35px" />
+                    </TopbarProfileImg>
+                    <TopbarProfileName>
+                        <span>{props.firstname}</span>
+                    </TopbarProfileName>
+                    <TopbarProfileSettings>
+                        <Icon
+                            name="settings-outline"
+                            size="large"
+                            fill="#000000"     // small, medium, large, xlarge
+                            animation={{
+                                type: "pulse",  // zoom, pulse, shake, flip
+                                hover: true,
+                                infinite: false
+                            }}
+                        />
+                    </TopbarProfileSettings>
+                </TopbarProfile>
+            </Topbar>
+
+    } else {
+        topbar =
+            <Topbar>
+                <TopbarSearch></TopbarSearch>
+                <RegisterModalForm buttonLabel="Inscription" addItemToState={addItemToState} />
+                <LoginModalForm buttonLabel="Connexion" addItemToState={addItemToState} />
+            </Topbar>
+
+    }
     return (
-        <Topbar>
-            <TopbarSearch></TopbarSearch>
-            <RegisterModalForm buttonLabel="Inscription" addItemToState={addItemToState} />
-            <LoginModalForm buttonLabel="Connexion" addItemToState={addItemToState} />
-            <TopbarProfile>
-                <TopbarProfileImg>
-                    <img src={props.profilePic} alt="profile picture" height="35px" width="35px" />
-                </TopbarProfileImg>
-                <TopbarProfileName>
-                    <span>{props.firstname} {props.lastname}</span>
-                </TopbarProfileName>
-                <TopbarProfileSettings>
-                    <Icon
-                        name="settings-outline"
-                        size="large"
-                        fill="#000000"     // small, medium, large, xlarge
-                        animation={{
-                            type: "pulse",  // zoom, pulse, shake, flip
-                            hover: true,
-                            infinite: false
-                        }}
-                    />
-                </TopbarProfileSettings>
-            </TopbarProfile>
-        </Topbar>
+        topbar
     );
 };
