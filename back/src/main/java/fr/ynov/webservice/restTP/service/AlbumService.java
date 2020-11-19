@@ -58,7 +58,6 @@ public class AlbumService {
             Optional<Album> albumOpt = this.albumRepository.findById(albumId);
             if (albumOpt.isPresent()){
                 Album album = albumOpt.get();
-                System.out.println(a.getDatePublication());
                 if (a.getDatePublication() != null){
                     album.setDatePublication(a.getDatePublication());
                 }
@@ -67,6 +66,9 @@ public class AlbumService {
                 }
                 if (a.getNom() != null && a.getNom().trim().length() > 0){
                     album.setNom(a.getNom());
+                }
+                if (a.getArtiste() != null){
+                    album.setArtiste(a.getArtiste());
                 }
                 return this.albumRepository.save(album);
             }
@@ -79,8 +81,7 @@ public class AlbumService {
         if (adminOpt.isPresent()) {
             Optional<Album> albumOpt = this.albumRepository.findById(albumId);
             if (albumOpt.isPresent()) {
-                Album album = albumOpt.get();
-                this.albumRepository.delete(album);
+                this.albumRepository.delete(albumOpt.get());
                 return albumOpt.get();
             }
         }

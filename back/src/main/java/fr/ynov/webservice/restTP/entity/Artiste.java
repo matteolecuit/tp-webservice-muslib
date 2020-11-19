@@ -1,14 +1,12 @@
 package fr.ynov.webservice.restTP.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +25,7 @@ public class Artiste {
     private String imageUrl;
 
     @JsonIgnoreProperties({"artiste"})
-    @ManyToMany(targetEntity = Album.class)
+    @OneToMany(targetEntity = Album.class, cascade = CascadeType.ALL, mappedBy = "artiste")
     private List<Album> albums = new ArrayList<>();
 
     public Artiste(String alias, String imageUrl) {

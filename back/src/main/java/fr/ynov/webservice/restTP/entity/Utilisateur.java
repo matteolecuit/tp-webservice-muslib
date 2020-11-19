@@ -41,8 +41,9 @@ public class Utilisateur {
     @OneToMany(targetEntity = Titre.class)
     private List<Titre> titres = new ArrayList<>();
 
-    public Utilisateur(String email, String pseudo) {
+    public Utilisateur(String email, String pseudo, String password) {
         this.email = email;
         this.pseudo = pseudo;
+        this.password = password;
     }
 }

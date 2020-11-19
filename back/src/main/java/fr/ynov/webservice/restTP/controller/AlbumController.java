@@ -1,7 +1,6 @@
 package fr.ynov.webservice.restTP.controller;
 
 import fr.ynov.webservice.restTP.entity.Album;
-import fr.ynov.webservice.restTP.entity.Album;
 import fr.ynov.webservice.restTP.service.AlbumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

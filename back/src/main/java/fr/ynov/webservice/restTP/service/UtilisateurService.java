@@ -5,14 +5,20 @@ import fr.ynov.webservice.restTP.exception.PlaylistTitreExistException;
 import fr.ynov.webservice.restTP.model.Favoris;
 import fr.ynov.webservice.restTP.repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UtilisateurService {
+public class UtilisateurService implements UserDetailsService {
 
     @Autowired
     UtilisateurRepository utilisateurRepository;
@@ -29,8 +35,18 @@ public class UtilisateurService {
     @Autowired
     PlaylistService playlistService;
 
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public UtilisateurService(BCryptPasswordEncoder bCryptPasswordEncoder){
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+
     public Optional<Utilisateur> findById(long id){
         return this.utilisateurRepository.findById(id);
+    }
+
+    public Optional<Utilisateur> findByEmail(String email){
+        return this.utilisateurRepository.findByEmail(email);
     }
 
     public List<Utilisateur> findAll(){
@@ -38,11 +54,34 @@ public class UtilisateurService {
     }
 
     public Utilisateur save(Utilisateur utilisateur){
-        return this.utilisateurRepository.save(utilisateur);
+        if (utilisateur.getPassword() != null && utilisateur.getPassword().trim().length() > 0 &&
+            utilisateur.getEmail() != null && utilisateur.getEmail().trim().length() > 0 &&
+            utilisateur.getPseudo() != null && utilisateur.getPseudo().trim().length() > 0) {
+            utilisateur.setPassword(bCryptPasswordEncoder.encode(utilisateur.getPassword()));
+            return this.utilisateurRepository.save(utilisateur);
+        }
+        return null;
     }
 
-    public Utilisateur addAlbumToFavorite(long userId, long albumId){
-        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
+    @Override
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        // try by email
+        Optional<Utilisateur> userOpt = utilisateurRepository.findByEmail(login);
+        if (!userOpt.isPresent()) {
+            //try by pseudo
+            userOpt = utilisateurRepository.findByPseudo(login);
+        }
+        if (userOpt.isPresent()){
+            Utilisateur user = userOpt.get();
+            return new User(user.getEmail(), user.getPassword(), Collections.emptyList());
+        }else{
+            throw new UsernameNotFoundException(login);
+        }
+
+    }
+
+    public Utilisateur addAlbumToFavorite(String email, long albumId){
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
         if (userOpt.isPresent()){
             Optional<Album> albumOpt = this.albumService.findById(albumId);
             if (albumOpt.isPresent()){
@@ -54,8 +93,8 @@ public class UtilisateurService {
         return null;
     }
 
-    public Utilisateur deleteAlbumFromFavorite(long userId, long albumId){
-        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
+    public Utilisateur deleteAlbumFromFavorite(String email, long albumId){
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
         if (userOpt.isPresent()) {
             Utilisateur user = userOpt.get();
             // retrouve l'album
@@ -70,8 +109,8 @@ public class UtilisateurService {
         return null;
     }
 
-    public Utilisateur addArtisteToFavorite(long userId, long artisteId){
-        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
+    public Utilisateur addArtisteToFavorite(String email, long artisteId){
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
         if (userOpt.isPresent()){
             Optional<Artiste> artisteOpt = this.artisteService.findById(artisteId);
             if (artisteOpt.isPresent()){
@@ -83,8 +122,8 @@ public class UtilisateurService {
         return null;
     }
 
-    public Utilisateur deleteArtisteFromFavorite(long userId, long artisteId){
-        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
+    public Utilisateur deleteArtisteFromFavorite(String email, long artisteId){
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
         if (userOpt.isPresent()) {
             Utilisateur user = userOpt.get();
             // retrouve l'artiste
@@ -99,8 +138,8 @@ public class UtilisateurService {
         return null;
     }
 
-    public Utilisateur addTitreToFavorite(long userId, long titreId){
-        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
+    public Utilisateur addTitreToFavorite(String email, long titreId){
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
         if (userOpt.isPresent()){
             Optional<Titre> titreOpt = this.titreService.findById(titreId);
             if (titreOpt.isPresent()){
@@ -112,8 +151,8 @@ public class UtilisateurService {
         return null;
     }
 
-    public Utilisateur deleteTitreFromFavorite(long userId, long titreId){
-        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
+    public Utilisateur deleteTitreFromFavorite(String email, long titreId){
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
         if (userOpt.isPresent()) {
             Utilisateur user = userOpt.get();
             // retrouve le titre
@@ -128,8 +167,8 @@ public class UtilisateurService {
         return null;
     }
 
-    public Favoris getFavoris(long userId) {
-        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
+    public Favoris getFavoris(String email) {
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
         if (userOpt.isPresent()){
             Utilisateur user = userOpt.get();
             return new Favoris(user.getTitres(), user.getArtistes(), user.getAlbums());
@@ -137,18 +176,19 @@ public class UtilisateurService {
         return null;
     }
 
-    public Utilisateur createPlaylist(long userId, Playlist playlist){
-        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
+    public Utilisateur createPlaylist(String email, Playlist playlist){
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
         if (userOpt.isPresent()){
             Utilisateur user = userOpt.get();
-            user.getPlaylists().add(playlist);
+            Playlist newPlaylist = this.playlistService.save(playlist);
+            user.getPlaylists().add(newPlaylist);
             return this.utilisateurRepository.save(user);
         }
         return null;
     }
 
-    public Utilisateur addTitreToPlaylist(long userId, long playId, long titreId) throws PlaylistTitreExistException {
-        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
+    public Utilisateur addTitreToPlaylist(String email, long playId, long titreId) throws PlaylistTitreExistException {
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
         if (userOpt.isPresent()){
             Utilisateur user = userOpt.get();
             Optional<Playlist> playlistOpt = user.getPlaylists().stream().filter(play -> play.getId() == playId).findFirst();
@@ -169,8 +209,8 @@ public class UtilisateurService {
         return null;
     }
 
-    public Utilisateur deleteTitreFromPlaylist(long userId, long playId, long titreId) {
-        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
+    public Utilisateur deleteTitreFromPlaylist(String email, long playId, long titreId) {
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
         if (userOpt.isPresent()){
             Utilisateur user = userOpt.get();
             Optional<Playlist> playlistOpt = user.getPlaylists().stream().filter(play -> play.getId() == playId).findFirst();
@@ -187,8 +227,8 @@ public class UtilisateurService {
         return null;
     }
 
-    public Utilisateur deletePlaylist(long userId, long playId) {
-        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
+    public Utilisateur deletePlaylist(String email, long playId) {
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
         if (userOpt.isPresent()) {
             Optional<Playlist> playlistOpt = userOpt.get().getPlaylists().stream().filter(play -> play.getId() == playId).findFirst();
             if (playlistOpt.isPresent()) {
@@ -205,8 +245,8 @@ public class UtilisateurService {
         return null;
     }
 
-    public Playlist getPlaylist(long userId, long playId) {
-        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
+    public Playlist getPlaylist(String email, long playId) {
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
         if (userOpt.isPresent()){
             Optional<Playlist> playlistOpt = userOpt.get().getPlaylists().stream().filter(play -> play.getId() == playId).findFirst();
             if (playlistOpt.isPresent()) {
@@ -216,8 +256,8 @@ public class UtilisateurService {
         return null;
     }
 
-    public List<Playlist> getAllPlaylist(long userId) {
-        Optional<Utilisateur> userOpt = this.utilisateurRepository.findById(userId);
+    public List<Playlist> getAllPlaylist(String email) {
+        Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
         return userOpt.map(Utilisateur::getPlaylists).orElse(null);
     }
 

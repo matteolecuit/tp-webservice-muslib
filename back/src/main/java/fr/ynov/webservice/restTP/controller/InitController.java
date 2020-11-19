@@ -41,13 +41,22 @@ public class InitController {
         System.out.println("utilisateurService");
 
         for (int i = 0; i < 5; i++){
-            this.utilisateurService.save(new Utilisateur("test"+i+"@mail.com", "pseudo"+i));
+            this.utilisateurService.save(new Utilisateur("test"+i+"@mail.com", "pseudo"+i, "pwd"));
+        }
+
+        System.out.println("artisteService");
+
+        for (int i = 0; i < 5; i++){
+            Artiste art = new Artiste("art "+i, "");
+            this.artisteService.create(1, art);
         }
 
         System.out.println("albumService");
 
         for (int i = 0; i < 5; i++){
             Album album = new Album(Calendar.getInstance(), "album "+i, "https://e-cdns-images.dzcdn.net/images/cover/5722e04a2ba2539c02ac2afb655a4f93/264x264-000000-80-0-0.jpg");
+            Artiste artiste = this.artisteService.getRandom(1).get(0);
+            album.setArtiste(artiste);
             this.albumService.create(1, album);
         }
 
@@ -55,16 +64,14 @@ public class InitController {
 
         for (int i = 0; i < 5; i++){
             Titre titre = new Titre(180, "Titre "+i);
-            Titre newTitre = this.titreService.create(1, titre);
-            Album album = this.albumService.getRandom(1).get(0);
-            album.getTitres().add(newTitre);
-            this.albumService.create(1, album);
+            titre.setAlbum(this.albumService.getRandom(1).get(0));
+            this.titreService.create(1, titre);
         }
 
         System.out.println("artisteService");
 
         for (int i = 0; i < 5; i++){
-            Artiste art = new Artiste("art "+i, "https://e-cdn-images.dzcdn.net/images/artist/4ad5a1a6eebec66da3db5796d947be01/264x264-000000-80-0-0.jpg");
+            Artiste art = new Artiste("art "+i, "");
             List<Album> albumList = albumService.getRandom(1);
 
             art.setAlbums(albumList);
@@ -75,10 +82,8 @@ public class InitController {
         System.out.println("playlistService");
 
         for (int i = 0; i < 5; i++){
-            Playlist playlist = this.playlistService.save(new Playlist("Playlist "+i));
             Utilisateur user = this.utilisateurService.getRandom(1).get(0);
-            user.getPlaylists().add(playlist);
-            this.utilisateurService.save(user);
+            this.utilisateurService.createPlaylist(user.getEmail(), new Playlist("Playlist "+i));
         }
 
     }

@@ -35,6 +35,36 @@ public class TitreService {
         return null;
     }
 
+    public Titre update(long adminId, long titreId, Titre t) {
+        Optional<Administrateur> adminOpt = this.administrateurService.findById(adminId);
+        if (adminOpt.isPresent()){
+            Optional<Titre> titreOpt = this.titreRepository.findById(titreId);
+            if (titreOpt.isPresent()){
+                Titre titre = titreOpt.get();
+                if (t.getNom() != null && t.getNom().trim().length() > 0){
+                    titre.setNom(t.getNom());
+                }
+                if (t.getDuree() > 0){
+                    titre.setDuree(t.getDuree());
+                }
+                return this.titreRepository.save(titre);
+            }
+        }
+        return null;
+    }
+
+    public Titre delete(long adminId, long titreId) {
+        Optional<Administrateur> adminOpt = this.administrateurService.findById(adminId);
+        if (adminOpt.isPresent()) {
+            Optional<Titre> titreOpt = this.titreRepository.findById(titreId);
+            if (titreOpt.isPresent()) {
+                this.titreRepository.delete(titreOpt.get());
+                return titreOpt.get();
+            }
+        }
+        return null;
+    }
+
     public List<Titre> getRandom(int numberOfRandom){
 
         List<Titre> randTitres = new ArrayList<>();

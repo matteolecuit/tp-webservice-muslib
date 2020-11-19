@@ -27,7 +27,22 @@ public class TitreController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "")
-    public Titre create(@RequestParam("adminId") long adminId, @RequestBody Titre titre){
+    public Titre createTitre(@RequestParam("adminId") long adminId, @RequestBody Titre titre){
         return this.titreService.create(adminId, titre);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+    public Titre updateTitre(@RequestParam("adminId") long adminId, @PathVariable("id") long titreId, @RequestBody Titre titre){
+        return this.titreService.update(adminId, titreId, titre);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "")
+    public Titre deleteTitre(@RequestParam("adminId") long adminId, @RequestParam long titreId){
+        return this.titreService.delete(adminId, titreId);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/random")
+    public List<Titre> getRandom(@RequestParam int numRand){
+        return this.titreService.getRandom(numRand);
     }
 }
