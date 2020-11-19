@@ -71,7 +71,7 @@ public class UtilisateurService implements UserDetailsService {
             //try by pseudo
             userOpt = utilisateurRepository.findByPseudo(login);
         }
-        if (userOpt.isPresent() && !userOpt.get().isAdmin()){
+        if (userOpt.isPresent()){
             Utilisateur user = userOpt.get();
             return new User(user.getEmail(), user.getPassword(), Collections.emptyList());
         }else{
