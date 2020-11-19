@@ -37,13 +37,16 @@ public class Utilisateur {
     @OneToMany(targetEntity = Playlist.class, cascade = CascadeType.ALL)
     private List<Playlist> playlists = new ArrayList<>();
 
-    @OneToMany(targetEntity = Artiste.class)
+    @JoinTable(uniqueConstraints = {@UniqueConstraint(columnNames={"utilisateur_id", "artistes_id"})})
+    @ManyToMany(targetEntity = Artiste.class)
     private List<Artiste> artistes = new ArrayList<>();
 
-    @OneToMany(targetEntity = Album.class)
+    @JoinTable(uniqueConstraints = {@UniqueConstraint(columnNames={"utilisateur_id", "albums_id"})})
+    @ManyToMany(targetEntity = Album.class)
     private List<Album> albums = new ArrayList<>();
 
-    @OneToMany(targetEntity = Titre.class)
+    @JoinTable(uniqueConstraints = {@UniqueConstraint(columnNames={"utilisateur_id", "titres_id"})})
+    @ManyToMany(targetEntity = Titre.class)
     private List<Titre> titres = new ArrayList<>();
 
     public Utilisateur(String email, String pseudo, String password) {
