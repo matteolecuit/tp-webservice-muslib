@@ -1,5 +1,8 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { dispatch } from 'redux'
+
+const setUser = (payload) => ({ type: "SET_USER", payload })
 
 class RegisterForm extends React.Component {
   state = {
@@ -28,13 +31,9 @@ class RegisterForm extends React.Component {
       })
     })
       .then(response => response.json())
-      .then(item => {
-        if (Array.isArray(item)) {
-          this.props.addItemToState(item[0])
-          this.props.toggle()
-        } else {
-          console.log('failure')
-        }
+      .then(data => {
+        localStorage.setItem("token", data.token)
+        dispatch(setUser(data.user));
       })
       .catch(err => console.log(err))
   }

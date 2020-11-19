@@ -1,5 +1,10 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { dispatch } from 'redux'
+
+const setUser = (payload) => ({ type: "SET_USER", payload })
+
+export const logUserOut = () => ({ type: "LOG_OUT" })
 
 class LoginForm extends React.Component {
   state = {
@@ -13,53 +18,20 @@ class LoginForm extends React.Component {
 
   submitFormAdd = e => {
     e.preventDefault()
-    fetch('http://localhost:8080/titre', {
+    fetch('http://localhost:8080/login', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        duree: 300,
-        nom: this.state.nom,
-        artiste: null,
-        album: null,
+        email: this.state.identifiant,
+        password: this.state.password,
       })
     })
       .then(response => response.json())
-      .then(item => {
-        if (Array.isArray(item)) {
-          this.props.addItemToState(item[0])
-          this.props.toggle()
-        } else {
-          console.log('failure')
-        }
-      })
-      .catch(err => console.log(err))
-  }
-
-  submitFormEdit = e => {
-    e.preventDefault()
-    fetch('http://localhost:8080/titre', {
-      method: 'put',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        duree: this.state.duree,
-        nom: this.state.nom,
-        artiste: null,
-        album: null,
-      })
-    })
-      .then(response => response.json())
-      .then(item => {
-        if (Array.isArray(item)) {
-          // console.log(item[0])
-          this.props.updateState(item[0])
-          this.props.toggle()
-        } else {
-          console.log('failure')
-        }
+      .then(data => {
+        localStorage.setItem("token", data.token)
+        dispatch(setUser(data.user));
       })
       .catch(err => console.log(err))
   }
