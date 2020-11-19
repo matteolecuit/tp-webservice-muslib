@@ -27,9 +27,18 @@ class ManageAlbumsPage extends Component {
 	};
 
 	getAlbums() {
-		fetch('http://localhost:8080/album/')
+		fetch('http://localhost:8080/album/', {
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": "application/json",
+				"Authorization": `${localStorage.getItem("token")}`
+			}
+		})
 			.then(response => response.json())
 			.then(albums => {
+				albums.forEach(album => {
+					album.artiste = album.artiste.alias
+				});
 				this.setState({ albums });
 				console.log(albums);
 			})

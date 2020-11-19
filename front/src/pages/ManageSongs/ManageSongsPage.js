@@ -11,7 +11,13 @@ class ManageSongsPage extends Component {
 	};
 
 	getTitres() {
-		fetch('http://localhost:8080/titre/')
+		fetch('http://localhost:8080/titre/', {
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": "application/json",
+				"Authorization": `${localStorage.getItem("token")}`
+			}
+		})
 			.then(response => response.json())
 			.then(titres => {
 				this.setState({ titres });

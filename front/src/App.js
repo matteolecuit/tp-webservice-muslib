@@ -105,6 +105,9 @@ class App extends Component {
 									<Route exact path="/artists/:id" component={ArtistPage} />
 									<Route exact path="/playlists/" component={PlaylistsPage} />
 									<Route exact path="/playlists/:id" component={PlaylistPage} />
+									<Route exact path="/manage/songs" component={ManageSongsPage} />
+									<Route exact path="/manage/albums" component={ManageAlbumsPage} />
+									<Route exact path="/manage/artists" component={ManageArtistsPage} />
 								</Switch>
 							</div>
 						</div>
