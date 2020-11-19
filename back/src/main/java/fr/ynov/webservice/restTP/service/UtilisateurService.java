@@ -82,7 +82,7 @@ public class UtilisateurService implements UserDetailsService {
 
     public Utilisateur addAlbumToFavorite(String email, long albumId){
         Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
-        if (userOpt.isPresent() && !userOpt.get().isAdmin()){
+        if (userOpt.isPresent() && !userOpt.get().getAdmin()){
             Optional<Album> albumOpt = this.albumService.findById(albumId);
             if (albumOpt.isPresent()){
                 Utilisateur user = userOpt.get();
@@ -95,7 +95,7 @@ public class UtilisateurService implements UserDetailsService {
 
     public Utilisateur deleteAlbumFromFavorite(String email, long albumId){
         Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
-        if (userOpt.isPresent() && !userOpt.get().isAdmin()) {
+        if (userOpt.isPresent() && !userOpt.get().getAdmin()) {
             Utilisateur user = userOpt.get();
             // retrouve l'album
             Optional<Album> album = user.getAlbums().stream().filter(albm -> albm.getId() == albumId).findFirst();
@@ -111,7 +111,7 @@ public class UtilisateurService implements UserDetailsService {
 
     public Utilisateur addArtisteToFavorite(String email, long artisteId){
         Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
-        if (userOpt.isPresent() && !userOpt.get().isAdmin()){
+        if (userOpt.isPresent() && !userOpt.get().getAdmin()){
             Optional<Artiste> artisteOpt = this.artisteService.findById(artisteId);
             if (artisteOpt.isPresent()){
                 Utilisateur user = userOpt.get();
@@ -124,7 +124,7 @@ public class UtilisateurService implements UserDetailsService {
 
     public Utilisateur deleteArtisteFromFavorite(String email, long artisteId){
         Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
-        if (userOpt.isPresent() && !userOpt.get().isAdmin()) {
+        if (userOpt.isPresent() && !userOpt.get().getAdmin()) {
             Utilisateur user = userOpt.get();
             // retrouve l'artiste
             Optional<Artiste> artiste = user.getArtistes().stream().filter(art -> art.getId() == artisteId).findFirst();
@@ -140,7 +140,7 @@ public class UtilisateurService implements UserDetailsService {
 
     public Utilisateur addTitreToFavorite(String email, long titreId){
         Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
-        if (userOpt.isPresent() && !userOpt.get().isAdmin()){
+        if (userOpt.isPresent() && !userOpt.get().getAdmin()){
             Optional<Titre> titreOpt = this.titreService.findById(titreId);
             if (titreOpt.isPresent()){
                 Utilisateur user = userOpt.get();
@@ -153,7 +153,7 @@ public class UtilisateurService implements UserDetailsService {
 
     public Utilisateur deleteTitreFromFavorite(String email, long titreId){
         Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
-        if (userOpt.isPresent() && !userOpt.get().isAdmin()) {
+        if (userOpt.isPresent() && !userOpt.get().getAdmin()) {
             Utilisateur user = userOpt.get();
             // retrouve le titre
             Optional<Titre> titre = user.getTitres().stream().filter(ttre -> ttre.getId() == titreId).findFirst();
@@ -169,7 +169,7 @@ public class UtilisateurService implements UserDetailsService {
 
     public Favoris getFavoris(String email) {
         Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
-        if (userOpt.isPresent() && !userOpt.get().isAdmin()){
+        if (userOpt.isPresent() && !userOpt.get().getAdmin()){
             Utilisateur user = userOpt.get();
             return new Favoris(user.getTitres(), user.getArtistes(), user.getAlbums());
         }
@@ -178,7 +178,7 @@ public class UtilisateurService implements UserDetailsService {
 
     public Utilisateur createPlaylist(String email, Playlist playlist){
         Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
-        if (userOpt.isPresent() && !userOpt.get().isAdmin()){
+        if (userOpt.isPresent() && !userOpt.get().getAdmin()){
             Utilisateur user = userOpt.get();
             Playlist newPlaylist = this.playlistService.save(playlist);
             user.getPlaylists().add(newPlaylist);
@@ -189,7 +189,7 @@ public class UtilisateurService implements UserDetailsService {
 
     public Utilisateur addTitreToPlaylist(String email, long playId, long titreId) throws PlaylistTitreExistException {
         Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
-        if (userOpt.isPresent() && !userOpt.get().isAdmin()){
+        if (userOpt.isPresent() && !userOpt.get().getAdmin()){
             Utilisateur user = userOpt.get();
             Optional<Playlist> playlistOpt = user.getPlaylists().stream().filter(play -> play.getId() == playId).findFirst();
             if (playlistOpt.isPresent()){
@@ -211,7 +211,7 @@ public class UtilisateurService implements UserDetailsService {
 
     public Utilisateur deleteTitreFromPlaylist(String email, long playId, long titreId) {
         Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
-        if (userOpt.isPresent() && !userOpt.get().isAdmin()){
+        if (userOpt.isPresent() && !userOpt.get().getAdmin()){
             Utilisateur user = userOpt.get();
             Optional<Playlist> playlistOpt = user.getPlaylists().stream().filter(play -> play.getId() == playId).findFirst();
             if (playlistOpt.isPresent()){
@@ -219,7 +219,6 @@ public class UtilisateurService implements UserDetailsService {
                 Optional<Titre> titreOpt = playlist.getTitres().stream().filter(titre -> titre.getId() == titreId).findFirst();
                 if (titreOpt.isPresent()) {
                     playlist.getTitres().remove(titreOpt.get());
-                    System.out.println(playlist);
                     return this.utilisateurRepository.save(user);
                 }
             }
@@ -229,7 +228,7 @@ public class UtilisateurService implements UserDetailsService {
 
     public Utilisateur deletePlaylist(String email, long playId) {
         Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
-        if (userOpt.isPresent() && !userOpt.get().isAdmin()) {
+        if (userOpt.isPresent() && !userOpt.get().getAdmin()) {
             Optional<Playlist> playlistOpt = userOpt.get().getPlaylists().stream().filter(play -> play.getId() == playId).findFirst();
             if (playlistOpt.isPresent()) {
                 Playlist playlist = playlistOpt.get();
@@ -247,7 +246,7 @@ public class UtilisateurService implements UserDetailsService {
 
     public Playlist getPlaylist(String email, long playId) {
         Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
-        if (userOpt.isPresent() && !userOpt.get().isAdmin()){
+        if (userOpt.isPresent() && !userOpt.get().getAdmin()){
             Optional<Playlist> playlistOpt = userOpt.get().getPlaylists().stream().filter(play -> play.getId() == playId).findFirst();
             if (playlistOpt.isPresent()) {
                 return playlistOpt.get();

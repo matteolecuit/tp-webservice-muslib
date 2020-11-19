@@ -29,7 +29,7 @@ public class TitreService {
 
     public Titre create(String email, Titre titre){
         Optional<Utilisateur> userOpt = this.utilisateurService.findByEmail(email);
-        if (userOpt.isPresent() && userOpt.get().isAdmin()){
+        if (userOpt.isPresent() && userOpt.get().getAdmin()){
             return this.titreRepository.save(titre);
         }
         return null;
@@ -37,7 +37,7 @@ public class TitreService {
 
     public Titre update(String email, long titreId, Titre t) {
         Optional<Utilisateur> userOpt = this.utilisateurService.findByEmail(email);
-        if (userOpt.isPresent() && userOpt.get().isAdmin()){
+        if (userOpt.isPresent() && userOpt.get().getAdmin()){
             Optional<Titre> titreOpt = this.titreRepository.findById(titreId);
             if (titreOpt.isPresent()){
                 Titre titre = titreOpt.get();
@@ -55,7 +55,7 @@ public class TitreService {
 
     public Titre delete(String email, long titreId) {
         Optional<Utilisateur> userOpt = this.utilisateurService.findByEmail(email);
-        if (userOpt.isPresent() && userOpt.get().isAdmin()) {
+        if (userOpt.isPresent() && userOpt.get().getAdmin()) {
             Optional<Titre> titreOpt = this.titreRepository.findById(titreId);
             if (titreOpt.isPresent()) {
                 this.titreRepository.delete(titreOpt.get());

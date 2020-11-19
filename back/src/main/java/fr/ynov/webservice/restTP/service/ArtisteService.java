@@ -29,7 +29,7 @@ public class ArtisteService {
 
     public Artiste create(String email, Artiste artiste){
         Optional<Utilisateur> userOpt = this.utilisateurService.findByEmail(email);
-        if (userOpt.isPresent() && userOpt.get().isAdmin()){
+        if (userOpt.isPresent() && userOpt.get().getAdmin()){
             return this.artisteRepository.save(artiste);
         }
         return null;
@@ -37,7 +37,7 @@ public class ArtisteService {
 
     public Artiste update(String email, long artisteId, Artiste a) {
         Optional<Utilisateur> userOpt = this.utilisateurService.findByEmail(email);
-        if (userOpt.isPresent() && userOpt.get().isAdmin()){
+        if (userOpt.isPresent() && userOpt.get().getAdmin()){
             Optional<Artiste> artisteOpt = this.artisteRepository.findById(artisteId);
             if (artisteOpt.isPresent()){
                 Artiste artiste = artisteOpt.get();
@@ -55,7 +55,7 @@ public class ArtisteService {
 
     public Artiste delete(String email, long artisteId) {
         Optional<Utilisateur> userOpt = this.utilisateurService.findByEmail(email);
-        if (userOpt.isPresent() && userOpt.get().isAdmin()) {
+        if (userOpt.isPresent() && userOpt.get().getAdmin()) {
             Optional<Artiste> artisteOpt = this.artisteRepository.findById(artisteId);
             if (artisteOpt.isPresent()) {
                 this.artisteRepository.delete(artisteOpt.get());
