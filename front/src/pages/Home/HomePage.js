@@ -43,12 +43,18 @@ class HomePage extends Component {
 	}
 
 	render() {
-		const artists = this.state.artists.map((item) =>
-			<StyledArtistCard imgUrl={item.imageUrl} titre={item.alias} link={'/artists/' + item.id}></StyledArtistCard>
-		);
-		const albums = this.state.albums.map((item) =>
-			<StyledCard imgUrl={item.imageUrl} titre={item.nom} link={'/albums/' + item.id} artiste={item.artiste}></StyledCard>
-		);
+		let artists = [];
+		if (this.state.artists) {
+			artists = this.state.artists.map((item) =>
+				<StyledArtistCard imgUrl={item.imageUrl} titre={item.alias} link={'/artists/' + item.id}></StyledArtistCard>
+			);
+		}
+		let albums = [];
+		if (this.state.albums) {
+			albums = this.state.albums.map((item) =>
+				<StyledCard imgUrl={item.imageUrl} titre={item.nom} link={'/albums/' + item.id} artiste={item.artiste}></StyledCard>
+			);
+		}
 		return (
 			<Container className="App">
 				<Row>
