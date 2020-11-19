@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Calendar;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "init")
@@ -41,13 +40,22 @@ public class InitController {
         System.out.println("utilisateurService");
 
         for (int i = 0; i < 5; i++){
-            this.utilisateurService.save(new Utilisateur("test"+i+"@mail.com", "pseudo"+i));
+            this.utilisateurService.save(new Utilisateur("test"+i+"@mail.com", "pseudo"+i, "pwd"));
+        }
+
+        System.out.println("artisteService");
+
+        for (int i = 0; i < 5; i++){
+            Artiste art = new Artiste("art "+i, "");
+            this.artisteService.create(1, art);
         }
 
         System.out.println("albumService");
 
         for (int i = 0; i < 5; i++){
             Album album = new Album(Calendar.getInstance(), "album "+i, "");
+            Artiste artiste = this.artisteService.getRandom(1).get(0);
+            album.setArtiste(artiste);
             this.albumService.create(1, album);
         }
 
@@ -55,30 +63,15 @@ public class InitController {
 
         for (int i = 0; i < 5; i++){
             Titre titre = new Titre(180, "Titre "+i);
-            Titre newTitre = this.titreService.create(1, titre);
-            Album album = this.albumService.getRandom(1).get(0);
-            album.getTitres().add(newTitre);
-            this.albumService.create(1, album);
-        }
-
-        System.out.println("artisteService");
-
-        for (int i = 0; i < 5; i++){
-            Artiste art = new Artiste("art "+i, "");
-            List<Album> albumList = albumService.getRandom(1);
-
-            art.setAlbums(albumList);
-
-            this.artisteService.create(1, art);
+            titre.setAlbum(this.albumService.getRandom(1).get(0));
+            this.titreService.create(1, titre);
         }
 
         System.out.println("playlistService");
 
         for (int i = 0; i < 5; i++){
-            Playlist playlist = this.playlistService.save(new Playlist("Playlist "+i));
             Utilisateur user = this.utilisateurService.getRandom(1).get(0);
-            user.getPlaylists().add(playlist);
-            this.utilisateurService.save(user);
+            this.utilisateurService.createPlaylist(user.getEmail(), new Playlist("Playlist "+i));
         }
 
     }

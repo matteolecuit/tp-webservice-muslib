@@ -25,6 +25,8 @@ public class Administrateur {
 
     private String pseudo;
 
+    private String password;
+
     public Administrateur(String email, String pseudo) {
         this.email = email;
         this.pseudo = pseudo;

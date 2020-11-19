@@ -6,6 +6,7 @@ import fr.ynov.webservice.restTP.exception.PlaylistTitreExistException;
 import fr.ynov.webservice.restTP.model.Favoris;
 import fr.ynov.webservice.restTP.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,13 +20,8 @@ public class UtilisateurController {
     UtilisateurService utilisateurService;
 
     @RequestMapping(method = RequestMethod.GET, value = "")
-    public List<Utilisateur> getAll(){
-        return this.utilisateurService.findAll();
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public Utilisateur getUtilisateur(@PathVariable(value = "id") long id){
-        Optional<Utilisateur> userOpt = this.utilisateurService.findById(id);
+    public Utilisateur getUtilisateur(Authentication authentication){
+        Optional<Utilisateur> userOpt = this.utilisateurService.findByEmail(authentication.getName());
         return userOpt.orElse(null);
     }
 
@@ -34,68 +30,77 @@ public class UtilisateurController {
         return utilisateurService.save(utilisateur);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/{id}/favoris/album")
-    public Utilisateur addAlbumToFavorite(@PathVariable(value = "id") long userId, @RequestParam long albumId){
-        return this.utilisateurService.addAlbumToFavorite(userId, albumId);
+    /*@RequestMapping(method = RequestMethod.GET, value = "/login")
+    public String login(@RequestParam(value = "state") String state) {
+        if (state.equals("success")){
+            return "Invalid username/password";
+        }else{
+            return "Successfully logged in !";
+        }
+    }*/
+
+    @RequestMapping(method = RequestMethod.POST, value = "/favoris/album")
+    public Utilisateur addAlbumToFavorite(Authentication authentication, @RequestParam long albumId){
+        return this.utilisateurService.addAlbumToFavorite(authentication.getName(), albumId);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/favoris/album")
-    public Utilisateur deleteAlbumFromFavorite(@PathVariable(value = "id") long userId, @RequestParam long albumId){
-        return this.utilisateurService.deleteAlbumFromFavorite(userId, albumId);
+    @RequestMapping(method = RequestMethod.DELETE, value = "/favoris/album")
+    public Utilisateur deleteAlbumFromFavorite(Authentication authentication, @RequestParam long albumId){
+        return this.utilisateurService.deleteAlbumFromFavorite(authentication.getName(), albumId);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/{id}/favoris/artiste")
-    public Utilisateur addArtisteToFavorite(@PathVariable(value = "id") long userId, @RequestParam long artisteId){
-        return this.utilisateurService.addArtisteToFavorite(userId, artisteId);
+    @RequestMapping(method = RequestMethod.POST, value = "/favoris/artiste")
+    public Utilisateur addArtisteToFavorite(Authentication authentication, @RequestParam long artisteId){
+        return this.utilisateurService.addArtisteToFavorite(authentication.getName(), artisteId);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/favoris/artiste")
-    public Utilisateur deleteArtisteFromFavorite(@PathVariable(value = "id") long userId, @RequestParam long artisteId){
-        return this.utilisateurService.deleteArtisteFromFavorite(userId, artisteId);
+    @RequestMapping(method = RequestMethod.DELETE, value = "/favoris/artiste")
+    public Utilisateur deleteArtisteFromFavorite(Authentication authentication, @RequestParam long artisteId){
+        return this.utilisateurService.deleteArtisteFromFavorite(authentication.getName(), artisteId);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/{id}/favoris/titre")
-    public Utilisateur addTitreToFavorite(@PathVariable(value = "id") long userId, @RequestParam long titreId){
-        return this.utilisateurService.addTitreToFavorite(userId, titreId);
+    @RequestMapping(method = RequestMethod.POST, value = "/favoris/titre")
+    public Utilisateur addTitreToFavorite(Authentication authentication, @RequestParam long titreId){
+        return this.utilisateurService.addTitreToFavorite(authentication.getName(), titreId);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/favoris/titre")
-    public Utilisateur deleteTitreFromFavorite(@PathVariable(value = "id") long userId, @RequestParam long titreId){
-        return this.utilisateurService.deleteTitreFromFavorite(userId, titreId);
+    @RequestMapping(method = RequestMethod.DELETE, value = "/favoris/titre")
+    public Utilisateur deleteTitreFromFavorite(Authentication authentication, @RequestParam long titreId){
+        return this.utilisateurService.deleteTitreFromFavorite(authentication.getName(), titreId);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{id}/favoris")
-    public Favoris getFavoris(@PathVariable(value = "id") long userId){
-        return this.utilisateurService.getFavoris(userId);
+    @RequestMapping(method = RequestMethod.GET, value = "/favoris")
+    public Favoris getFavoris(Authentication authentication){
+        return this.utilisateurService.getFavoris(authentication.getName());
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/{userId}/playlist")
-    public Utilisateur createPlaylist(@PathVariable("userId") long userId, @RequestBody Playlist playlist){
-        return this.utilisateurService.createPlaylist(userId, playlist);
+    @RequestMapping(method = RequestMethod.POST, value = "/playlist")
+    public Utilisateur createPlaylist(Authentication authentication, @RequestBody Playlist playlist){
+        return this.utilisateurService.createPlaylist(authentication.getName(), playlist);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/{userId}/playlist/{playId}")
-    public Utilisateur addTitreToPlaylist(@PathVariable(value = "userId") long userId, @PathVariable(value = "playId") long playId, @RequestParam long titreId) throws PlaylistTitreExistException {
-        return this.utilisateurService.addTitreToPlaylist(userId, playId, titreId);
+    @RequestMapping(method = RequestMethod.POST, value = "/playlist/{playId}")
+    public Utilisateur addTitreToPlaylist(Authentication authentication, @PathVariable(value = "playId") long playId, @RequestParam long titreId) throws PlaylistTitreExistException {
+        return this.utilisateurService.addTitreToPlaylist(authentication.getName(), playId, titreId);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{userId}/playlist/{playId}")
-    public Utilisateur deleteTitreFromPlaylist(@PathVariable(value = "userId") long userId, @PathVariable(value = "playId") long playId, @RequestParam long titreId){
-        return this.utilisateurService.deleteTitreFromPlaylist(userId, playId, titreId);
+    @RequestMapping(method = RequestMethod.DELETE, value = "/playlist/{playId}")
+    public Utilisateur deleteTitreFromPlaylist(Authentication authentication, @PathVariable(value = "playId") long playId, @RequestParam long titreId){
+        return this.utilisateurService.deleteTitreFromPlaylist(authentication.getName(), playId, titreId);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{userId}/playlist")
-    public Utilisateur deletePlaylist(@PathVariable(value = "userId") long userId, @RequestParam long playId){
-        return this.utilisateurService.deletePlaylist(userId, playId);
+    @RequestMapping(method = RequestMethod.DELETE, value = "/playlist")
+    public Utilisateur deletePlaylist(Authentication authentication, @RequestParam long playId){
+        return this.utilisateurService.deletePlaylist(authentication.getName(), playId);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{userId}/playlist/{playId}")
-    public Playlist getPlaylist(@PathVariable(value = "userId") long userId, @PathVariable(value = "playId") long playId){
-        return this.utilisateurService.getPlaylist(userId, playId);
+    @RequestMapping(method = RequestMethod.GET, value = "/playlist/{playId}")
+    public Playlist getPlaylist(Authentication authentication, @PathVariable(value = "playId") long playId){
+        return this.utilisateurService.getPlaylist(authentication.getName(), playId);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{userId}/playlist")
-    public List<Playlist> getAllPlaylist(@PathVariable(value = "userId") long userId){
-        return this.utilisateurService.getAllPlaylist(userId);
+    @RequestMapping(method = RequestMethod.GET, value = "/playlist")
+    public List<Playlist> getAllPlaylist(Authentication authentication){
+        return this.utilisateurService.getAllPlaylist(authentication.getName());
     }
 }
