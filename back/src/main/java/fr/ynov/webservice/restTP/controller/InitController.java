@@ -47,29 +47,29 @@ public class InitController {
         System.out.println("albumService");
 
         for (int i = 0; i < 5; i++){
-            this.albumService.create(1, new Album(Calendar.getInstance(), "album "+i, ""));
-        }
-
-        System.out.println("artisteService");
-
-        for (int i = 0; i < 5; i++){
-            Artiste art = new Artiste("art "+i, "");
-            List<Album> albumList = albumService.getRandom(1);
-
-            art.setAlbums(albumList);
-
-            this.artisteService.create(1, art);
+            Album album = new Album(Calendar.getInstance(), "album "+i, "https://e-cdns-images.dzcdn.net/images/cover/5722e04a2ba2539c02ac2afb655a4f93/264x264-000000-80-0-0.jpg");
+            this.albumService.create(1, album);
         }
 
         System.out.println("titreService");
 
         for (int i = 0; i < 5; i++){
             Titre titre = new Titre(180, "Titre "+i);
-            List<Artiste> artisteList = this.artisteService.getRandom(1);
-            Artiste artiste = artisteList.get(0);
-            artiste.getTitres().add(titre);
-            artiste.getAlbums().get(0).getTitres().add(titre);
-            this.titreService.create(1, titre);
+            Titre newTitre = this.titreService.create(1, titre);
+            Album album = this.albumService.getRandom(1).get(0);
+            album.getTitres().add(newTitre);
+            this.albumService.create(1, album);
+        }
+
+        System.out.println("artisteService");
+
+        for (int i = 0; i < 5; i++){
+            Artiste art = new Artiste("art "+i, "https://e-cdn-images.dzcdn.net/images/artist/4ad5a1a6eebec66da3db5796d947be01/264x264-000000-80-0-0.jpg");
+            List<Album> albumList = albumService.getRandom(1);
+
+            art.setAlbums(albumList);
+
+            this.artisteService.create(1, art);
         }
 
         System.out.println("playlistService");

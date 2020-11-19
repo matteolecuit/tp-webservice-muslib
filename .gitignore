@@ -5,3 +5,5 @@ back/.DS_Store
 
 
 .DS_Store
+
+back/src/main/resources/application.properties
