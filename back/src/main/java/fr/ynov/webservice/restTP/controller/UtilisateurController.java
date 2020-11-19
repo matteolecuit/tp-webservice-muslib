@@ -29,6 +29,11 @@ public class UtilisateurController {
         return userOpt.orElse(null);
     }
 
+    @RequestMapping(method = RequestMethod.PUT, value = "")
+    public Utilisateur updateUtilisateur(Authentication authentication, @RequestBody Utilisateur utilisateur){
+        return this.utilisateurService.update(authentication.getName(), utilisateur);
+    }
+
     @RequestMapping(method = RequestMethod.POST, value = "/register")
     public JSONObject createUtilisateur(@RequestBody Utilisateur utilisateur){
         Utilisateur user =  utilisateurService.save(utilisateur);
