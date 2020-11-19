@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { useDispatch } from 'react-redux'
 
 const setUser = (payload) => ({ type: "SET_USER", payload })
 
@@ -33,7 +32,7 @@ class RegisterForm extends React.Component {
       .then(response => response.json())
       .then(data => {
         localStorage.setItem("token", data.token)
-        useDispatch(setUser(data.user));
+        window.location.reload(false);
       })
       .catch(err => console.log(err))
   }
