@@ -1,5 +1,6 @@
 package fr.ynov.webservice.restTP.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,7 +28,11 @@ public class Utilisateur {
 
     private String pseudo;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
+    @Column(columnDefinition = "boolean default false", nullable = false)
+    private boolean admin;
 
     @OneToMany(targetEntity = Playlist.class, cascade = CascadeType.ALL)
     private List<Playlist> playlists = new ArrayList<>();
@@ -45,5 +50,12 @@ public class Utilisateur {
         this.email = email;
         this.pseudo = pseudo;
         this.password = password;
+    }
+
+    public Utilisateur(String email, String pseudo, String password, boolean admin) {
+        this.email = email;
+        this.pseudo = pseudo;
+        this.password = password;
+        this.admin = admin;
     }
 }

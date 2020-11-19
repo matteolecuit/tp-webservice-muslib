@@ -64,4 +64,3 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         return SecurityConstants.TOKEN_PREFIX + token;
     }
 }
-

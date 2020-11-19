@@ -3,6 +3,7 @@ package fr.ynov.webservice.restTP.controller;
 import fr.ynov.webservice.restTP.entity.Titre;
 import fr.ynov.webservice.restTP.service.TitreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,18 +28,18 @@ public class TitreController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "")
-    public Titre createTitre(@RequestParam("adminId") long adminId, @RequestBody Titre titre){
-        return this.titreService.create(adminId, titre);
+    public Titre createTitre(Authentication authentication, @RequestBody Titre titre){
+        return this.titreService.create(authentication.getName(), titre);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-    public Titre updateTitre(@RequestParam("adminId") long adminId, @PathVariable("id") long titreId, @RequestBody Titre titre){
-        return this.titreService.update(adminId, titreId, titre);
+    public Titre updateTitre(Authentication authentication, @PathVariable("id") long titreId, @RequestBody Titre titre){
+        return this.titreService.update(authentication.getName(), titreId, titre);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "")
-    public Titre deleteTitre(@RequestParam("adminId") long adminId, @RequestParam long titreId){
-        return this.titreService.delete(adminId, titreId);
+    public Titre deleteTitre(Authentication authentication, @RequestParam long titreId){
+        return this.titreService.delete(authentication.getName(), titreId);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/random")
