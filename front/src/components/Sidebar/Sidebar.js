@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
 import Icon from 'react-eva-icons';
 import {
@@ -6,16 +6,17 @@ import {
 	Switch,
 	Route,
 	Link
-  } from "react-router-dom";
+} from "react-router-dom";
 
 class Sidebar extends Component {
 	items = [];
 	playlistsLabel = {};
 	playlists = [];
-
+	state = {
+		playlists: []
+	}
 	constructor(props) {
 		super();
-		console.log(props);
 		this.items = props.items;
 		this.playlistsLabel = props.playlistsLabel;
 		this.playlists = props.playlists;
@@ -24,14 +25,14 @@ class Sidebar extends Component {
 		this.itemsList = this.items.map((item) =>
 			<Link to={item.url}>
 				<SidebarItem>
-					<Icon 
+					<Icon
 						name={item.icon}
 						size="large"
 						fill="#000000"     // small, medium, large, xlarge
 						animation={{
-						type: "pulse",  // zoom, pulse, shake, flip
-						hover: true,
-						infinite: false 
+							type: "pulse",  // zoom, pulse, shake, flip
+							hover: true,
+							infinite: false
 						}}
 					/>
 					<SidebarItemLabel>{item.label}</SidebarItemLabel>
@@ -42,64 +43,82 @@ class Sidebar extends Component {
 		// Print Playlists Label
 		if (this.playlistsLabel) {
 			this.playlistsLabelShow =
-			<Link to={this.playlistsLabel.url}>
-				<SidebarPlaylist>
-					<SidebarItemLabel>{this.playlistsLabel.label}</SidebarItemLabel>
-					<Icon 
-						name={this.playlistsLabel.icon}
-						size="large"
-						fill="#000000"     // small, medium, large, xlarge
-						animation={{
-						type: "pulse",  // zoom, pulse, shake, flip
-						hover: true,
-						infinite: false 
-						}}
-					/>
-				</SidebarPlaylist>
-			</Link>
+				<Link to={this.playlistsLabel.url}>
+					<SidebarPlaylist>
+						<SidebarItemLabel>{this.playlistsLabel.label}</SidebarItemLabel>
+						<Icon
+							name={this.playlistsLabel.icon}
+							size="large"
+							fill="#000000"     // small, medium, large, xlarge
+							animation={{
+								type: "pulse",  // zoom, pulse, shake, flip
+								hover: true,
+								infinite: false
+							}}
+						/>
+					</SidebarPlaylist>
+				</Link>
 		}
 
 		// Print Playlists
-		if (this.playlists) {
-			this.playlistsList = this.playlists.map((playlist) =>
-			<Link to={playlist.url}>
-				<SidebarItem>
-					<Icon 
-						name={playlist.icon}
-						size="large"
-						fill="#000000"     // small, medium, large, xlarge
-						animation={{
-						type: "pulse",  // zoom, pulse, shake, flip
-						hover: true,
-						infinite: false 
-						}}
-					/>
-					<SidebarItemLabel>{playlist.label}</SidebarItemLabel>
-				</SidebarItem>
-			</Link>
-		);
-		}
-		
+
+
+	}
+	getPlaylist() {
+		fetch('http://localhost:8080/utilisateur/playlist', {
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": "application/json",
+				"Authorization": `${localStorage.getItem("token")}`
+			}
+		})
+			.then(response => response.json())
+			.then(playlists => {
+				this.setState({ playlists });
+			})
+			.catch(err => console.log(err))
+	};
+	componentDidMount() {
+		this.getPlaylist();
 	}
 
 	render() {
-		return (
-		  <StyledSidebar>
-			  <SidebarLogo id="logo">
-				  <Link to="/"><SidebarLogoImg src="https://i.redd.it/fnutbjqyahj21.jpg"/></Link>
-				  <SidebarLogoTitle>Tongo Music</SidebarLogoTitle>
-			  </SidebarLogo>
-	  
-			  <div id="navbar">
-					  <SidebarNav>
-						  {this.itemsList}
-						  {this.playlistsLabelShow}
-						  {this.playlistsList}
-					  </SidebarNav>
-			  </div>
-		  </StyledSidebar>
+		this.playlistsList = this.state.playlists.map((playlist) =>
+			<Link to={'/playlists/' + playlist.id}>
+				<SidebarItem>
+					<Icon
+						name="folder-outline"
+						size="large"
+						fill="#000000"     // small, medium, large, xlarge
+						animation={{
+							type: "pulse",  // zoom, pulse, shake, flip
+							hover: true,
+							infinite: false
+						}}
+					/>
+					<SidebarItemLabel>{playlist.nom}</SidebarItemLabel>
+				</SidebarItem>
+			</Link>
 		);
-	  };
+
+		return (
+			<StyledSidebar>
+				<SidebarLogo id="logo">
+					<Link to="/"><SidebarLogoImg src="https://i.redd.it/fnutbjqyahj21.jpg" /></Link>
+					<SidebarLogoTitle>Tongo Music</SidebarLogoTitle>
+				</SidebarLogo>
+
+				<div id="navbar">
+					<SidebarNav>
+						{this.itemsList}
+						{this.playlistsLabelShow}
+						{this.playlistsList}
+
+					</SidebarNav>
+				</div>
+			</StyledSidebar>
+		);
+	};
 }
 
 export default Sidebar;

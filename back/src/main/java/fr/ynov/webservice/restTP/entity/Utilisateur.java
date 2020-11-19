@@ -32,7 +32,7 @@ public class Utilisateur {
     private String password;
 
     @Column(columnDefinition = "boolean default false", nullable = false)
-    private boolean admin;
+    private Boolean admin;
 
     @OneToMany(targetEntity = Playlist.class, cascade = CascadeType.ALL)
     private List<Playlist> playlists = new ArrayList<>();

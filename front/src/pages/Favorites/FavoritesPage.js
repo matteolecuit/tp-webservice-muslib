@@ -37,6 +37,12 @@ class FavoritesPage extends Component {
   }
 
   render() {
+    let titres = [];
+    if (this.state.titres) {
+      titres = this.state.titres.map((item) => (
+        <StyledCard imgUrl={item.imageUrl} titre={item.nom}></StyledCard>
+      ));
+    }
     let artists = [];
     if (this.state.artistes) {
       artists = this.state.artistes.map((item) => (

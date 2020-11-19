@@ -29,7 +29,7 @@ public class AlbumService {
 
     public Album create(String email, Album album){
         Optional<Utilisateur> userOpt = this.utilisateurService.findByEmail(email);
-        if (userOpt.isPresent() && userOpt.get().isAdmin()){
+        if (userOpt.isPresent() && userOpt.get().getAdmin()){
             return this.albumRepository.save(album);
         }
         return null;
@@ -37,7 +37,7 @@ public class AlbumService {
 
     public Album update(String email, long albumId, Album a) {
         Optional<Utilisateur> userOpt = this.utilisateurService.findByEmail(email);
-        if (userOpt.isPresent() && userOpt.get().isAdmin()){
+        if (userOpt.isPresent() && userOpt.get().getAdmin()){
             Optional<Album> albumOpt = this.albumRepository.findById(albumId);
             if (albumOpt.isPresent()){
                 Album album = albumOpt.get();
@@ -61,7 +61,7 @@ public class AlbumService {
 
     public Album delete(String email, long albumId) {
         Optional<Utilisateur> userOpt = this.utilisateurService.findByEmail(email);
-        if (userOpt.isPresent() && userOpt.get().isAdmin()) {
+        if (userOpt.isPresent() && userOpt.get().getAdmin()) {
             Optional<Album> albumOpt = this.albumRepository.findById(albumId);
             if (albumOpt.isPresent()) {
                 this.albumRepository.delete(albumOpt.get());

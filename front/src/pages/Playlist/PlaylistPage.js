@@ -4,7 +4,7 @@ import Icon from 'react-eva-icons';
 import { Container, Row, Col } from 'reactstrap'
 import StyledTrack from '../../components/Commons/Track';
 
-class AlbumsPage extends Component {
+class PlaylistPage extends Component {
 
 	state = {
 		playlist: {
@@ -60,7 +60,7 @@ class AlbumsPage extends Component {
 	id = this.props.match.params.id;
 
 	getPlaylist() {
-		fetch('http://localhost:8080/playlist/' + this.id, {
+		fetch('http://localhost:8080/utilisateur/playlist/' + this.id, {
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json",
@@ -69,7 +69,9 @@ class AlbumsPage extends Component {
 		})
 			.then(response => response.json())
 			.then(playlist => {
-				playlist.imageUrl = playlist.titres[0].imageUrl;
+				if (playlist.titres.length > 0) {
+					playlist.imageUrl = playlist.titres[0].imageUrl;
+				}
 				this.setState({ playlist });
 				console.log(this.state.playlist);
 			})
@@ -77,7 +79,25 @@ class AlbumsPage extends Component {
 	};
 
 	componentDidMount() {
+		console.log(this.id);
 		this.getPlaylist();
+	}
+	componentDidUpdate(prevProps, prevState) {
+		/**
+		* this is the initial render
+		* without a previous prop change
+		*/
+		if (prevProps == undefined) {
+			return false
+		}
+
+		/**
+		 * new Project in town ?
+		 */
+		if (this.id != this.props.match.params.id) {
+			this.id = this.props.match.params.id;
+			this.getPlaylist();
+		}
 	}
 
 	render() {
@@ -116,5 +136,5 @@ class AlbumsPage extends Component {
 	};
 }
 
-export default AlbumsPage
+export default PlaylistPage
 

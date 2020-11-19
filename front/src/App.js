@@ -28,57 +28,34 @@ class App extends Component {
 			pseudo: null,
 			avatar: null
 		},
-		sidebar: {
-			items: [
-				{
-					icon: "activity-outline",
-					label: "Discover",
-					url: "/"
-				},
-				{
-					icon: "book-open-outline",
-					label: "Albums",
-					url: "/albums"
-				},
-				{
-					icon: "person-outline",
-					label: "Artists",
-					url: "/artists"
-				},
-				{
-					icon: "heart-outline",
-					label: "Favorites",
-					url: "/favorites"
-				}
-			],
-			playlistsLabel: {
-				label: "Playlists",
-				icon: "plus-circle-outline",
-				url: "/playlists"
+		items: [
+			{
+				icon: "activity-outline",
+				label: "Discover",
+				url: "/"
 			},
-			playlists: [
-				{
-					label: "Liked Songs",
-					icon: "folder-outline",
-					url: "/playlists/1"
-				},
-				{
-					label: "Best Of Big Ali",
-					icon: "folder-outline",
-					url: "/playlists/1"
-				},
-				{
-					label: "Fiesta",
-					icon: "folder-outline",
-					url: "/playlists/1"
-				},
-				{
-					label: "Motivation",
-					icon: "folder-outline",
-					url: "/playlists/1"
-				},
-			]
-		}
+			{
+				icon: "book-open-outline",
+				label: "Albums",
+				url: "/albums"
+			},
+			{
+				icon: "person-outline",
+				label: "Artists",
+				url: "/artists"
+			},
+			{
+				icon: "heart-outline",
+				label: "Favorites",
+				url: "/favorites"
+			}
+		],
+		playlistsLabel: {
+			label: "Playlists",
+			icon: "plus-circle-outline",
+			url: "/playlists"
+		},
+		playlists: []
 	};
 	getUserData() {
 		fetch('http://localhost:8080/utilisateur', {
@@ -95,14 +72,14 @@ class App extends Component {
 			.catch(err => console.log(err))
 	};
 	componentDidMount() {
-		this.getUserData()
+		this.getUserData();
 	}
 
 	render() {
 		return (
 			<Router>
 				<Container>
-					<Sidebar items={this.state.sidebar.items} playlistsLabel={this.state.sidebar.playlistsLabel} playlists={this.state.sidebar.playlists}></Sidebar>
+					<Sidebar items={this.state.items} playlistsLabel={this.state.playlistsLabel}></Sidebar>
 					<div style={{ width: "100%", zIndex: "0" }}>
 						<Topbar firstname={this.state.utilisateur.pseudo} profilePic={this.state.utilisateur.avatar}></Topbar>
 						<div style={{ background: "linear-gradient(180deg, rgba(244, 249, 255, 0.01) 0%, #F4F9FF 50.23%)", height: "100%", marginTop: "100px" }}>
