@@ -47,7 +47,7 @@ public class InitController {
         System.out.println("artisteService");
 
         for (int i = 0; i < 5; i++){
-            Artiste art = new Artiste("art "+i, "");
+            Artiste art = new Artiste("art "+i, "https://e-cdn-images.dzcdn.net/images/artist/4ad5a1a6eebec66da3db5796d947be01/264x264-000000-80-0-0.jpg");
             this.artisteService.create(1, art);
         }
 
