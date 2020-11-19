@@ -11,7 +11,7 @@ class ManageArtistsPage extends Component {
 	};
 
 	getArtists() {
-		fetch('http://localhost:8080/artist/')
+		fetch('http://localhost:8080/artiste/')
 			.then(response => response.json())
 			.then(artists => {
 				console.log(artists);
