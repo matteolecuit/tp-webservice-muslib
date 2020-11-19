@@ -30,15 +30,6 @@ public class UtilisateurController {
         return utilisateurService.save(utilisateur);
     }
 
-    /*@RequestMapping(method = RequestMethod.GET, value = "/login")
-    public String login(@RequestParam(value = "state") String state) {
-        if (state.equals("success")){
-            return "Invalid username/password";
-        }else{
-            return "Successfully logged in !";
-        }
-    }*/
-
     @RequestMapping(method = RequestMethod.POST, value = "/favoris/album")
     public Utilisateur addAlbumToFavorite(Authentication authentication, @RequestParam long albumId){
         return this.utilisateurService.addAlbumToFavorite(authentication.getName(), albumId);
