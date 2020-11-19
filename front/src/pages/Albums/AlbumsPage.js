@@ -118,19 +118,41 @@ class AlbumsPage extends Component {
 			},
 		]
 	};
+
+	getAlbums() {
+		fetch('http://localhost:8080/album/', {
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": "application/json",
+				"Authorization": `${localStorage.getItem("token")}`
+			}
+		})
+			.then(response => response.json())
+			.then(albums => {
+				this.setState({ albums });
+			})
+			.catch(err => console.log(err))
+	};
+
+	componentDidMount() {
+		this.getAlbums();
+	}
+
 	
-	// List Albums
-	albums = this.state.albums.map((item) =>
-		<StyledCard imgUrl={item.img} titre={item.name} link={item.url} artiste={item.artist}></StyledCard>
-	);
 	
 	render() {
+		let albums = []
+		if (this.state.albums) {
+			albums = this.state.albums.map((item) =>
+				<StyledCard imgUrl={item.imageUrl} titre={item.nom} link={item.url} artiste={item.artist}></StyledCard>
+			);
+		}
 		return (
 			<Container>
 				<Row>
 					<h2 style={{margin: "20px 0"}}>Featured Albums</h2>
 					<ul style={{display: "flex", justifyContent: "flex-start", padding: "0", flexWrap: "wrap"}}>
-						{this.albums}
+						{albums}
 					</ul>
 				</Row>
 			</Container>
