@@ -10,10 +10,11 @@ class ManageSongsPage extends Component {
 		this.state = {
 			titres: [],
 			addSong: {
-				titre: "",
+				nom: "",
 				artiste: "",
 				duree: ""
-			}
+			},
+			albums: []
 		};
 
 		this.handleChange = this.handleChange.bind(this);
@@ -35,46 +36,65 @@ class ManageSongsPage extends Component {
 			.catch(err => console.log(err))
 	};
 
+	getAlbums() {
+		fetch('http://localhost:8080/album/', {
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": "application/json",
+				"Authorization": `${localStorage.getItem("token")}`
+			}
+		})
+			.then(response => response.json())
+			.then(albums => {
+				albums.forEach(album => {
+					album.artiste = album.artiste.alias
+				});
+				this.setState({ albums });
+			})
+			.catch(err => console.log(err))
+	};
+
 	componentDidMount() {
 		this.getTitres();
+		this.getAlbums();
 	}
 
 	handleChange(event) {
 		switch (event.target.name) {
 			case ("track-title"):
-				this.state.addSong.titre = event.target.value;
-				console.log(this.state.addSong.titre);
+				this.state.addSong.nom = event.target.value;
 				break;
 
 			case ("track-album"):
 				this.state.addSong.album = event.target.value;
-				console.log(this.state.addSong.album);
 				break;
 
 			case ("track-length"):
 				this.state.addSong.duree = event.target.value;
-				console.log(this.state.addSong.duree);
 				break;
 
 		}
 	}
-
+	
 	handleSubmit(event) {
 		event.preventDefault();
 		fetch('http://localhost:8080/titre', {
 			method: 'post',
 			headers: {
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/json',
+				"Authorization": `${localStorage.getItem("token")}`
 			},
 			body: JSON.stringify({
-				titre: this.state.addSong.titre,
-				album: this.state.addSong.album,
+				nom: this.state.addSong.nom,
+				album: {
+					id: this.state.addSong.album
+				},
 				duree: this.state.addSong.duree
 			})
 		})
 		.then(response => response.json())
 		.then(data => {
-			console.log(data);
+			this.componentDidMount();
 		})
 		.catch(err => console.log(err))
 	}
@@ -83,7 +103,14 @@ class ManageSongsPage extends Component {
 		let tracks = [];
 		if (this.state.titres) {
 			tracks = this.state.titres.map((item, index) =>
-				<StyledAdminTrack trackNumber={index + 1} title={item.nom} artist={item.artiste} length={item.duree}></StyledAdminTrack>
+				<StyledAdminTrack trackNumber={index + 1} title={item.nom} artist={item.album.nom} length={item.duree}></StyledAdminTrack>
+			);
+		}
+
+		let albums = [];
+		if (this.state.albums) {
+			albums = this.state.albums.map((item, index) =>
+				<option value={item.id}>{item.nom}</option>
 			);
 		}
 
@@ -96,9 +123,10 @@ class ManageSongsPage extends Component {
 							{tracks}
 						</ul>
 						<form onSubmit={this.handleSubmit} style={{ display: "flex" }}>
-							<input type="text" disabled style={{ flex: 1, maxWidth: "25px" }}></input>
 							<input type="text" name="track-title" placeholder="Title" style={{ flex: 5 }} onChange={this.handleChange} />
-							<input type="text" name="track-album" placeholder="Album" style={{ flex: 5 }} onChange={this.handleChange} />
+							<select name="track-album" placeholder="Album" style={{ flex: 5 }} onChange={this.handleChange}>
+								{albums}
+							</select>
 							<input type="text" name="track-length" placeholder="Length" style={{ flex: 3 }} onChange={this.handleChange} />
 							<input type="submit" value="Envoyer" />
 						</form>
