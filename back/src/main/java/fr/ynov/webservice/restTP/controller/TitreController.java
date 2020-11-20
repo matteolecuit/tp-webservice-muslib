@@ -17,18 +17,17 @@ public class TitreController {
     TitreService titreService;
 
     @RequestMapping(method = RequestMethod.GET, value = "")
-    public List<Titre> getAll(Authentication authentication){
+    public List<Titre> getAll(){
+        return this.titreService.findAll();
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    public Titre getById(Authentication authentication, @PathVariable("id") long id){
         String email = "";
         if (authentication != null){
             email = authentication.getName();
         }
-        return this.titreService.findAll(email);
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public Titre getById(@PathVariable("id") long id){
-        Optional<Titre> titreOpt = this.titreService.findById(id);
-        return titreOpt.orElse(null);
+        return this.titreService.findByIdAndIsLiked(email, id);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "")

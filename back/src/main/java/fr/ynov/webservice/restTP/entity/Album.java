@@ -41,4 +41,7 @@ public class Album {
         this.nom = nom;
         this.imageUrl = imageUrl;
     }
+
+    @Transient
+    private Boolean like = false;
 }

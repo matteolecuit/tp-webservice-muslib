@@ -83,10 +83,10 @@ public class UtilisateurService implements UserDetailsService {
     public Utilisateur addAlbumToFavorite(String email, long albumId){
         Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
         if (userOpt.isPresent() && !userOpt.get().getAdmin()){
-            Optional<Album> albumOpt = this.albumService.findById(albumId);
-            if (albumOpt.isPresent()){
+            Album album = this.albumService.findById(albumId);
+            if (album != null){
                 Utilisateur user = userOpt.get();
-                user.getAlbums().add(albumOpt.get());
+                user.getAlbums().add(album);
                 return this.utilisateurRepository.save(user);
             }
         }
@@ -141,10 +141,10 @@ public class UtilisateurService implements UserDetailsService {
     public Utilisateur addTitreToFavorite(String email, long titreId){
         Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
         if (userOpt.isPresent() && !userOpt.get().getAdmin()){
-            Optional<Titre> titreOpt = this.titreService.findById(titreId);
-            if (titreOpt.isPresent()){
+            Titre titre = this.titreService.findById(titreId);
+            if (titre != null){
                 Utilisateur user = userOpt.get();
-                user.getTitres().add(titreOpt.get());
+                user.getTitres().add(titre);
                 return this.utilisateurRepository.save(user);
             }
         }
@@ -193,10 +193,10 @@ public class UtilisateurService implements UserDetailsService {
             Utilisateur user = userOpt.get();
             Optional<Playlist> playlistOpt = user.getPlaylists().stream().filter(play -> play.getId() == playId).findFirst();
             if (playlistOpt.isPresent()){
-                Optional<Titre> titreOpt = this.titreService.findById(titreId);
-                if (titreOpt.isPresent()) {
+                Titre titre = this.titreService.findById(titreId);
+                if (titre != null) {
                     Playlist playlist = playlistOpt.get();
-                    playlist.getTitres().add(titreOpt.get());
+                    playlist.getTitres().add(titre);
                     try {
                         return this.utilisateurRepository.save(user);
                     }catch (Exception e){

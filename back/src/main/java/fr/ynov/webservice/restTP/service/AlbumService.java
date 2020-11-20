@@ -1,6 +1,7 @@
 package fr.ynov.webservice.restTP.service;
 
 import fr.ynov.webservice.restTP.entity.Album;
+import fr.ynov.webservice.restTP.entity.Titre;
 import fr.ynov.webservice.restTP.entity.Utilisateur;
 import fr.ynov.webservice.restTP.repository.AlbumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,28 @@ public class AlbumService {
         return this.albumRepository.findAll();
     }
 
-    public Optional<Album> findById(long id){
-        return this.albumRepository.findById(id);
+    public Album findById(long id){
+        Optional<Album> albumOpt = this.albumRepository.findById(id);;
+        return albumOpt.orElse(null);
+    }
+
+    public Album findByIdAndIsLiked(String email, long id) {
+        Album album = findById(id);
+        if (album != null){
+
+            Optional<Utilisateur> userOpt = this.utilisateurService.findByEmail(email);
+            if (userOpt.isPresent()){
+
+                List<Album> likedAlbum = userOpt.get().getAlbums();
+                if (likedAlbum.contains(album)) {
+                    album.setLike(true);
+                }
+
+            }
+
+            return album;
+        }
+        return null;
     }
 
     public Album create(String email, Album album){

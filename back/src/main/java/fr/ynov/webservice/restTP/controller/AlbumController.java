@@ -22,9 +22,12 @@ public class AlbumController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public Album getById(@PathVariable(value = "id") long id){
-        Optional<Album> albumOpt = this.albumService.findById(id);
-        return albumOpt.orElse(null);
+    public Album getById(Authentication authentication, @PathVariable(value = "id") long id){
+        String email = "";
+        if (authentication != null){
+            email = authentication.getName();
+        }
+        return this.albumService.findByIdAndIsLiked(email, id);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "")
