@@ -40,7 +40,7 @@ class ArtistsPage extends Component {
 			<Container>
 				<Row>
 					<Col>
-						<h2 style={{margin: "20px 0"}}>Featured Artists</h2>
+						<h2 style={{margin: "20px 0", width: "100%", textAlign: "left"}}>Featured Artists</h2>
 						<ul style={{display: "flex", justifyContent: "flex-start", padding: "0", flexWrap: "wrap"}}>
 							{artists}
 						</ul>
