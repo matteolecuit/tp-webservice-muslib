@@ -5,11 +5,13 @@ import LoginModalForm from '../../components/Modals/LoginModal'
 import RegisterModalForm from "../Modals/RegisterModal";
 import { TransitionPropTypeKeys } from "reactstrap/lib/utils";
 import { Button, Divider } from "@material-ui/core";
+import ChangeUserInfoModalForm from "../Modals/ChangeUserInfosModal";
+
 import {
-	BrowserRouter as Router,
-	Switch,
-	Route,
-	Link
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
 } from "react-router-dom";
 
 const Topbar = styled.section`
@@ -77,8 +79,8 @@ export default (props) => {
     let topbar = null;
 
     let manageIcon = [];
-		if (props.admin) {
-			manageIcon = 
+    if (props.admin) {
+        manageIcon =
             <TopbarProfileSettings>
                 <Link to="/manage/artists">
                     <Icon
@@ -93,8 +95,8 @@ export default (props) => {
                     />
                 </Link>
             </TopbarProfileSettings>
-        }
-        
+    }
+
     if (localStorage.getItem("token")) {
         topbar =
             <Topbar>
@@ -106,7 +108,7 @@ export default (props) => {
                 </Button>
                 <TopbarProfile>
                     <TopbarProfileImg>
-                        <img src={props.profilePic} alt="profile picture" height="35px" width="35px" />
+                        <ChangeUserInfoModalForm src={props.profilePic} />
                     </TopbarProfileImg>
                     <TopbarProfileName>
                         <span>{props.firstname}</span>
