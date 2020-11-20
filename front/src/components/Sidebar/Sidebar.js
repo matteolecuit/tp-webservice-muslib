@@ -39,12 +39,12 @@ class Sidebar extends Component {
     // Print Playlists Label
     if (this.playlistsLabel) {
       this.playlistsLabelShow = (
-        <Link to={this.playlistsLabel.url}>
-          <SidebarPlaylist>
+        <SidebarPlaylist>
+          <DarkLink to={this.playlistsLabel.url}>
             <SidebarItemLabel>{this.playlistsLabel.label}</SidebarItemLabel>
-            <AddPlaylistModal />
-          </SidebarPlaylist>
-        </Link>
+          </DarkLink>
+          <AddPlaylistModal />
+        </SidebarPlaylist>
       );
     }
 
@@ -115,6 +115,16 @@ class Sidebar extends Component {
 }
 
 export default Sidebar;
+
+const DarkLink = styled(Link)`
+  color: #000000;
+  &:hover {
+    color: #3e2ad1;
+    opacity: 100%;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+`;
 
 const StyledSidebar = styled.section`
   color: white;
