@@ -1,7 +1,6 @@
 package fr.ynov.webservice.restTP.service;
 
 import fr.ynov.webservice.restTP.entity.Artiste;
-import fr.ynov.webservice.restTP.entity.Artiste;
 import fr.ynov.webservice.restTP.entity.Utilisateur;
 import fr.ynov.webservice.restTP.repository.ArtisteRepository;
 import org.springframework.beans.factory.annotation.Autowired;

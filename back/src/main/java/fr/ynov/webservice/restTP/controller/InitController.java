@@ -1,18 +1,21 @@
 package fr.ynov.webservice.restTP.controller;
 
-import fr.ynov.webservice.restTP.entity.*;
+import fr.ynov.webservice.restTP.entity.Album;
+import fr.ynov.webservice.restTP.entity.Artiste;
+import fr.ynov.webservice.restTP.entity.Titre;
+import fr.ynov.webservice.restTP.entity.Utilisateur;
 import fr.ynov.webservice.restTP.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 @RestController
-@RequestMapping(value = "init")
+@RequestMapping(value = "/")
 public class InitController {
 
     @Autowired
@@ -30,7 +33,7 @@ public class InitController {
     @Autowired
     PlaylistService playlistService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "")
+    @RequestMapping(method = RequestMethod.GET, value = "init")
     public void init(){
 
         createUsers();
@@ -107,5 +110,10 @@ public class InitController {
         this.titreService.create(user.getEmail(), new Titre(246, "Your Latest Trick", imageUrl, album));
         this.titreService.create(user.getEmail(), new Titre(322, "Why Worry", imageUrl, album));
 
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "doc")
+    public ModelAndView doc(){
+        return new ModelAndView("redirect:http://localhost:63342/back/restTP/target/apidocs/index.html?_ijt=ge5bb9m991r0e0mgc2npafp2kd");
     }
 }
