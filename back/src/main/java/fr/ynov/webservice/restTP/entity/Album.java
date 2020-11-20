@@ -1,7 +1,6 @@
 package fr.ynov.webservice.restTP.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,10 +35,17 @@ public class Album {
     @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
     private List<Titre> titres = new ArrayList<>();
 
-    public Album(Calendar datePublication, String nom, String imageUrl) {
+    public Album(Calendar datePublication, String nom, String imageUrl ) {
         this.datePublication = datePublication;
         this.nom = nom;
         this.imageUrl = imageUrl;
+    }
+
+    public Album(Calendar datePublication, String nom, String imageUrl, Artiste artiste) {
+        this.datePublication = datePublication;
+        this.nom = nom;
+        this.imageUrl = imageUrl;
+        this.artiste = artiste;
     }
 
     @Transient

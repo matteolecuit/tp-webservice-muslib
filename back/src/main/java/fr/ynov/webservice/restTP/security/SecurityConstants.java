@@ -14,4 +14,5 @@ public class SecurityConstants {
     public static final String ALBUM_URL = "/album/**";
     public static final String ARTISTE_URL = "/artiste/**";
     public static final String TITRE_URL = "/titre/**";
+    public static final String DOC_URL = "/doc";
 }

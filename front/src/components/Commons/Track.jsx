@@ -2,18 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import Icon from 'react-eva-icons';
 import { Link } from "react-router-dom";
+import AddPlaylistModalForm from "../Modals/AddPlaylistModal";
 
 export default (props) => {
-	return (
-		<StyledTrack>
+    return (
+        <StyledTrack>
             <div class="track">
                 <span class="track-number">{props.trackNumber}</span>
-                <span class="track-add"><Icon name="plus-circle-outline" size="large" fill="rgb(15,30,54, 0.5)" animation={{type: "pulse", hover: true, infinite: false}}/></span>
+                <AddPlaylistModalForm id={props.id} />
                 <span class="track-title">{props.title}</span>
                 <span class="track-artist">{props.artist}</span>
                 <span class="track-length">{props.length}</span>
             </div>
-		</StyledTrack>)
+        </StyledTrack>)
 };
 
 const StyledTrack = styled.div`

@@ -28,7 +28,7 @@ class LoginForm extends React.Component {
         localStorage.setItem("token", data.token);
         window.location.reload(false);
       })
-      .catch((err) => window.alert("Wrong login"));
+      .catch((err) => window.alert(err));
   };
   componentDidMount() {
     // if item exists, populate the state with proper data
