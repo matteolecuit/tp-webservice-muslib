@@ -23,6 +23,7 @@ class ManageArtistsPage extends Component {
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.deleteItem = this.deleteItem.bind(this);
 	}
 	
 
@@ -40,6 +41,20 @@ class ManageArtistsPage extends Component {
 			})
 			.catch(err => console.log(err))
 	};
+
+	deleteItem(id) {
+		fetch('http://localhost:8080/artiste?artisteId=' + id, {
+			method: 'DELETE',
+			headers: {
+				"Authorization": `${localStorage.getItem("token")}`
+			}
+		})
+		.then(response => response.json())
+		.then(data => {
+			this.componentDidMount();
+		})
+		.catch(err => console.log(err))
+	}
 
 	componentDidMount() {
 		this.getArtists();
@@ -81,7 +96,7 @@ class ManageArtistsPage extends Component {
 		let artists = [];
 		if (this.state.artists) {
 			artists = this.state.artists.map((item, index) =>
-				<StyledAdminTrack trackNumber={index + 1} title={item.alias} image={item.imageUrl}></StyledAdminTrack>
+				<StyledAdminTrack trackNumber={item.id} title={item.alias} image={item.imageUrl} deleteItem={this.deleteItem}></StyledAdminTrack>
 			);
 		}
 

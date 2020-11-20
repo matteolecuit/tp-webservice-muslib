@@ -27,6 +27,7 @@ class ManageAlbumsPage extends Component {
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.deleteItem = this.deleteItem.bind(this)
 	}
 
 	getArtistes() {
@@ -61,6 +62,20 @@ class ManageAlbumsPage extends Component {
 			})
 			.catch(err => console.log(err))
 	};
+
+	deleteItem(id) {
+		fetch('http://localhost:8080/album?albumId=' + id, {
+			method: 'DELETE',
+			headers: {
+				"Authorization": `${localStorage.getItem("token")}`
+			}
+		})
+		.then(response => response.json())
+		.then(data => {
+			this.componentDidMount();
+		})
+		.catch(err => console.log(err))
+	}
 
 	componentDidMount() {
 		this.getAlbums();
@@ -111,7 +126,7 @@ class ManageAlbumsPage extends Component {
 		let tracks = [];
 		if (this.state.albums) {
 			tracks = this.state.albums.map((item, index) =>
-				<StyledAdminTrack trackNumber={index + 1} title={item.nom} artist={item.artiste} image={item.imageUrl} length={item.duree}></StyledAdminTrack>
+				<StyledAdminTrack trackNumber={item.id} title={item.nom} artist={item.artiste} image={item.imageUrl} length={item.duree} deleteItem={this.deleteItem}></StyledAdminTrack>
 			);
 		}
 
