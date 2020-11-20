@@ -34,6 +34,13 @@ public class Titre {
         this.imageUrl = imageUrl;
     }
 
+    public Titre(int duree, String nom, String imageUrl, Album album) {
+        this.duree = duree;
+        this.nom = nom;
+        this.imageUrl = imageUrl;
+        this.album = album;
+    }
+
     @Transient
     private Boolean like = false;
 
