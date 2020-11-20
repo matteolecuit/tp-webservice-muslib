@@ -57,7 +57,7 @@ class ArtistPage extends Component {
 		return (
 			<Container>
 				<Row>
-					<StyledArtistBanner bannerImg={this.state.artist.imageUrl} img={this.state.artist.imageUrl} name={this.state.artist.alias} albumsCount={albums.length} id={this.state.artist.id}></StyledArtistBanner>
+					<StyledArtistBanner like={this.state.artist.like} bannerImg={this.state.artist.imageUrl} img={this.state.artist.imageUrl} name={this.state.artist.alias} albumsCount={albums.length} id={this.state.artist.id}></StyledArtistBanner>
 					<h2 style={{ margin: "20px 0", width: "100%", textAlign: "left" }}>Albums</h2>
 					<ul style={{ display: "flex", justifyContent: "flex-start", padding: "0", flexWrap: "wrap" }}>
 						{albums}

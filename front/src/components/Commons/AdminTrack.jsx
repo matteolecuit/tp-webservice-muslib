@@ -4,6 +4,15 @@ import Icon from 'react-eva-icons';
 import { Link } from "react-router-dom";
 
 export default (props) => {
+    // this.deleteItem = this.deleteItem.bind(this);
+
+    function deleteItem(e) {
+        console.log("Child Clicked");
+        // Pass event to caller via the onChild2Event prop.
+        // You can do something with the event, or just pass it.
+        this.props.deleteItem(e.target.value);
+    };
+
 	return (
 		<StyledTrack>
             <div class="track">
@@ -12,7 +21,7 @@ export default (props) => {
                 <span class="track-artist">{props.artist}</span>
                 <span class="track-image">{props.image}</span>
                 <span class="track-length">{props.length}</span>
-				<Icon 
+				<span><Icon 
 						name="edit-outline"
 						size="large"
 						fill="#0F1E36"     // small, medium, large, xlarge
@@ -21,17 +30,17 @@ export default (props) => {
 						hover: true,
 						infinite: false 
 						}}
-					/>
-				<Icon 
+					/></span>
+				<span onClick={ () => {props.deleteItem(props.trackNumber)}}><Icon 
 						name="trash-2-outline"
-						size="large"
+                        size="large"
 						fill="#0F1E36"     // small, medium, large, xlarge
 						animation={{
 						type: "pulse",  // zoom, pulse, shake, flip
 						hover: true,
 						infinite: false 
 						}}
-					/>
+					/></span>
             </div>
 		</StyledTrack>)
 };

@@ -75,6 +75,26 @@ function logout() {
 
 export default (props) => {
     let topbar = null;
+
+    let manageIcon = [];
+		if (props.admin) {
+			manageIcon = 
+            <TopbarProfileSettings>
+                <Link to="/manage/artists">
+                    <Icon
+                        name="settings-outline"
+                        size="large"
+                        fill="#000000"     // small, medium, large, xlarge
+                        animation={{
+                            type: "pulse",  // zoom, pulse, shake, flip
+                            hover: true,
+                            infinite: false
+                        }}
+                    />
+                </Link>
+            </TopbarProfileSettings>
+        }
+        
     if (localStorage.getItem("token")) {
         topbar =
             <Topbar>
@@ -91,20 +111,7 @@ export default (props) => {
                     <TopbarProfileName>
                         <span>{props.firstname}</span>
                     </TopbarProfileName>
-                    <TopbarProfileSettings>
-                        <Link to="/manage/artists">
-                            <Icon
-                                name="settings-outline"
-                                size="large"
-                                fill="#000000"     // small, medium, large, xlarge
-                                animation={{
-                                    type: "pulse",  // zoom, pulse, shake, flip
-                                    hover: true,
-                                    infinite: false
-                                }}
-                            />
-                        </Link>
-                    </TopbarProfileSettings>
+                    {manageIcon}
                 </TopbarProfile>
             </Topbar>
 

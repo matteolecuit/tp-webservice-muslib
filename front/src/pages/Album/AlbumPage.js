@@ -5,7 +5,7 @@ import { Container, Row, Col } from 'reactstrap'
 import StyledTrack from '../../components/Commons/Track';
 import { Button } from "@material-ui/core";
 
-class AlbumsPage extends Component {
+class AlbumPage extends Component {
 
 	state = {
 		album: {
@@ -43,9 +43,9 @@ class AlbumsPage extends Component {
 			.catch(err => console.log(err))
 	};
 
-	setFavoris(id) {
+	setFavoris(id, method) {
 		fetch("http://localhost:8080/utilisateur/favoris/album?albumId=" + id, {
-			method: "post",
+			method: method,
 			headers: {
 				"Content-Type": "application/json",
 				Accept: "application/json",
@@ -54,14 +54,23 @@ class AlbumsPage extends Component {
 		})
 			.then((response) => response.json())
 			.then(() => {
-
+				window.location.reload(false);
 			})
 			.catch((err) => console.log(err));
+	}
+
+	getMethod() {
+		if (this.state.album.like == false) {
+			return "post";
+		} else if (this.state.album.like == true) {
+			return "delete";
+		}
 	}
 
 	componentDidMount() {
 		this.getAlbum();
 	}
+	icon = null;
 
 	render() {
 		let tracks = [];
@@ -71,6 +80,29 @@ class AlbumsPage extends Component {
 			);
 		}
 
+		if (this.state.album.like == true) {
+			this.icon = <Icon
+				name='heart'
+				size="large"
+				fill="#0F1E36"     // small, medium, large, xlarge
+				animation={{
+					type: "pulse",  // zoom, pulse, shake, flip
+					hover: true,
+					infinite: false
+				}}
+			/>
+		} else if (this.state.album.like == false) {
+			this.icon = <Icon
+				name='heart-outline'
+				size="large"
+				fill="#0F1E36"     // small, medium, large, xlarge
+				animation={{
+					type: "pulse",  // zoom, pulse, shake, flip
+					hover: true,
+					infinite: false
+				}}
+			/>
+		}
 		return (
 			<Container>
 				<Row>
@@ -80,17 +112,8 @@ class AlbumsPage extends Component {
 					<Col>
 						<h2 style={{ margin: "20px 0", fontWeight: "900", fontSize: "3rem" }}>{this.state.album.nom}</h2>
 						<h3 style={{ margin: "20px 0", color: "0F1E36", opacity: "50%" }}>{this.state.album.artiste}</h3>
-						<Button onClick={() => this.setFavoris(this.state.album.id)}>
-							<Icon
-								name="heart-outline"
-								size="large"
-								fill="#0F1E36"     // small, medium, large, xlarge
-								animation={{
-									type: "pulse",  // zoom, pulse, shake, flip
-									hover: true,
-									infinite: false
-								}}
-							/>
+						<Button onClick={() => this.setFavoris(this.state.album.id, this.getMethod())}>
+							{this.icon}
 						</Button>
 						<ul style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", padding: "0", margin: "20px 0", flexWrap: "wrap" }}>
 							{tracks}
@@ -102,5 +125,5 @@ class AlbumsPage extends Component {
 	};
 }
 
-export default AlbumsPage
+export default AlbumPage
 

@@ -25,6 +25,7 @@ class ManageSongsPage extends Component {
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.deleteItem = this.deleteItem.bind(this);
 	}
 
 	getTitres() {
@@ -60,6 +61,20 @@ class ManageSongsPage extends Component {
 			.catch(err => console.log(err))
 	};
 
+	deleteItem(id) {
+		fetch('http://localhost:8080/titre?titreId=' + id, {
+			method: 'DELETE',
+			headers: {
+				"Authorization": `${localStorage.getItem("token")}`
+			}
+		})
+		.then(response => response.json())
+		.then(data => {
+			this.componentDidMount();
+		})
+		.catch(err => console.log(err))
+	}
+
 	componentDidMount() {
 		this.getTitres();
 		this.getAlbums();
@@ -78,7 +93,6 @@ class ManageSongsPage extends Component {
 			case ("track-length"):
 				this.state.addSong.duree = event.target.value;
 				break;
-
 		}
 	}
 	
@@ -109,7 +123,7 @@ class ManageSongsPage extends Component {
 		let tracks = [];
 		if (this.state.titres) {
 			tracks = this.state.titres.map((item, index) =>
-				<StyledAdminTrack trackNumber={index + 1} title={item.nom} artist={item.album.nom} length={item.duree}></StyledAdminTrack>
+				<StyledAdminTrack trackNumber={item.id} title={item.nom} artist={item.album.nom} length={item.duree} deleteItem={this.deleteItem}></StyledAdminTrack>
 			);
 		}
 

@@ -23,10 +23,7 @@ import Topbar from "./components/Topbar/Topbar";
 
 class App extends Component {
   state = {
-    utilisateur: {
-      pseudo: null,
-      avatar: null,
-    },
+    utilisateur: {},
     items: [
       {
         icon: "activity-outline",
@@ -92,6 +89,7 @@ class App extends Component {
             <Topbar
               firstname={this.state.utilisateur.pseudo}
               profilePic={this.state.utilisateur.avatar}
+              admin={this.state.utilisateur.admin}
             ></Topbar>
             <div
               style={{
