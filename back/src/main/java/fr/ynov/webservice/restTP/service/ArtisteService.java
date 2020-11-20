@@ -1,6 +1,7 @@
 package fr.ynov.webservice.restTP.service;
 
 import fr.ynov.webservice.restTP.entity.Artiste;
+import fr.ynov.webservice.restTP.entity.Artiste;
 import fr.ynov.webservice.restTP.entity.Utilisateur;
 import fr.ynov.webservice.restTP.repository.ArtisteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,28 @@ public class ArtisteService {
         return this.artisteRepository.findAll();
     }
 
-    public Optional<Artiste> findById(long id){
-        return this.artisteRepository.findById(id);
+    public Artiste findById(long id){
+        Optional<Artiste> artisteOpt = this.artisteRepository.findById(id);
+        return artisteOpt.orElse(null);
+    }
+
+    public Artiste findByIdAndIsLiked(String email, long id) {
+        Artiste artiste = findById(id);
+        if (artiste != null){
+
+            Optional<Utilisateur> userOpt = this.utilisateurService.findByEmail(email);
+            if (userOpt.isPresent()){
+
+                List<Artiste> likedArtiste = userOpt.get().getArtistes();
+                if (likedArtiste.contains(artiste)) {
+                    artiste.setLike(true);
+                }
+
+            }
+
+            return artiste;
+        }
+        return null;
     }
 
     public Artiste create(String email, Artiste artiste){
