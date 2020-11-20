@@ -55,7 +55,12 @@ class App extends Component {
 			icon: "plus-circle-outline",
 			url: "/playlists"
 		},
-		playlists: []
+		playlists: [
+			{
+				id: 1,
+				nom: "DJ Abdel Megamix"
+			}
+		]
 	};
 	getUserData() {
 		fetch('http://localhost:8080/utilisateur', {
@@ -79,7 +84,7 @@ class App extends Component {
 		return (
 			<Router>
 				<Container>
-					<Sidebar items={this.state.items} playlistsLabel={this.state.playlistsLabel}></Sidebar>
+					<Sidebar items={this.state.items} playlistsLabel={this.state.playlistsLabel} playlists={this.state.playlists}></Sidebar>
 					<div style={{ width: "100%", zIndex: "0" }}>
 						<Topbar firstname={this.state.utilisateur.pseudo} profilePic={this.state.utilisateur.avatar}></Topbar>
 						<div style={{ background: "linear-gradient(180deg, rgba(244, 249, 255, 0.01) 0%, #F4F9FF 50.23%)", height: "100%", marginTop: "100px" }}>

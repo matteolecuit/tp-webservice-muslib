@@ -150,7 +150,6 @@ class AlbumsPage extends Component {
       })
       .catch((err) => console.log(err));
   }
-
   componentDidMount() {
     this.getAlbums();
   }
