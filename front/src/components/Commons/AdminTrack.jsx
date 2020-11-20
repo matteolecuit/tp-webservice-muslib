@@ -10,6 +10,7 @@ export default (props) => {
                 <span class="track-number">{props.trackNumber}</span>
                 <span class="track-title">{props.title}</span>
                 <span class="track-artist">{props.artist}</span>
+                <span class="track-image">{props.image}</span>
                 <span class="track-length">{props.length}</span>
 				<Icon 
 						name="edit-outline"
@@ -67,6 +68,18 @@ const StyledTrack = styled.div`
             flex: 5;
             color: #0F1E36;
             opacity: 50%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .track-image {
+            flex: 5;
+            color: #0F1E36;
+            opacity: 50%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .track-length {

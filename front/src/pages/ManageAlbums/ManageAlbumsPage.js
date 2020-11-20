@@ -70,6 +70,10 @@ class ManageAlbumsPage extends Component {
 			case ("track-album"):
 				this.state.addAlbum.artiste.id = event.target.value;
 				break;
+
+			case ("track-image"):
+				this.state.addAlbum.imageUrl = event.target.value;
+				break;
 		}
 	}
 
@@ -101,7 +105,7 @@ class ManageAlbumsPage extends Component {
 		let tracks = [];
 		if (this.state.albums) {
 			tracks = this.state.albums.map((item, index) =>
-				<StyledAdminTrack trackNumber={index + 1} title={item.nom} artist={item.artiste} length={item.duree}></StyledAdminTrack>
+				<StyledAdminTrack trackNumber={index + 1} title={item.nom} artist={item.artiste} image={item.imageUrl} length={item.duree}></StyledAdminTrack>
 			);
 		}
 
@@ -124,6 +128,7 @@ class ManageAlbumsPage extends Component {
 							<select name="track-album" placeholder="Album" style={{ flex: 5 }} onChange={this.handleChange}>
 								{artists}
 							</select>
+							<input type="text" name="track-image" placeholder="Image" style={{ flex: 5 }} onChange={this.handleChange} />
 							<input type="submit" value="Envoyer" />
 						</form>
 					</Col>
