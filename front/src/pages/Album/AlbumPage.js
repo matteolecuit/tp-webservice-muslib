@@ -67,7 +67,7 @@ class AlbumsPage extends Component {
 		let tracks = [];
 		if (this.state.album.titres) {
 			tracks = this.state.album.titres.map((item, index) =>
-				<StyledTrack trackNumber={index + 1} title={item.nom} length={item.duree}></StyledTrack>
+				<StyledTrack trackNumber={index + 1} title={item.nom} length={item.duree} id={item.id}></StyledTrack>
 			);
 		}
 
