@@ -36,7 +36,6 @@ class ManageArtistsPage extends Component {
 		})
 			.then(response => response.json())
 			.then(artists => {
-				console.log(artists);
 				this.setState({ artists });
 			})
 			.catch(err => console.log(err))
