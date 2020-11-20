@@ -19,8 +19,20 @@ public class TitreService {
     @Autowired
     UtilisateurService utilisateurService;
      
-    public List<Titre> findAll(){
-        return this.titreRepository.findAll();
+    public List<Titre> findAll(String email){
+        List<Titre> titres = this.titreRepository.findAll();
+
+        Optional<Utilisateur> userOpt = this.utilisateurService.findByEmail(email);
+        if (userOpt.isPresent()){
+            List<Titre> likedTitre = userOpt.get().getTitres();
+            for (Titre t : titres) {
+                if (likedTitre.contains(t)) {
+                    t.setLike(true);
+                }
+            }
+        }
+
+        return titres;
     }
 
     public Optional<Titre> findById(long id){
