@@ -92,6 +92,7 @@ class AddToPlaylistModalForm extends Component {
               style={{ flex: 5 }}
               onChange={(event) => this.setPlaylist(this.props.id, event)}
             >
+              <option value="0">Sélectionnez une playlist</option>
               {playlists}
             </select>
           </ModalBody>
