@@ -112,10 +112,10 @@ public class UtilisateurService implements UserDetailsService {
     public Utilisateur addArtisteToFavorite(String email, long artisteId){
         Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
         if (userOpt.isPresent() && !userOpt.get().getAdmin()){
-            Optional<Artiste> artisteOpt = this.artisteService.findById(artisteId);
-            if (artisteOpt.isPresent()){
+            Artiste artiste = this.artisteService.findById(artisteId);
+            if (artiste != null){
                 Utilisateur user = userOpt.get();
-                user.getArtistes().add(artisteOpt.get());
+                user.getArtistes().add(artiste);
                 return this.utilisateurRepository.save(user);
             }
         }

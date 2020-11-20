@@ -22,9 +22,12 @@ public class ArtisteController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public Artiste getById(@PathVariable("id") long id){
-        Optional<Artiste> artistOpt = this.artisteService.findById(id);
-        return artistOpt.orElse(null);
+    public Artiste getById(Authentication authentication, @PathVariable("id") long id){
+        String email = "";
+        if (authentication != null){
+            email = authentication.getName();
+        }
+        return this.artisteService.findByIdAndIsLiked(email, id);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "")

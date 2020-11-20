@@ -61,4 +61,12 @@ public class Utilisateur {
         this.password = password;
         this.admin = admin;
     }
+
+    public Utilisateur(String email, String pseudo, String password, boolean admin, String avatar) {
+        this.email = email;
+        this.pseudo = pseudo;
+        this.password = password;
+        this.admin = admin;
+        this.avatar = avatar;
+    }
 }
