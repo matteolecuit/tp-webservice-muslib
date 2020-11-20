@@ -4,6 +4,38 @@ import Icon from 'react-eva-icons';
 import { Button } from "@material-ui/core";
 
 export default (props) => {
+    let icon = null;
+    if (props.like == true) {
+        icon = <Icon
+            name='heart'
+            size="large"
+            fill="#fbfdff"     // small, medium, large, xlarge
+            animation={{
+                type: "pulse",  // zoom, pulse, shake, flip
+                hover: true,
+                infinite: false
+            }}
+        />
+    } else if (props.like == false) {
+        icon = <Icon
+            name='heart-outline'
+            size="large"
+            fill="#fefeff"     // small, medium, large, xlarge
+            animation={{
+                type: "pulse",  // zoom, pulse, shake, flip
+                hover: true,
+                infinite: false
+            }}
+        />
+    }
+    function getMethod() {
+        if (props.like == false) {
+            return "post";
+        } else if (props.like == true) {
+            return "delete";
+        }
+    }
+
     return (
         <StyledArtistBanner style={{ backgroundImage: `url(${props.bannerImg})` }}>
             <div class="banner">
@@ -17,8 +49,8 @@ export default (props) => {
                             <span>Total</span>
                             <span class="albums-number">{props.albumsCount}</span>
                         </div>
-                        <Button onClick={() => setFavoris(props.id)}>
-                            <Icon name={iconName} size="large" fill="#FFF" animation={{ type: "pulse", hover: true, infinite: false }} />
+                        <Button onClick={() => setFavoris(props.id, getMethod())}>
+                            {icon}
                         </Button>
                     </div>
                 </div>
@@ -26,11 +58,10 @@ export default (props) => {
         </StyledArtistBanner>)
 };
 
-let iconName = 'heart-outline';
 
-function setFavoris(id) {
+function setFavoris(id, method) {
     fetch("http://localhost:8080/utilisateur/favoris/artiste?artisteId=" + id, {
-        method: "post",
+        method: method,
         headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
@@ -39,10 +70,11 @@ function setFavoris(id) {
     })
         .then((response) => response.json())
         .then(() => {
-            iconName = 'heart';
+            window.location.reload(false);
         })
         .catch((err) => console.log(err));
 }
+
 
 const StyledArtistBanner = styled.div`
     display: flex;
