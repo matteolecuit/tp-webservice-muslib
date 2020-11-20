@@ -84,23 +84,25 @@ class Sidebar extends Component {
 	}
 
 	render() {
-		this.playlistsList = this.playlists.map((playlist) =>
-			<Link to={'/playlists/' + playlist.id}>
-				<SidebarItem>
-					<Icon
-						name="folder-outline"
-						size="large"
-						fill="#000000"     // small, medium, large, xlarge
-						animation={{
-							type: "pulse",  // zoom, pulse, shake, flip
-							hover: true,
-							infinite: false
-						}}
-					/>
-					<SidebarItemLabel>{playlist.nom}</SidebarItemLabel>
-				</SidebarItem>
-			</Link>
-		);
+		if (this.state.playlists) {
+			this.playlistsList = this.state.playlists.map((playlist) =>
+				<Link to={'/playlists/' + playlist.id}>
+					<SidebarItem>
+						<Icon
+							name="folder-outline"
+							size="large"
+							fill="#000000"     // small, medium, large, xlarge
+							animation={{
+								type: "pulse",  // zoom, pulse, shake, flip
+								hover: true,
+								infinite: false
+							}}
+						/>
+						<SidebarItemLabel>{playlist.nom}</SidebarItemLabel>
+					</SidebarItem>
+				</Link>
+			);
+		}
 
 		return (
 			<StyledSidebar>
