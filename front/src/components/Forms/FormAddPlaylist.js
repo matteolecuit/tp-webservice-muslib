@@ -16,6 +16,8 @@ class PlaylistAddEditForm extends React.Component {
       method: "post",
       headers: {
         "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `${localStorage.getItem("token")}`,
       },
       body: JSON.stringify({
         nom: this.state.nom,
@@ -29,6 +31,7 @@ class PlaylistAddEditForm extends React.Component {
         } else {
           console.log("failure");
         }
+        window.location.reload(false);
       })
       .catch((err) => console.log(err));
   };
