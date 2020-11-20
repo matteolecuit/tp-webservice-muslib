@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import Icon from 'react-eva-icons';
 import { Link } from "react-router-dom";
+import { render } from "react-dom";
 
 export default (props) => {
-    // this.deleteItem = this.deleteItem.bind(this);
 
     function deleteItem(e) {
         console.log("Child Clicked");
@@ -12,6 +12,10 @@ export default (props) => {
         // You can do something with the event, or just pass it.
         this.props.deleteItem(e.target.value);
     };
+
+    function editItem(e) {
+        this.props.editItem(e.target.value);
+    }
 
 	return (
 		<StyledTrack>
@@ -21,7 +25,7 @@ export default (props) => {
                 <span class="track-artist">{props.artist}</span>
                 <span class="track-image">{props.image}</span>
                 <span class="track-length">{props.length}</span>
-				<span><Icon 
+				<span onClick={ () => {props.editItem(props.trackNumber)}}><Icon 
 						name="edit-outline"
 						size="large"
 						fill="#0F1E36"     // small, medium, large, xlarge
