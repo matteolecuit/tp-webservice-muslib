@@ -71,7 +71,6 @@ class App extends Component {
 			.then(response => response.json())
 			.then(utilisateur => {
 				this.setState({ utilisateur });
-				console.log(utilisateur);
 			})
 			.catch(err => console.log(err))
 	};
