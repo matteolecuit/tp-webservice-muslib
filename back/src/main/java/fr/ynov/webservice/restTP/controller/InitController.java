@@ -79,13 +79,13 @@ public class InitController {
         this.titreService.create(user.getEmail(), new Titre(194, "Jcvd", imageUrl)).setAlbum(this.albumService.findAll().get(1));
         this.titreService.create(user.getEmail(), new Titre(192, "Salvatrucha", imageUrl)).setAlbum(this.albumService.findAll().get(1));
         this.titreService.create(user.getEmail(), new Titre(211, "Tokyo", imageUrl)).setAlbum(this.albumService.findAll().get(1));
-        artiste = this.artisteService.findById(1).get();
+        artiste = this.artisteService.findAll().get(1);
         imageUrl = "https://tinyurl.com/yxn77p3n";
         this.albumService.create(user.getEmail(), new Album(new GregorianCalendar(2008, Calendar.MARCH, 27), "Louder", imageUrl)).setArtiste(artiste);
         this.titreService.create(user.getEmail(), new Titre(315, "Louder", imageUrl)).setAlbum(this.albumService.findAll().get(2));
         this.titreService.create(user.getEmail(), new Titre(192, "Hit the floor", imageUrl)).setAlbum(this.albumService.findAll().get(2));
         this.titreService.create(user.getEmail(), new Titre(256, "Hunger", imageUrl)).setAlbum(this.albumService.findAll().get(2));
-        artiste = this.artisteService.findById(2).get();
+        artiste = this.artisteService.findAll().get(2);
         imageUrl = "https://tinyurl.com/y33ogj2l";
         this.albumService.create(user.getEmail(), new Album(new GregorianCalendar(2018, Calendar.JANUARY, 19), "Veteran", imageUrl)).setArtiste(artiste);
         this.titreService.create(user.getEmail(), new Titre(157, "1539 N. Calvert", imageUrl)).setAlbum(this.albumService.findAll().get(3));
@@ -93,7 +93,7 @@ public class InitController {
         this.titreService.create(user.getEmail(), new Titre(198, "Thug Tears", imageUrl)).setAlbum(this.albumService.findAll().get(3));
         this.titreService.create(user.getEmail(), new Titre(85, "Dayum", imageUrl)).setAlbum(this.albumService.findAll().get(3));
         this.titreService.create(user.getEmail(), new Titre(152, "Baby I'm Bleeding", imageUrl)).setAlbum(this.albumService.findAll().get(3));
-        artiste = this.artisteService.findById(3).get();
+        artiste = this.artisteService.findAll().get(3);
         imageUrl = "https://tinyurl.com/y5ukwaxn";
         this.albumService.create(user.getEmail(), new Album(new GregorianCalendar(1985, Calendar.MAY, 13), "Brothers in Arms", imageUrl)).setArtiste(artiste);
         this.titreService.create(user.getEmail(), new Titre(239, "So Far Away", imageUrl)).setAlbum(this.albumService.findAll().get(4));
