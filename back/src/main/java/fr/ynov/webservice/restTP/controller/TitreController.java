@@ -17,8 +17,12 @@ public class TitreController {
     TitreService titreService;
 
     @RequestMapping(method = RequestMethod.GET, value = "")
-    public List<Titre> getAll(){
-        return this.titreService.findAll();
+    public List<Titre> getAll(Authentication authentication){
+        String email = "";
+        if (authentication != null){
+            email = authentication.getName();
+        }
+        return this.titreService.findAll(email);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")

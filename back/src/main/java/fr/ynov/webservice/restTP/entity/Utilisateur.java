@@ -31,8 +31,8 @@ public class Utilisateur {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    @Column(columnDefinition = "boolean default false", nullable = false)
-    private Boolean admin;
+    @Column(nullable = false)
+    private Boolean admin= false;
 
     @OneToMany(targetEntity = Playlist.class, cascade = CascadeType.ALL)
     private List<Playlist> playlists = new ArrayList<>();
