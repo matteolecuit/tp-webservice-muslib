@@ -95,8 +95,7 @@
 							<goal>docs</goal>
 						</goals>
 						<configuration>
-							<configFile>enunciate.xml</configFile>
-							<docsDir>${project.build.directory}</docsDir>
+							<docsDir>${project.basedir}/src/main/resources/static</docsDir>
 						</configuration>
 					</execution>
 				</executions>

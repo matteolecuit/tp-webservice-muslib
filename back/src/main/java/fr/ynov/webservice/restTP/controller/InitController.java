@@ -114,6 +114,6 @@ public class InitController {
 
     @RequestMapping(method = RequestMethod.GET, value = "doc")
     public ModelAndView doc(){
-        return new ModelAndView("redirect:http://localhost:63342/back/restTP/target/apidocs/index.html?_ijt=ge5bb9m991r0e0mgc2npafp2kd");
+        return new ModelAndView("redirect:http://localhost:8080/apidocs/index.html");
     }
 }
