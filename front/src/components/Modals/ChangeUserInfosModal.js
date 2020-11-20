@@ -77,7 +77,7 @@ class ChangeUserInfoModalForm extends Component {
       <div>
         <img onClick={this.toggle} src={this.props.src} alt="profile picture" height="35px" width="35px" />
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle} close={closeBtn}>Ajouter à une playlist {this.props.id}</ModalHeader>
+          <ModalHeader toggle={this.toggle} close={closeBtn}>Editer le profil</ModalHeader>
           <ModalBody>
             <Form
               onSubmit={this.props.item ? this.submitFormEdit : this.submitForm}

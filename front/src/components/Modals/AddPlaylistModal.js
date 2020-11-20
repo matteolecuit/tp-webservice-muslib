@@ -36,7 +36,7 @@ class AddPlaylistModalForm extends Component {
         </span>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle} close={closeBtn}>
-            Create a playlist {this.props.id}
+            Create a playlist
           </ModalHeader>
           <ModalBody>
             <FormAddPlaylist

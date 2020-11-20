@@ -40,9 +40,9 @@ class AddToPlaylistModalForm extends Component {
   setPlaylist(titreId, event) {
     fetch(
       "http://localhost:8080/utilisateur/playlist/" +
-        event.target.value +
-        "?titreId=" +
-        titreId,
+      event.target.value +
+      "?titreId=" +
+      titreId,
       {
         method: "post",
         headers: {
@@ -83,7 +83,7 @@ class AddToPlaylistModalForm extends Component {
         </span>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle} close={closeBtn}>
-            Ajouter à une playlist {this.props.id}
+            Ajouter à une playlist
           </ModalHeader>
           <ModalBody>
             <select
