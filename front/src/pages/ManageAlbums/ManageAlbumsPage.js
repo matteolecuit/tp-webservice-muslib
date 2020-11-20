@@ -63,6 +63,26 @@ class ManageAlbumsPage extends Component {
 			.catch(err => console.log(err))
 	};
 
+	editItem(id) {
+		fetch('http://localhost:8080/album/' + id, {
+			headers: {
+				"Authorization": `${localStorage.getItem("token")}`
+			}
+		})
+		.then(response => response.json())
+		.then(data => {
+			let idInput = document.getElementsByName("track-id")[0];
+			idInput.value = data.id;
+
+			let titleInput = document.getElementsByName("track-title")[0];
+			titleInput.value = data.nom
+
+			let imageInput = document.getElementsByName("track-image")[0];
+			imageInput.value = data.imageUrl;
+		})
+		.catch(err => console.log(err))
+	}
+
 	deleteItem(id) {
 		fetch('http://localhost:8080/album?albumId=' + id, {
 			method: 'DELETE',
@@ -99,34 +119,62 @@ class ManageAlbumsPage extends Component {
 	}
 
 	handleSubmit(event) {
+		let idInput = document.getElementsByName("track-id")[0];
+		let titleInput = document.getElementsByName("track-title")[0];
+		let imageInput = document.getElementsByName("track-image")[0];
 		event.preventDefault();
-		fetch('http://localhost:8080/album', {
-			method: 'post',
-			headers: {
-				'Content-Type': 'application/json',
-				"Authorization": `${localStorage.getItem("token")}`
-			},
-			body: JSON.stringify({
-				date_publication: this.state.addAlbum.date_publication,
-				nom: this.state.addAlbum.nom,
-				imageUrl: this.state.addAlbum.imageUrl,
-				artiste: {
-					id: this.state.addAlbum.artiste.id
-				}
+		if (idInput.value.length > 0) {
+			fetch('http://localhost:8080/album/' + idInput.value, {
+				method: 'put',
+				headers: {
+					'Content-Type': 'application/json',
+					"Authorization": `${localStorage.getItem("token")}`
+				},
+				body: JSON.stringify({
+					nom: titleInput.value,
+					imageUrl: imageInput.value
+				})
 			})
-		})
-		.then(response => response.json())
-		.then(data => {
-			this.componentDidMount();
-		})
-		.catch(err => console.log(err))
+			.then(response => response.json())
+			.then(data => {
+				idInput.value = "";
+				titleInput.value = "";
+				imageInput.value = "";
+				this.componentDidMount();
+			})
+			.catch(err => console.log(err))
+		} else {
+			fetch('http://localhost:8080/album', {
+				method: 'post',
+				headers: {
+					'Content-Type': 'application/json',
+					"Authorization": `${localStorage.getItem("token")}`
+				},
+				body: JSON.stringify({
+					date_publication: this.state.addAlbum.date_publication,
+					nom: this.state.addAlbum.nom,
+					imageUrl: this.state.addAlbum.imageUrl,
+					artiste: {
+						id: this.state.addAlbum.artiste.id
+					}
+				})
+			})
+			.then(response => response.json())
+			.then(data => {
+				idInput.value = "";
+				titleInput.value = "";
+				imageInput.value = "";
+				this.componentDidMount();
+			})
+			.catch(err => console.log(err))
+		}
 	}
 
 	render() {
 		let tracks = [];
 		if (this.state.albums) {
 			tracks = this.state.albums.map((item, index) =>
-				<StyledAdminTrack trackNumber={item.id} title={item.nom} artist={item.artiste} image={item.imageUrl} length={item.duree} deleteItem={this.deleteItem}></StyledAdminTrack>
+				<StyledAdminTrack trackNumber={item.id} title={item.nom} artist={item.artiste} image={item.imageUrl} length={item.duree} editItem={this.editItem} deleteItem={this.deleteItem}></StyledAdminTrack>
 			);
 		}
 
@@ -150,6 +198,7 @@ class ManageAlbumsPage extends Component {
 							{tracks}
 						</ul>
 						<form onSubmit={this.handleSubmit} style={{ display: "flex" }}>
+							<input type="int" name="track-id" disabled style={{ display: "none" }} onChange={this.handleChange} />
 							<input type="text" name="track-title" placeholder="Title" style={{ flex: 5 }} onChange={this.handleChange} />
 							<select name="track-album" placeholder="Album" style={{ flex: 5 }} onChange={this.handleChange}>
 								{artists}

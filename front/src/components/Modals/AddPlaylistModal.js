@@ -1,82 +1,53 @@
-import React, { Component } from 'react'
-import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap'
-import LoginForm from '../Forms/FormLogin'
-import Icon from 'react-eva-icons';
+import React, { Component } from "react";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
+import FormAddPlaylist from "../Forms/FormAddPlaylist";
+import Icon from "react-eva-icons";
 
 class AddPlaylistModalForm extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       modal: false,
-      playlists: [],
-    }
+    };
   }
 
   toggle = () => {
-    this.setState(prevState => ({
-      modal: !prevState.modal
-    }))
-  }
-
-  getPlaylist() {
-    fetch('http://localhost:8080/utilisateur/playlist', {
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization": `${localStorage.getItem("token")}`
-      }
-    })
-      .then(response => response.json())
-      .then(playlists => {
-        this.setState({ playlists });
-      })
-      .catch(err => console.log(err))
+    this.setState((prevState) => ({
+      modal: !prevState.modal,
+    }));
   };
 
-  componentDidMount() {
-    this.getPlaylist();
-  }
-
-  setPlaylist(titreId, event) {
-
-    fetch("http://localhost:8080/utilisateur/playlist/" + event.target.value + '?titreId=' + titreId, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `${localStorage.getItem("token")}`
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        this.toggle();
-      })
-      .catch((err) => window.alert("Wrong login"));
-  }
-
   render() {
+    const closeBtn = (
+      <button className="close" onClick={this.toggle}>
+        &times;
+      </button>
+    );
 
-    const closeBtn = <button className="close" onClick={this.toggle}>&times;</button>
-
-    let playlists = [];
-    if (this.state.playlists) {
-      playlists = this.state.playlists.map((item) =>
-        <option value={item.id}>{item.nom}</option>
-      );
-    }
     return (
       <div>
-        <span onClick={this.toggle} ><Icon name="plus-circle-outline" size="large" fill="rgb(15,30,54, 0.5)" animation={{ type: "pulse", hover: true, infinite: false }} /></span>
+        <span onClick={this.toggle}>
+          <Icon
+            name="plus-circle-outline"
+            size="large"
+            fill="#000000"
+            animation={{ type: "pulse", hover: true, infinite: false }}
+          />
+        </span>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle} close={closeBtn}>Ajouter à une playlist {this.props.id}</ModalHeader>
+          <ModalHeader toggle={this.toggle} close={closeBtn}>
+            Create a playlist
+          </ModalHeader>
           <ModalBody>
-            <select name="track-album" placeholder="Album" style={{ flex: 5 }} onChange={(event) => this.setPlaylist(this.props.id, event)}>
-              {playlists}
-            </select>
+            <FormAddPlaylist
+              item={this.props.item}
+              toggle={this.props.toggle}
+            />
           </ModalBody>
         </Modal>
       </div>
-    )
+    );
   }
 }
 
-export default AddPlaylistModalForm
+export default AddPlaylistModalForm;

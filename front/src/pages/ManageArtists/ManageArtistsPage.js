@@ -56,6 +56,26 @@ class ManageArtistsPage extends Component {
 		.catch(err => console.log(err))
 	}
 
+	editItem(id) {
+		fetch('http://localhost:8080/artiste/' + id, {
+			headers: {
+				"Authorization": `${localStorage.getItem("token")}`
+			}
+		})
+		.then(response => response.json())
+		.then(data => {
+			let idInput = document.getElementsByName("track-id")[0];
+			idInput.value = data.id;
+
+			let titleInput = document.getElementsByName("track-title")[0];
+			titleInput.value = data.alias
+
+			let imageInput = document.getElementsByName("track-image")[0];
+			imageInput.value = data.imageUrl;
+		})
+		.catch(err => console.log(err))
+	}
+
 	componentDidMount() {
 		this.getArtists();
 	}
@@ -66,37 +86,65 @@ class ManageArtistsPage extends Component {
 				this.state.addArtist.alias = event.target.value;
 				break;
 
-			case ("track-album"):
+			case ("track-image"):
 				this.state.addArtist.imageUrl = event.target.value;
 				break;
 		}
 	}
 	
 	handleSubmit(event) {
+		let idInput = document.getElementsByName("track-id")[0];
+		let titleInput = document.getElementsByName("track-title")[0];
+		let imageInput = document.getElementsByName("track-image")[0];
 		event.preventDefault();
-		fetch('http://localhost:8080/artiste', {
-			method: 'post',
-			headers: {
-				'Content-Type': 'application/json',
-				"Authorization": `${localStorage.getItem("token")}`
-			},
-			body: JSON.stringify({
-				alias: this.state.addArtist.alias,
-				imageUrl: this.state.addArtist.imageUrl
+		if (idInput.value.length > 0) {
+			fetch('http://localhost:8080/artiste/' + idInput.value, {
+				method: 'put',
+				headers: {
+					'Content-Type': 'application/json',
+					"Authorization": `${localStorage.getItem("token")}`
+				},
+				body: JSON.stringify({
+					alias: titleInput.value,
+					imageUrl: imageInput.value
+				})
 			})
-		})
-		.then(response => response.json())
-		.then(data => {
-			this.componentDidMount();
-		})
-		.catch(err => console.log(err))
+			.then(response => response.json())
+			.then(data => {
+				idInput.value = "";
+				titleInput.value = "";
+				imageInput.value = "";
+				this.componentDidMount();
+			})
+			.catch(err => console.log(err))
+		} else {
+			fetch('http://localhost:8080/artiste', {
+				method: 'post',
+				headers: {
+					'Content-Type': 'application/json',
+					"Authorization": `${localStorage.getItem("token")}`
+				},
+				body: JSON.stringify({
+					alias: this.state.addArtist.alias,
+					imageUrl: this.state.addArtist.imageUrl
+				})
+			})
+			.then(response => response.json())
+			.then(data => {
+				idInput.value = "";
+				titleInput.value = "";
+				imageInput.value = "";
+				this.componentDidMount();
+			})
+			.catch(err => console.log(err))
+		}
 	}
 
 	render() {
 		let artists = [];
 		if (this.state.artists) {
 			artists = this.state.artists.map((item, index) =>
-				<StyledAdminTrack trackNumber={item.id} title={item.alias} image={item.imageUrl} deleteItem={this.deleteItem}></StyledAdminTrack>
+				<StyledAdminTrack trackNumber={item.id} title={item.alias} image={item.imageUrl} editItem={this.editItem} deleteItem={this.deleteItem}></StyledAdminTrack>
 			);
 		}
 
@@ -113,8 +161,9 @@ class ManageArtistsPage extends Component {
 							{artists}
 						</ul>
 						<form onSubmit={this.handleSubmit} style={{ display: "flex" }}>
-							<input type="text" name="track-title" placeholder="Title" style={{ flex: 5 }} onChange={this.handleChange} />
-							<input type="text" name="track-album" placeholder="image" style={{ flex: 5 }} onChange={this.handleChange} />
+							<input type="int" name="track-id" disabled style={{ display: "none" }} onChange={this.handleChange} />
+							<input type="text" name="track-title" placeholder="Nom" style={{ flex: 5 }} onChange={this.handleChange} />
+							<input type="text" name="track-image" placeholder="Image" style={{ flex: 5 }} onChange={this.handleChange} />
 							<input type="submit" value="Envoyer" />
 						</form>
 					</Col>

@@ -43,7 +43,7 @@ class AlbumsPage extends Component {
     return (
       <Container>
         <Row>
-          <h2 style={{ margin: "20px 0" }}>Featured Albums</h2>
+          <h2 style={{ margin: "20px 0", width: "100%", textAlign: "left"}}>Featured Albums</h2>
           <ul
             style={{
               display: "flex",
