@@ -25,7 +25,7 @@ public class Titre {
     private String imageUrl;
 
     @JsonIgnoreProperties({"titres"})
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Album album;
 
     public Titre(int duree, String nom, String imageUrl) {
@@ -33,5 +33,8 @@ public class Titre {
         this.nom = nom;
         this.imageUrl = imageUrl;
     }
+
+    @Transient
+    private Boolean like = false;
 
 }

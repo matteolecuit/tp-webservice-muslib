@@ -22,9 +22,12 @@ public class TitreController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public Titre getById(@PathVariable("id") long id){
-        Optional<Titre> titreOpt = this.titreService.findById(id);
-        return titreOpt.orElse(null);
+    public Titre getById(Authentication authentication, @PathVariable("id") long id){
+        String email = "";
+        if (authentication != null){
+            email = authentication.getName();
+        }
+        return this.titreService.findByIdAndIsLiked(email, id);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "")

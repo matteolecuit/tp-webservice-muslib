@@ -13,7 +13,8 @@ class Sidebar extends Component {
 	playlistsLabel = {};
 	playlists = [];
 	state = {
-		playlists: []
+		playlists: [
+		]
 	}
 	constructor(props) {
 		super();
@@ -83,7 +84,7 @@ class Sidebar extends Component {
 	}
 
 	render() {
-		this.playlistsList = this.state.playlists.map((playlist) =>
+		this.playlistsList = this.playlists.map((playlist) =>
 			<Link to={'/playlists/' + playlist.id}>
 				<SidebarItem>
 					<Icon

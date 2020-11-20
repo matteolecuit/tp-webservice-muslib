@@ -20,11 +20,33 @@ public class TitreService {
     UtilisateurService utilisateurService;
      
     public List<Titre> findAll(){
-        return this.titreRepository.findAll();
+        List<Titre> titres = this.titreRepository.findAll();
+
+        return titres;
     }
 
-    public Optional<Titre> findById(long id){
-        return this.titreRepository.findById(id);
+    public Titre findById(long id){
+        Optional<Titre> titreOpt = this.titreRepository.findById(id);
+        return titreOpt.orElse(null);
+    }
+
+    public Titre findByIdAndIsLiked(String email, long id){
+        Titre titre = findById(id);
+        if (titre != null){
+
+            Optional<Utilisateur> userOpt = this.utilisateurService.findByEmail(email);
+            if (userOpt.isPresent()){
+
+                List<Titre> likedTitre = userOpt.get().getTitres();
+                if (likedTitre.contains(titre)) {
+                    titre.setLike(true);
+                }
+
+            }
+
+            return titre;
+        }
+        return null;
     }
 
     public Titre create(String email, Titre titre){

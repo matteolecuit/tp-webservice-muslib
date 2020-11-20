@@ -1,6 +1,7 @@
 package fr.ynov.webservice.restTP.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,7 +29,7 @@ public class Album {
     private String imageUrl;
     
     @JsonIgnoreProperties({"albums"})
-    @ManyToOne(targetEntity = Artiste.class)
+    @ManyToOne(optional = false, targetEntity = Artiste.class)
     private Artiste artiste;
 
     @JsonIgnoreProperties({"album"})
@@ -40,4 +41,7 @@ public class Album {
         this.nom = nom;
         this.imageUrl = imageUrl;
     }
+
+    @Transient
+    private Boolean like = false;
 }

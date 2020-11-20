@@ -33,5 +33,8 @@ public class Artiste {
         this.imageUrl = imageUrl;
     }
 
+    @Transient
+    private Boolean like = false;
+
 
 }

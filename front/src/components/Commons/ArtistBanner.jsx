@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import Icon from 'react-eva-icons';
+import { Button } from "@material-ui/core";
 
 export default (props) => {
     return (
-        <StyledArtistBanner style={{backgroundImage: `url(${props.bannerImg})`}}>
+        <StyledArtistBanner style={{ backgroundImage: `url(${props.bannerImg})` }}>
             <div class="banner">
                 <div class="banner-img">
-                    <img src={props.img} alt="Artist Img"/>
+                    <img src={props.img} alt="Artist Img" />
                 </div>
                 <div class="banner-content">
                     <h1 class="artist-name">{props.name}</h1>
@@ -16,12 +17,32 @@ export default (props) => {
                             <span>Total</span>
                             <span class="albums-number">{props.albumsCount}</span>
                         </div>
-                        <Icon name="heart-outline" size="large" fill="#FFF" animation={{type: "pulse", hover: true, infinite: false}}/>
+                        <Button onClick={() => setFavoris(props.id)}>
+                            <Icon name={iconName} size="large" fill="#FFF" animation={{ type: "pulse", hover: true, infinite: false }} />
+                        </Button>
                     </div>
                 </div>
             </div>
         </StyledArtistBanner>)
 };
+
+let iconName = 'heart-outline';
+
+function setFavoris(id) {
+    fetch("http://localhost:8080/utilisateur/favoris/artiste?artisteId=" + id, {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `${localStorage.getItem("token")}`,
+        },
+    })
+        .then((response) => response.json())
+        .then(() => {
+            iconName = 'heart';
+        })
+        .catch((err) => console.log(err));
+}
 
 const StyledArtistBanner = styled.div`
     display: flex;

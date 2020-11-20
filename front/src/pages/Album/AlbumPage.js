@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Icon from 'react-eva-icons';
 import { Container, Row, Col } from 'reactstrap'
 import StyledTrack from '../../components/Commons/Track';
+import { Button } from "@material-ui/core";
 
 class AlbumsPage extends Component {
 
@@ -24,10 +25,9 @@ class AlbumsPage extends Component {
 			]
 		}
 	};
-	id = this.props.match.params.id;
 
 	getAlbum() {
-		fetch('http://localhost:8080/album/' + this.id, {
+		fetch('http://localhost:8080/album/' + this.props.match.params.id, {
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json",
@@ -42,6 +42,22 @@ class AlbumsPage extends Component {
 			})
 			.catch(err => console.log(err))
 	};
+
+	setFavoris(id) {
+		fetch("http://localhost:8080/utilisateur/favoris/album?albumId=" + id, {
+			method: "post",
+			headers: {
+				"Content-Type": "application/json",
+				Accept: "application/json",
+				Authorization: `${localStorage.getItem("token")}`,
+			},
+		})
+			.then((response) => response.json())
+			.then(() => {
+
+			})
+			.catch((err) => console.log(err));
+	}
 
 	componentDidMount() {
 		this.getAlbum();
@@ -64,16 +80,18 @@ class AlbumsPage extends Component {
 					<Col>
 						<h2 style={{ margin: "20px 0", fontWeight: "900", fontSize: "3rem" }}>{this.state.album.nom}</h2>
 						<h3 style={{ margin: "20px 0", color: "0F1E36", opacity: "50%" }}>{this.state.album.artiste}</h3>
-						<Icon
-							name="heart-outline"
-							size="large"
-							fill="#0F1E36"     // small, medium, large, xlarge
-							animation={{
-								type: "pulse",  // zoom, pulse, shake, flip
-								hover: true,
-								infinite: false
-							}}
-						/>
+						<Button onClick={() => this.setFavoris(this.state.album.id)}>
+							<Icon
+								name="heart-outline"
+								size="large"
+								fill="#0F1E36"     // small, medium, large, xlarge
+								animation={{
+									type: "pulse",  // zoom, pulse, shake, flip
+									hover: true,
+									infinite: false
+								}}
+							/>
+						</Button>
 						<ul style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", padding: "0", margin: "20px 0", flexWrap: "wrap" }}>
 							{tracks}
 						</ul>
