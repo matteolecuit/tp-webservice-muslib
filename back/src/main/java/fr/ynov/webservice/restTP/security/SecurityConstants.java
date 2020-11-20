@@ -15,4 +15,5 @@ public class SecurityConstants {
     public static final String ARTISTE_URL = "/artiste/**";
     public static final String TITRE_URL = "/titre/**";
     public static final String DOC_URL = "/doc";
+    public static final String RESOURCE_DOC_URL = "/apidocs/**";
 }
