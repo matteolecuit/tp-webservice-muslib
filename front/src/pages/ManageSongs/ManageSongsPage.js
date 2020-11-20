@@ -134,6 +134,9 @@ class ManageSongsPage extends Component {
 				},
 				body: JSON.stringify({
 					nom: titleInput.value,
+					album: {
+						id: albumsInput.value
+					},
 					duree: lengthInput.value
 				})
 			})
@@ -146,30 +149,31 @@ class ManageSongsPage extends Component {
 				this.componentDidMount();
 			})
 			.catch(err => console.log(err))
-		}
-		fetch('http://localhost:8080/titre', {
-			method: 'post',
-			headers: {
-				'Content-Type': 'application/json',
-				"Authorization": `${localStorage.getItem("token")}`
-			},
-			body: JSON.stringify({
-				nom: this.state.addSong.nom,
-				album: {
-					id: this.state.addSong.album
+		} else {
+			fetch('http://localhost:8080/titre', {
+				method: 'post',
+				headers: {
+					'Content-Type': 'application/json',
+					"Authorization": `${localStorage.getItem("token")}`
 				},
-				duree: this.state.addSong.duree
+				body: JSON.stringify({
+					nom: this.state.addSong.nom,
+					album: {
+						id: this.state.addSong.album
+					},
+					duree: this.state.addSong.duree
+				})
 			})
-		})
-		.then(response => response.json())
-		.then(data => {
-			idInput.value = "";
-			titleInput.value = "";
-			albumsInput.value = "";
-			lengthInput.value = "";
-			this.componentDidMount();
-		})
-		.catch(err => console.log(err))
+			.then(response => response.json())
+			.then(data => {
+				idInput.value = "";
+				titleInput.value = "";
+				albumsInput.value = "";
+				lengthInput.value = "";
+				this.componentDidMount();
+			})
+			.catch(err => console.log(err))
+		}
 	}
 
 	render() {
