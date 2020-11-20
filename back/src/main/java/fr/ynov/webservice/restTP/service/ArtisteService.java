@@ -1,6 +1,8 @@
 package fr.ynov.webservice.restTP.service;
 
+import fr.ynov.webservice.restTP.entity.Album;
 import fr.ynov.webservice.restTP.entity.Artiste;
+import fr.ynov.webservice.restTP.entity.Titre;
 import fr.ynov.webservice.restTP.entity.Utilisateur;
 import fr.ynov.webservice.restTP.repository.ArtisteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,8 +80,21 @@ public class ArtisteService {
         if (userOpt.isPresent() && userOpt.get().getAdmin()) {
             Optional<Artiste> artisteOpt = this.artisteRepository.findById(artisteId);
             if (artisteOpt.isPresent()) {
-                this.artisteRepository.delete(artisteOpt.get());
-                return artisteOpt.get();
+                Artiste artiste = artisteOpt.get();
+                //delete all artiste favourite
+                for (Utilisateur user : this.utilisateurService.findAll()) {
+                    //delete album favourite of the artiste
+                    for (Album album : artiste.getAlbums()) {
+                        //delete titre favourite of the album
+                        for (Titre titre : album.getTitres()) {
+                            user.getTitres().remove(titre);
+                        }
+                        user.getAlbums().remove(album);
+                    }
+                    user.getArtistes().remove(artiste);
+                }
+                this.artisteRepository.delete(artiste);
+                return artiste;
             }
         }
         return null;

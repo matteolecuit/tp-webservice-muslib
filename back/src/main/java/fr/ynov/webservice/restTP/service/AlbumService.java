@@ -1,6 +1,7 @@
 package fr.ynov.webservice.restTP.service;
 
 import fr.ynov.webservice.restTP.entity.Album;
+import fr.ynov.webservice.restTP.entity.Titre;
 import fr.ynov.webservice.restTP.entity.Utilisateur;
 import fr.ynov.webservice.restTP.repository.AlbumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,8 +85,17 @@ public class AlbumService {
         if (userOpt.isPresent() && userOpt.get().getAdmin()) {
             Optional<Album> albumOpt = this.albumRepository.findById(albumId);
             if (albumOpt.isPresent()) {
-                this.albumRepository.delete(albumOpt.get());
-                return albumOpt.get();
+                Album album = albumOpt.get();
+                //delete all album favourite
+                for (Utilisateur user : this.utilisateurService.findAll()) {
+                    //delete titre favourite of the album
+                    for (Titre titre : album.getTitres()) {
+                        user.getTitres().remove(titre);
+                    }
+                    user.getAlbums().remove(album);
+                }
+                this.albumRepository.delete(album);
+                return album;
             }
         }
         return null;

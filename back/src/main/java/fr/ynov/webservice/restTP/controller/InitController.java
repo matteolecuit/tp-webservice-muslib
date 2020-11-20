@@ -51,9 +51,9 @@ public class InitController {
 
     private void createUsers() {
         System.out.println("utilisateurService");
-        this.utilisateurService.save(new Utilisateur("admin@mail.com", "super admin", "pwd", true, "https://tinyurl.com/y4n5vuxr"));
-        this.utilisateurService.save(new Utilisateur("user1@mail.com", "Fiona Human", "pwd", false, "https://tinyurl.com/y6ev9ym5"));
-        this.utilisateurService.save(new Utilisateur("user2@mail.com", "Donkey Superfan", "pwd", false, "https://tinyurl.com/y4n69s3f"));
+        this.utilisateurService.create(new Utilisateur("admin@mail.com", "super admin", "pwd", true, "https://tinyurl.com/y4n5vuxr"));
+        this.utilisateurService.create(new Utilisateur("user1@mail.com", "Fiona Human", "pwd", false, "https://tinyurl.com/y6ev9ym5"));
+        this.utilisateurService.create(new Utilisateur("user2@mail.com", "Donkey Superfan", "pwd", false, "https://tinyurl.com/y4n69s3f"));
     }
 
     private void createArtistes() {

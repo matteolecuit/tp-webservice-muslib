@@ -53,7 +53,7 @@ public class UtilisateurService implements UserDetailsService {
         return this.utilisateurRepository.findAll();
     }
 
-    public Utilisateur save(Utilisateur utilisateur){
+    public Utilisateur create(Utilisateur utilisateur){
         if (utilisateur.getPassword() != null && utilisateur.getPassword().trim().length() > 0 &&
             utilisateur.getEmail() != null && utilisateur.getEmail().trim().length() > 0 &&
             utilisateur.getPseudo() != null && utilisateur.getPseudo().trim().length() > 0) {
@@ -61,6 +61,10 @@ public class UtilisateurService implements UserDetailsService {
             return this.utilisateurRepository.save(utilisateur);
         }
         return null;
+    }
+
+    public Utilisateur save(Utilisateur utilisateur){
+        return this.utilisateurRepository.save(utilisateur);
     }
 
     @Override

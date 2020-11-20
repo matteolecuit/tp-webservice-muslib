@@ -36,7 +36,7 @@ public class UtilisateurController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/register")
     public JSONObject createUtilisateur(@RequestBody Utilisateur utilisateur){
-        Utilisateur user =  utilisateurService.save(utilisateur);
+        Utilisateur user =  utilisateurService.create(utilisateur);
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
         SecurityContextHolder.getContext().setAuthentication(authToken);
         String token = JWTAuthenticationFilter.generateToken(user.getEmail());

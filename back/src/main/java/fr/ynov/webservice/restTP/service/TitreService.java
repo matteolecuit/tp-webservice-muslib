@@ -78,9 +78,18 @@ public class TitreService {
     public Titre delete(String email, long titreId) {
         Optional<Utilisateur> userOpt = this.utilisateurService.findByEmail(email);
         if (userOpt.isPresent() && userOpt.get().getAdmin()) {
+            System.out.println("user ok");
             Optional<Titre> titreOpt = this.titreRepository.findById(titreId);
             if (titreOpt.isPresent()) {
+                System.out.println("titre ok");
+                for (Utilisateur user : this.utilisateurService.findAll()) {
+                    user.getTitres().remove(titreOpt.get());
+                    //this.utilisateurService.save(user);
+                }
+                System.out.println(utilisateurService.findAll().size());
+                System.out.println("users favourite deleted");
                 this.titreRepository.delete(titreOpt.get());
+                System.out.println("return");
                 return titreOpt.get();
             }
         }
