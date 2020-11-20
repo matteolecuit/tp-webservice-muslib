@@ -5,7 +5,12 @@ import LoginModalForm from '../../components/Modals/LoginModal'
 import RegisterModalForm from "../Modals/RegisterModal";
 import { TransitionPropTypeKeys } from "reactstrap/lib/utils";
 import { Button, Divider } from "@material-ui/core";
-
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Link
+} from "react-router-dom";
 
 const Topbar = styled.section`
   display: flex;
@@ -87,16 +92,18 @@ export default (props) => {
                         <span>{props.firstname}</span>
                     </TopbarProfileName>
                     <TopbarProfileSettings>
-                        <Icon
-                            name="settings-outline"
-                            size="large"
-                            fill="#000000"     // small, medium, large, xlarge
-                            animation={{
-                                type: "pulse",  // zoom, pulse, shake, flip
-                                hover: true,
-                                infinite: false
-                            }}
-                        />
+                        <Link to="/manage/artists">
+                            <Icon
+                                name="settings-outline"
+                                size="large"
+                                fill="#000000"     // small, medium, large, xlarge
+                                animation={{
+                                    type: "pulse",  // zoom, pulse, shake, flip
+                                    hover: true,
+                                    infinite: false
+                                }}
+                            />
+                        </Link>
                     </TopbarProfileSettings>
                 </TopbarProfile>
             </Topbar>

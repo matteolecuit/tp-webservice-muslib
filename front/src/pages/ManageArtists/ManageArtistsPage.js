@@ -3,6 +3,12 @@ import styled from "styled-components";
 import Icon from 'react-eva-icons';
 import { Container, Row, Col } from 'reactstrap'
 import StyledAdminTrack from '../../components/Commons/AdminTrack';
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Link
+} from "react-router-dom";
 
 class ManageArtistsPage extends Component {
 	constructor(props) {
@@ -84,6 +90,11 @@ class ManageArtistsPage extends Component {
 			<Container>
 				<Row>
 					<Col>
+						<div style={{ display: "flex" }}>
+							<Link to="/manage/albums"><button style={{ backgroundColor: "#FFF", border: "solid 1px #000", borderRadius: "5px", marginRight: "10px" }}>Albums</button></Link>
+							<Link to="/manage/songs"><button style={{ backgroundColor: "#FFF", border: "solid 1px #000", borderRadius: "5px", marginRight: "10px" }}>Titres</button></Link>
+						</div>
+						<h2 style={{ margin: "20px 0" }}>Artists</h2>
 						<ul style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", padding: "0", margin: "20px 0", flexWrap: "wrap" }}>
 							{artists}
 						</ul>
