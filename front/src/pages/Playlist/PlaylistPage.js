@@ -104,7 +104,7 @@ class PlaylistPage extends Component {
 		let tracks = [];
 		if (this.state.playlist.titres) {
 			tracks = this.state.playlist.titres.map((item, index) =>
-				<StyledTrack trackNumber={index + 1} title={item.nom} length={item.duree} id={item.id}></StyledTrack>
+				<StyledTrack trackNumber={index + 1} title={item.nom} length={item.duree} id={item.id} like={item.like}></StyledTrack>
 			);
 		}
 
