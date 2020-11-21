@@ -134,6 +134,7 @@ const StyledSidebar = styled.section`
   position: fixed;
   width: 12vw;
   background-color: #fff;
+  max-width: 230px;
 
   a:hover {
     text-decoration: none;

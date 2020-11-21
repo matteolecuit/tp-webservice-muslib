@@ -17,7 +17,7 @@ import {
 const Topbar = styled.section`
   display: flex;
   background-color: #FFFFFF;
-  height: 10vh;
+  height: 75px;
   width: 100%;
   z-index: 1;
   position: fixed;

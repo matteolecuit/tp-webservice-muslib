@@ -116,16 +116,6 @@ class PlaylistPage extends Component {
 					</Col>
 					<Col>
 						<h2 style={{ margin: "20px 0", fontWeight: "900", fontSize: "3rem" }}>{this.state.playlist.nom}</h2>
-						<Icon
-							name="heart-outline"
-							size="large"
-							fill="#0F1E36"     // small, medium, large, xlarge
-							animation={{
-								type: "pulse",  // zoom, pulse, shake, flip
-								hover: true,
-								infinite: false
-							}}
-						/>
 						<ul style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", padding: "0", margin: "20px 0", flexWrap: "wrap" }}>
 							{tracks}
 						</ul>
