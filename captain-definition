@@ -4,12 +4,15 @@
       "FROM openjdk:8-jdk-alpine",
       "WORKDIR /workspace/app",
 
-      "COPY back .",
+      "COPY back/mvnw .",
+      "COPY back/.mvn .mvn",
+      "COPY back/pom.xml .",
+      "COPY back/src src",
 
-      "RUN mvn install -DskipTests",
+      "RUN ./mvnw install -DskipTests",
 
       "EXPOSE 8080",
 
-      "RUN mvn spring-boot:run"
+      "RUN ./mvnw spring-boot:run"
   ]
 }
