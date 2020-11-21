@@ -5,7 +5,6 @@
       "WORKDIR /workspace/app",
 
       "COPY back/mvnw .",
-      "COPY back/.mvn .mvn",
       "COPY back/pom.xml .",
       "COPY back/src src",
 
