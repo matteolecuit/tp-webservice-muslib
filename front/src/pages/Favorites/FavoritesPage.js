@@ -70,10 +70,16 @@ class FavoritesPage extends Component {
         <Row>
           <Col>
             <h2 style={{ margin: "20px 0" }}>Liked Songs</h2>
-            <StyledCard
-              imgUrl={this.state.songsImg}
-              link={this.state.songsUrl}
-            ></StyledCard>
+            <ul
+              style={{
+                display: "flex",
+                justifyContent: "flex-start",
+                padding: "0",
+                overflowX: "scroll",
+              }}
+            >
+              {titres}
+            </ul>
           </Col>
         </Row>
         <Row>
