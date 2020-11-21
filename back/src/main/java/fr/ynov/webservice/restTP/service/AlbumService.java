@@ -41,6 +41,12 @@ public class AlbumService {
                     album.setLike(true);
                 }
 
+                List<Titre> likedTitre = userOpt.get().getTitres();
+                for (Titre titre : album.getTitres()) {
+                    if (likedTitre.contains(titre))
+                        titre.setLike(true);
+                }
+
             }
 
             return album;

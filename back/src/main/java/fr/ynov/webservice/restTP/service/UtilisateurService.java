@@ -251,9 +251,19 @@ public class UtilisateurService implements UserDetailsService {
     public Playlist getPlaylist(String email, long playId) {
         Optional<Utilisateur> userOpt = this.utilisateurRepository.findByEmail(email);
         if (userOpt.isPresent() && !userOpt.get().getAdmin()){
-            Optional<Playlist> playlistOpt = userOpt.get().getPlaylists().stream().filter(play -> play.getId() == playId).findFirst();
+            Utilisateur user = userOpt.get();
+
+            Optional<Playlist> playlistOpt = user.getPlaylists().stream().filter(play -> play.getId() == playId).findFirst();
             if (playlistOpt.isPresent()) {
-                return playlistOpt.get();
+                Playlist playlist = playlistOpt.get();
+
+                for (Titre titre : playlist.getTitres()) {
+                    if (user.getTitres().contains(titre)){
+                        titre.setLike(true);
+                    }
+                }
+
+                return playlist;
             }
         }
         return null;
