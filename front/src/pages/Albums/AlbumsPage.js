@@ -10,7 +10,7 @@ class AlbumsPage extends Component {
   };
 
   getAlbums() {
-    fetch("http://localhost:8080/album/", {
+    fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/album/", {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -43,7 +43,7 @@ class AlbumsPage extends Component {
     return (
       <Container>
         <Row>
-          <h2 style={{ margin: "20px 0", width: "100%", textAlign: "left"}}>Featured Albums</h2>
+          <h2 style={{ margin: "20px 0", width: "100%", textAlign: "left" }}>Featured Albums</h2>
           <ul
             style={{
               display: "flex",

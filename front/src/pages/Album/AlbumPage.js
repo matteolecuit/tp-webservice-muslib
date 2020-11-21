@@ -27,7 +27,7 @@ class AlbumPage extends Component {
 	};
 
 	getAlbum() {
-		fetch('http://localhost:8080/album/' + this.props.match.params.id, {
+		fetch('http://ws-tp-muslib-back.serveurspaul.duckdns.org/album/' + this.props.match.params.id, {
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json",
@@ -44,7 +44,7 @@ class AlbumPage extends Component {
 	};
 
 	setFavoris(id, method) {
-		fetch("http://localhost:8080/utilisateur/favoris/album?albumId=" + id, {
+		fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/utilisateur/favoris/album?albumId=" + id, {
 			method: method,
 			headers: {
 				"Content-Type": "application/json",

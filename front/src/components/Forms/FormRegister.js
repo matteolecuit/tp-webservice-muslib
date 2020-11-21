@@ -17,7 +17,7 @@ class RegisterForm extends React.Component {
 
   submitFormAdd = e => {
     e.preventDefault()
-    fetch('http://localhost:8080/utilisateur/register', {
+    fetch('http://ws-tp-muslib-back.serveurspaul.duckdns.org/utilisateur/register', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'

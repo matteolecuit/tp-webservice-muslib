@@ -53,7 +53,7 @@ class Sidebar extends Component {
   getPlaylist() {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("http://localhost:8080/utilisateur/playlist", {
+      fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/utilisateur/playlist", {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",

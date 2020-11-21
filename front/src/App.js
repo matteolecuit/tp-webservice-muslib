@@ -59,7 +59,7 @@ class App extends Component {
     ],
   };
   getUserData() {
-    fetch("http://localhost:8080/utilisateur", {
+    fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/utilisateur", {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",

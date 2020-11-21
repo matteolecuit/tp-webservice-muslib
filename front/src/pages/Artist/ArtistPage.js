@@ -12,7 +12,7 @@ class ArtistPage extends Component {
 	};
 
 	getArtist() {
-		fetch('http://localhost:8080/artiste/' + this.id, {
+		fetch('http://ws-tp-muslib-back.serveurspaul.duckdns.org/artiste/' + this.id, {
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json",
@@ -27,7 +27,7 @@ class ArtistPage extends Component {
 	}
 
 	setFavoris(id) {
-		fetch("http://localhost:8080/utilisateur/favoris/artiste?artisteId=" + id, {
+		fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/utilisateur/favoris/artiste?artisteId=" + id, {
 			method: "post",
 			headers: {
 				"Content-Type": "application/json",

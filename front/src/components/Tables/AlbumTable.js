@@ -6,7 +6,7 @@ class AlbumTable extends Component {
   deleteAlbum = (id) => {
     let confirmDelete = window.confirm("Delete album forever?");
     if (confirmDelete) {
-      fetch("http://localhost:8080/album", {
+      fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/album", {
         method: "delete",
         headers: {
           "Content-Type": "application/json",

@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
 import Icon from 'react-eva-icons';
 import { Container, Row, Col } from 'reactstrap'
@@ -12,7 +12,7 @@ class ArtistsPage extends Component {
 	};
 
 	getArtists() {
-		fetch('http://localhost:8080/artiste/', {
+		fetch('http://ws-tp-muslib-back.serveurspaul.duckdns.org/artiste/', {
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json",
@@ -30,7 +30,7 @@ class ArtistsPage extends Component {
 	componentDidMount() {
 		this.getArtists();
 	}
-	
+
 	render() {
 		const artists = this.state.artists.map((item) =>
 			<StyledArtistCard imgUrl={item.imageUrl} titre={item.alias} link={'/artists/' + item.id}></StyledArtistCard>
@@ -40,8 +40,8 @@ class ArtistsPage extends Component {
 			<Container>
 				<Row>
 					<Col>
-						<h2 style={{margin: "20px 0", width: "100%", textAlign: "left"}}>Featured Artists</h2>
-						<ul style={{display: "flex", justifyContent: "flex-start", padding: "0", flexWrap: "wrap"}}>
+						<h2 style={{ margin: "20px 0", width: "100%", textAlign: "left" }}>Featured Artists</h2>
+						<ul style={{ display: "flex", justifyContent: "flex-start", padding: "0", flexWrap: "wrap" }}>
 							{artists}
 						</ul>
 					</Col>

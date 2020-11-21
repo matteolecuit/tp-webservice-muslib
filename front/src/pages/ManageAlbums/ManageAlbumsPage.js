@@ -26,7 +26,7 @@ class ManageAlbumsPage extends Component {
   }
 
   getArtistes() {
-    fetch("http://localhost:8080/artiste/", {
+    fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/artiste/", {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -41,7 +41,7 @@ class ManageAlbumsPage extends Component {
   }
 
   getAlbums() {
-    fetch("http://localhost:8080/album/", {
+    fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/album/", {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -59,7 +59,7 @@ class ManageAlbumsPage extends Component {
   }
 
   editItem(id) {
-    fetch("http://localhost:8080/album/" + id, {
+    fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/album/" + id, {
       headers: {
         Authorization: `${localStorage.getItem("token")}`,
       },
@@ -81,7 +81,7 @@ class ManageAlbumsPage extends Component {
   deleteItem(id) {
     let confirmDelete = window.confirm("Delete album forever?");
     if (confirmDelete) {
-      fetch("http://localhost:8080/album?albumId=" + id, {
+      fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/album?albumId=" + id, {
         method: "DELETE",
         headers: {
           Authorization: `${localStorage.getItem("token")}`,
@@ -122,7 +122,7 @@ class ManageAlbumsPage extends Component {
     let imageInput = document.getElementsByName("track-image")[0];
     event.preventDefault();
     if (idInput.value.length > 0) {
-      fetch("http://localhost:8080/album/" + idInput.value, {
+      fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/album/" + idInput.value, {
         method: "put",
         headers: {
           "Content-Type": "application/json",
@@ -142,7 +142,7 @@ class ManageAlbumsPage extends Component {
         })
         .catch((err) => console.log(err));
     } else {
-      fetch("http://localhost:8080/album", {
+      fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/album", {
         method: "post",
         headers: {
           "Content-Type": "application/json",

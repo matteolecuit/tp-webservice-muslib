@@ -13,7 +13,7 @@ class LoginForm extends React.Component {
 
   submitFormAdd = (e) => {
     e.preventDefault();
-    fetch("http://localhost:8080/login", {
+    fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/login", {
       method: "post",
       headers: {
         "Content-Type": "application/json",

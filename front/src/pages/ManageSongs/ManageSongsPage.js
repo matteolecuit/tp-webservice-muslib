@@ -24,7 +24,7 @@ class ManageSongsPage extends Component {
   }
 
   getTitres() {
-    fetch("http://localhost:8080/titre/", {
+    fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/titre/", {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -39,7 +39,7 @@ class ManageSongsPage extends Component {
   }
 
   getAlbums() {
-    fetch("http://localhost:8080/album/", {
+    fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/album/", {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -57,7 +57,7 @@ class ManageSongsPage extends Component {
   }
 
   editItem(id) {
-    fetch("http://localhost:8080/titre/" + id, {
+    fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/titre/" + id, {
       headers: {
         Authorization: `${localStorage.getItem("token")}`,
       },
@@ -82,7 +82,7 @@ class ManageSongsPage extends Component {
   deleteItem(id) {
     let confirmDelete = window.confirm("Delete album forever?");
     if (confirmDelete) {
-      fetch("http://localhost:8080/titre?titreId=" + id, {
+      fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/titre?titreId=" + id, {
         method: "DELETE",
         headers: {
           Authorization: `${localStorage.getItem("token")}`,
@@ -124,7 +124,7 @@ class ManageSongsPage extends Component {
     let lengthInput = document.getElementsByName("track-length")[0];
     event.preventDefault();
     if (idInput.value.length > 0) {
-      fetch("http://localhost:8080/titre/" + idInput.value, {
+      fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/titre/" + idInput.value, {
         method: "put",
         headers: {
           "Content-Type": "application/json",
@@ -148,7 +148,7 @@ class ManageSongsPage extends Component {
         })
         .catch((err) => console.log(err));
     } else {
-      fetch("http://localhost:8080/titre", {
+      fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/titre", {
         method: "post",
         headers: {
           "Content-Type": "application/json",

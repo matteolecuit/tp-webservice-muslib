@@ -7,7 +7,7 @@ class TitreTable extends Component {
   deleteTitre = (id) => {
     let confirmDelete = window.confirm("Delete titre forever?");
     if (confirmDelete) {
-      fetch("http://localhost:8080/titre", {
+      fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/titre", {
         method: "delete",
         headers: {
           "Content-Type": "application/json",

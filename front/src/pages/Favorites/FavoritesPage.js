@@ -13,7 +13,7 @@ class FavoritesPage extends Component {
   };
 
   getFavorites() {
-    fetch("http://localhost:8080/utilisateur/favoris/", {
+    fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/utilisateur/favoris/", {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",

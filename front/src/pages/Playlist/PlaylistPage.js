@@ -60,7 +60,7 @@ class PlaylistPage extends Component {
 	id = this.props.match.params.id;
 
 	getPlaylist() {
-		fetch('http://localhost:8080/utilisateur/playlist/' + this.id, {
+		fetch('http://ws-tp-muslib-back.serveurspaul.duckdns.org/utilisateur/playlist/' + this.id, {
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json",
