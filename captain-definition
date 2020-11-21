@@ -1,15 +1,15 @@
 {
   "schemaVersion": 2,
   "dockerfileLines": [
-      "FROM openjdk:8-jdk-alpine",
+      "FROM openjdk:11-jdk-alpine",
       "WORKDIR /workspace/app",
 
       "COPY back .",
 
-      "RUN ./mvnw install -DskipTests",
+      "RUN mvn install -DskipTests",
 
       "EXPOSE 8080",
 
-      "RUN ./mvnw spring-boot:run"
+      "RUN mvn spring-boot:run"
   ]
 }
