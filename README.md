@@ -5,7 +5,20 @@ Awesome music lib made with spring and react
 
 Une version déployée de l'application est disponible ici : https://ws-tp-muslib-front.serveurspaul.duckdns.org/
 
-## 1 - Initialisation du projet
+## 1 - Installation du projet
+
+### Installation du back
+
+ - Se rendre dans le dossier back
+ - Configurer le fichier `application.properties` en renseignant les données pour la base de données
+ - Lancer la commande `mvn install`
+ - Lancer le serveur
+
+### Installation du front
+
+- Se rendre dans le dossier front
+- Lancer la commande `yarn``
+- Lancer le serveur via la commande `npm start``
 
 Il est possible d'appeler la route /init afin d'ajouter des données dans la base, notamment un compte admin.
 Sur la version déployé, cette étape à déjà été réalisée.
