@@ -66,7 +66,7 @@ class AddToPlaylistModalForm extends Component {
     );
 
     let playlists = [];
-    if (this.state.playlists) {
+    if (!this.state.playlists.error) {
       playlists = this.state.playlists.map((item) => (
         <option value={item.id}>{item.nom}</option>
       ));
