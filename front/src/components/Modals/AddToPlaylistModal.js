@@ -19,7 +19,7 @@ class AddToPlaylistModalForm extends Component {
   };
 
   getPlaylist() {
-    fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/utilisateur/playlist", {
+    fetch("https://ws-tp-muslib-back.serveurspaul.duckdns.org/utilisateur/playlist", {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -39,7 +39,7 @@ class AddToPlaylistModalForm extends Component {
 
   setPlaylist(titreId, event) {
     fetch(
-      "http://ws-tp-muslib-back.serveurspaul.duckdns.org/utilisateur/playlist/" +
+      "https://ws-tp-muslib-back.serveurspaul.duckdns.org/utilisateur/playlist/" +
       event.target.value +
       "?titreId=" +
       titreId,

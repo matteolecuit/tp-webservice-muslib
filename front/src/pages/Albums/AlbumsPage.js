@@ -10,7 +10,7 @@ class AlbumsPage extends Component {
   };
 
   getAlbums() {
-    fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/album/", {
+    fetch("https://ws-tp-muslib-back.serveurspaul.duckdns.org/album/", {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",

@@ -10,7 +10,7 @@ class ArtistsPage extends Component {
     playlists: [],
   };
   getPlaylists() {
-    fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/utilisateur/playlist/", {
+    fetch("https://ws-tp-muslib-back.serveurspaul.duckdns.org/utilisateur/playlist/", {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",

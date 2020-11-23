@@ -15,7 +15,7 @@ class TitreAddEditForm extends React.Component {
 
   submitFormAdd = e => {
     e.preventDefault()
-    fetch('http://ws-tp-muslib-back.serveurspaul.duckdns.org/titre', {
+    fetch('https://ws-tp-muslib-back.serveurspaul.duckdns.org/titre', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
@@ -41,7 +41,7 @@ class TitreAddEditForm extends React.Component {
 
   submitFormEdit = e => {
     e.preventDefault()
-    fetch('http://ws-tp-muslib-back.serveurspaul.duckdns.org/titre', {
+    fetch('https://ws-tp-muslib-back.serveurspaul.duckdns.org/titre', {
       method: 'put',
       headers: {
         'Content-Type': 'application/json'

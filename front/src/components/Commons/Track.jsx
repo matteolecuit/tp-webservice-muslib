@@ -55,7 +55,7 @@ export default (props) => {
 };
 
 function setFavoris(id, method) {
-  fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/utilisateur/favoris/titre?titreId=" + id, {
+  fetch("https://ws-tp-muslib-back.serveurspaul.duckdns.org/utilisateur/favoris/titre?titreId=" + id, {
     method: method,
     headers: {
       "Content-Type": "application/json",

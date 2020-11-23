@@ -12,7 +12,7 @@ class ArtistsPage extends Component {
 	};
 
 	getArtists() {
-		fetch('http://ws-tp-muslib-back.serveurspaul.duckdns.org/artiste/', {
+		fetch('https://ws-tp-muslib-back.serveurspaul.duckdns.org/artiste/', {
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json",

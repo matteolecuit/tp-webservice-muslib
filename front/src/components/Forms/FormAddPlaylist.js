@@ -12,7 +12,7 @@ class PlaylistAddEditForm extends React.Component {
 
   submitFormAdd = (e) => {
     e.preventDefault();
-    fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/utilisateur/playlist", {
+    fetch("https://ws-tp-muslib-back.serveurspaul.duckdns.org/utilisateur/playlist", {
       method: "post",
       headers: {
         "Content-Type": "application/json",

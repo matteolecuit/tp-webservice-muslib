@@ -22,7 +22,7 @@ class ManageArtistsPage extends Component {
   }
 
   getArtists() {
-    fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/artiste", {
+    fetch("https://ws-tp-muslib-back.serveurspaul.duckdns.org/artiste", {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -39,7 +39,7 @@ class ManageArtistsPage extends Component {
   deleteItem(id) {
     let confirmDelete = window.confirm("Delete album forever?");
     if (confirmDelete) {
-      fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/artiste?artisteId=" + id, {
+      fetch("https://ws-tp-muslib-back.serveurspaul.duckdns.org/artiste?artisteId=" + id, {
         method: "DELETE",
         headers: {
           Authorization: `${localStorage.getItem("token")}`,
@@ -54,7 +54,7 @@ class ManageArtistsPage extends Component {
   }
 
   editItem(id) {
-    fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/artiste/" + id, {
+    fetch("https://ws-tp-muslib-back.serveurspaul.duckdns.org/artiste/" + id, {
       headers: {
         Authorization: `${localStorage.getItem("token")}`,
       },
@@ -95,7 +95,7 @@ class ManageArtistsPage extends Component {
     let imageInput = document.getElementsByName("track-image")[0];
     event.preventDefault();
     if (idInput.value.length > 0) {
-      fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/artiste/" + idInput.value, {
+      fetch("https://ws-tp-muslib-back.serveurspaul.duckdns.org/artiste/" + idInput.value, {
         method: "put",
         headers: {
           "Content-Type": "application/json",
@@ -115,7 +115,7 @@ class ManageArtistsPage extends Component {
         })
         .catch((err) => console.log(err));
     } else {
-      fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/artiste", {
+      fetch("https://ws-tp-muslib-back.serveurspaul.duckdns.org/artiste", {
         method: "post",
         headers: {
           "Content-Type": "application/json",

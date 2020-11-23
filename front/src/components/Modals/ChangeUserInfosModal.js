@@ -25,7 +25,7 @@ class ChangeUserInfoModalForm extends Component {
   }
 
   getPlaylist() {
-    fetch('http://ws-tp-muslib-back.serveurspaul.duckdns.org/utilisateur/playlist', {
+    fetch('https://ws-tp-muslib-back.serveurspaul.duckdns.org/utilisateur/playlist', {
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
@@ -45,7 +45,7 @@ class ChangeUserInfoModalForm extends Component {
 
   submitForm = (e) => {
     e.preventDefault();
-    fetch("http://ws-tp-muslib-back.serveurspaul.duckdns.org/utilisateur", {
+    fetch("https://ws-tp-muslib-back.serveurspaul.duckdns.org/utilisateur", {
       method: "put",
       headers: {
         "Content-Type": "application/json",

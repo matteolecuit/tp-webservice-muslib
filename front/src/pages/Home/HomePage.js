@@ -14,7 +14,7 @@ class HomePage extends Component {
 	};
 
 	getAlbums() {
-		fetch('http://ws-tp-muslib-back.serveurspaul.duckdns.org/album/random?numRand=10', {
+		fetch('https://ws-tp-muslib-back.serveurspaul.duckdns.org/album/random?numRand=10', {
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json",
@@ -31,7 +31,7 @@ class HomePage extends Component {
 			.catch(err => console.log(err))
 	};
 	getArtists() {
-		fetch('http://ws-tp-muslib-back.serveurspaul.duckdns.org/artiste/random?numRand=10', {
+		fetch('https://ws-tp-muslib-back.serveurspaul.duckdns.org/artiste/random?numRand=10', {
 			headers: {
 				"Content-Type": "application/json",
 				"Accept": "application/json",
